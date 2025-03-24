@@ -5,7 +5,7 @@ from chromadb.config import Settings
 from .base_db import BaseVectorDB
 
 class ChromaDB(BaseVectorDB):
-    """ChromaDB adapter implementation."""
+    """ChromaDB adapter implementation with multimodal support."""
     
     def __init__(self, 
                  collection_name: str = "course_notes",
@@ -13,34 +13,44 @@ class ChromaDB(BaseVectorDB):
         """Initialize the ChromaDB adapter.
         
         Args:
-            collection_name: Name of the collection to use
+            collection_name: Base name for collections
             persist_directory: Directory to persist the database
         """
         self.client = chromadb.Client(Settings(
             persist_directory=persist_directory,
             anonymized_telemetry=False
         ))
-        self.collection = self.client.get_or_create_collection(
-            name=collection_name
+        
+        # Create separate collections for text and images
+        self.text_collection = self.client.get_or_create_collection(
+            name=f"{collection_name}_text"
+        )
+        self.image_collection = self.client.get_or_create_collection(
+            name=f"{collection_name}_images"
         )
     
     def add_vectors(self, 
-                   vectors: np.ndarray, 
-                   metadata: Optional[List[Dict[str, Any]]] = None) -> None:
+                   vectors: List[np.ndarray], 
+                   metadata: Optional[List[Dict[str, Any]]] = None,
+                   modality: str = "text") -> None:
         """Add vectors to ChromaDB.
         
         Args:
-            vectors: Array of vectors to add
+            vectors: List of vectors to add
             metadata: Optional list of metadata dictionaries for each vector
+            modality: Type of vectors ('text' or 'image')
         """
         # Generate IDs for the vectors
-        ids = [f"vec_{i}" for i in range(len(vectors))]
+        ids = [f"{modality}_{i}" for i in range(len(vectors))]
         
         # Convert vectors to list format for ChromaDB
-        vectors_list = vectors.tolist()
+        vectors_list = [v.tolist() for v in vectors]
+        
+        # Select appropriate collection
+        collection = self.text_collection if modality == "text" else self.image_collection
         
         # Add vectors to collection
-        self.collection.add(
+        collection.add(
             embeddings=vectors_list,
             documents=[meta.get('text', '') for meta in (metadata or [])],
             metadatas=metadata,
@@ -49,62 +59,63 @@ class ChromaDB(BaseVectorDB):
     
     def search(self, 
                query_vector: np.ndarray, 
-               k: int = 5) -> List[Dict[str, Any]]:
-        """Search for similar vectors in ChromaDB.
+               k: int = 5,
+               modality: str = "text") -> List[Dict[str, Any]]:
+        """Search for similar vectors.
         
         Args:
-            query_vector: Query vector to search for
+            query_vector: Query vector
             k: Number of results to return
+            modality: Type of query ('text' or 'image')
             
         Returns:
-            List of dictionaries containing results and their metadata
+            List of results with metadata and distances
         """
-        # Convert query vector to list format and ensure correct shape
-        if isinstance(query_vector, np.ndarray):
-            query_vector_list = query_vector.tolist()
-            # Handle case where query_vector has extra nesting
-            if isinstance(query_vector_list[0], list) and isinstance(query_vector_list[0][0], list):
-                query_vector_list = query_vector_list[0][0]
-            elif isinstance(query_vector_list[0], list):
-                query_vector_list = query_vector_list[0]
+        # Select appropriate collection
+        collection = self.text_collection if modality == "text" else self.image_collection
         
-        # Search for similar vectors
-        results = self.collection.query(
-            query_embeddings=[query_vector_list],
+        # Convert query vector to list
+        query_list = query_vector.tolist()
+        
+        # Search in collection
+        results = collection.query(
+            query_embeddings=[query_list],
             n_results=k
         )
         
         # Format results
         formatted_results = []
-        for i in range(len(results['documents'][0])):
-            formatted_results.append({
-                'text': results['documents'][0][i],
-                'metadata': results['metadatas'][0][i],
-                'distance': results['distances'][0][i] if 'distances' in results else None
-            })
-        
+        if results['distances'] and results['metadatas']:
+            for i in range(len(results['ids'][0])):
+                formatted_results.append({
+                    'id': results['ids'][0][i],
+                    'metadata': results['metadatas'][0][i],
+                    'distance': results['distances'][0][i]
+                })
+                
         return formatted_results
-    
+
     def delete_vectors(self, ids: List[str]) -> None:
         """Delete vectors by their IDs.
         
         Args:
             ids: List of vector IDs to delete
         """
-        self.collection.delete(ids=ids)
-    
-    def get_vector_count(self) -> int:
-        """Get the total number of vectors in the database.
+        # Separate IDs by modality
+        text_ids = [id_ for id_ in ids if id_.startswith('text_')]
+        image_ids = [id_ for id_ in ids if id_.startswith('image_')]
         
-        Returns:
-            int: Number of vectors
-        """
-        return self.collection.count()
-    
+        # Delete from respective collections
+        if text_ids:
+            self.text_collection.delete(ids=text_ids)
+        if image_ids:
+            self.image_collection.delete(ids=image_ids)
+
+    def get_vector_count(self) -> int:
+        """Get the total number of vectors in the database."""
+        return len(self.text_collection.get()['ids']) + len(self.image_collection.get()['ids'])
+
     def clear(self) -> None:
         """Clear all vectors from the database."""
-        # ChromaDB requires a where clause with at least one operator
-        # Using a condition that will match all documents
-        self.collection.delete(
-            where={"$and": [{"id": {"$exists": True}}]}
-        ) 
+        self.text_collection.delete(ids=self.text_collection.get()['ids'])
+        self.image_collection.delete(ids=self.image_collection.get()['ids']) 

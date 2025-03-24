@@ -1,0 +1,568 @@
+{
+  "timestamp": "20250324_013923",
+  "vector_dbs": {
+    "chroma": {
+      "indexing_time": 0.01711106300354004,
+      "query_times": [
+        0.055052995681762695,
+        0.05170488357543945,
+        0.05317497253417969
+      ],
+      "memory_usage": 0.0,
+      "avg_query_time": 0.05331095059712728,
+      "query_time_std": 0.001370238712616479
+    },
+    "redis": {
+      "indexing_time": 0.0002090930938720703,
+      "query_times": [
+        0.053037166595458984,
+        0.05524587631225586,
+        0.0534520149230957
+      ],
+      "memory_usage": 0.0,
+      "avg_query_time": 0.053911685943603516,
+      "query_time_std": 0.0009584963010150337
+    },
+    "qdrant": {
+      "indexing_time": 0.0001862049102783203,
+      "query_times": [
+        0.055020809173583984,
+        0.05065512657165527,
+        0.05502486228942871
+      ],
+      "memory_usage": 0.0,
+      "avg_query_time": 0.053566932678222656,
+      "query_time_std": 0.002058958508343371
+    }
+  },
+  "models": {
+    "qwen:7b": {
+      "chroma": {
+        "weight_0.0": {
+          "response_times": [
+            10.892259120941162,
+            8.388130187988281,
+            5.568915843963623
+          ],
+          "context_lengths": [
+            0,
+            0,
+            0
+          ],
+          "source_counts": [
+            0,
+            0,
+            0
+          ],
+          "avg_response_time": 8.283101717631022,
+          "response_time_std": 2.1745143742645436,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 3,
+          "error_count": 0,
+          "error_messages": []
+        },
+        "weight_0.3": {
+          "response_times": [
+            3.0191781520843506,
+            7.4035749435424805,
+            3.417649984359741
+          ],
+          "context_lengths": [
+            0,
+            0,
+            0
+          ],
+          "source_counts": [
+            0,
+            0,
+            0
+          ],
+          "avg_response_time": 4.613467693328857,
+          "response_time_std": 1.9795990841666562,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 3,
+          "error_count": 0,
+          "error_messages": []
+        },
+        "weight_0.5": {
+          "response_times": [
+            5.266804933547974,
+            8.587104082107544,
+            6.862566947937012
+          ],
+          "context_lengths": [
+            0,
+            0,
+            0
+          ],
+          "source_counts": [
+            0,
+            0,
+            0
+          ],
+          "avg_response_time": 6.905491987864177,
+          "response_time_std": 1.3558462371697153,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 3,
+          "error_count": 0,
+          "error_messages": []
+        }
+      },
+      "redis": {
+        "weight_0.0": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with qwen:7b: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with qwen:7b: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with qwen:7b: RedisVectorDB.search() got an unexpected keyword argument 'modality'"
+          ]
+        },
+        "weight_0.3": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with qwen:7b: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with qwen:7b: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with qwen:7b: RedisVectorDB.search() got an unexpected keyword argument 'modality'"
+          ]
+        },
+        "weight_0.5": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with qwen:7b: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with qwen:7b: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with qwen:7b: RedisVectorDB.search() got an unexpected keyword argument 'modality'"
+          ]
+        }
+      },
+      "qdrant": {
+        "weight_0.0": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with qwen:7b: Unsupported vector type <class 'dict'>",
+            "Error processing query with qwen:7b: Unsupported vector type <class 'dict'>",
+            "Error processing query with qwen:7b: Unsupported vector type <class 'dict'>"
+          ]
+        },
+        "weight_0.3": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with qwen:7b: Unsupported vector type <class 'dict'>",
+            "Error processing query with qwen:7b: Unsupported vector type <class 'dict'>",
+            "Error processing query with qwen:7b: Unsupported vector type <class 'dict'>"
+          ]
+        },
+        "weight_0.5": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with qwen:7b: Unsupported vector type <class 'dict'>",
+            "Error processing query with qwen:7b: Unsupported vector type <class 'dict'>",
+            "Error processing query with qwen:7b: Unsupported vector type <class 'dict'>"
+          ]
+        }
+      }
+    },
+    "mistral": {
+      "chroma": {
+        "weight_0.0": {
+          "response_times": [
+            24.764273166656494,
+            7.562278985977173,
+            7.623766899108887
+          ],
+          "context_lengths": [
+            0,
+            0,
+            0
+          ],
+          "source_counts": [
+            0,
+            0,
+            0
+          ],
+          "avg_response_time": 13.316773017247518,
+          "response_time_std": 8.094643905855452,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 3,
+          "error_count": 0,
+          "error_messages": []
+        },
+        "weight_0.3": {
+          "response_times": [
+            13.962347030639648,
+            6.630008220672607,
+            4.402451038360596
+          ],
+          "context_lengths": [
+            0,
+            0,
+            0
+          ],
+          "source_counts": [
+            0,
+            0,
+            0
+          ],
+          "avg_response_time": 8.331602096557617,
+          "response_time_std": 4.084072243454671,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 3,
+          "error_count": 0,
+          "error_messages": []
+        },
+        "weight_0.5": {
+          "response_times": [
+            20.88030695915222,
+            6.597190856933594,
+            6.4709038734436035
+          ],
+          "context_lengths": [
+            0,
+            0,
+            0
+          ],
+          "source_counts": [
+            0,
+            0,
+            0
+          ],
+          "avg_response_time": 11.316133896509806,
+          "response_time_std": 6.7630881447102675,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 3,
+          "error_count": 0,
+          "error_messages": []
+        }
+      },
+      "redis": {
+        "weight_0.0": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with mistral: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with mistral: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with mistral: RedisVectorDB.search() got an unexpected keyword argument 'modality'"
+          ]
+        },
+        "weight_0.3": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with mistral: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with mistral: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with mistral: RedisVectorDB.search() got an unexpected keyword argument 'modality'"
+          ]
+        },
+        "weight_0.5": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with mistral: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with mistral: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with mistral: RedisVectorDB.search() got an unexpected keyword argument 'modality'"
+          ]
+        }
+      },
+      "qdrant": {
+        "weight_0.0": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with mistral: Unsupported vector type <class 'dict'>",
+            "Error processing query with mistral: Unsupported vector type <class 'dict'>",
+            "Error processing query with mistral: Unsupported vector type <class 'dict'>"
+          ]
+        },
+        "weight_0.3": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with mistral: Unsupported vector type <class 'dict'>",
+            "Error processing query with mistral: Unsupported vector type <class 'dict'>",
+            "Error processing query with mistral: Unsupported vector type <class 'dict'>"
+          ]
+        },
+        "weight_0.5": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with mistral: Unsupported vector type <class 'dict'>",
+            "Error processing query with mistral: Unsupported vector type <class 'dict'>",
+            "Error processing query with mistral: Unsupported vector type <class 'dict'>"
+          ]
+        }
+      }
+    },
+    "llama2": {
+      "chroma": {
+        "weight_0.0": {
+          "response_times": [
+            6.69071888923645,
+            14.727256059646606,
+            11.987571954727173
+          ],
+          "context_lengths": [
+            0,
+            0,
+            0
+          ],
+          "source_counts": [
+            0,
+            0,
+            0
+          ],
+          "avg_response_time": 11.13518230120341,
+          "response_time_std": 3.335806600501273,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 3,
+          "error_count": 0,
+          "error_messages": []
+        },
+        "weight_0.3": {
+          "response_times": [
+            6.315462350845337,
+            20.706912994384766,
+            13.694172859191895
+          ],
+          "context_lengths": [
+            0,
+            0,
+            0
+          ],
+          "source_counts": [
+            0,
+            0,
+            0
+          ],
+          "avg_response_time": 13.572182734807333,
+          "response_time_std": 5.875918316836009,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 3,
+          "error_count": 0,
+          "error_messages": []
+        },
+        "weight_0.5": {
+          "response_times": [
+            3.7370967864990234,
+            14.463500738143921,
+            8.408261775970459
+          ],
+          "context_lengths": [
+            0,
+            0,
+            0
+          ],
+          "source_counts": [
+            0,
+            0,
+            0
+          ],
+          "avg_response_time": 8.869619766871134,
+          "response_time_std": 4.391170977487421,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 3,
+          "error_count": 0,
+          "error_messages": []
+        }
+      },
+      "redis": {
+        "weight_0.0": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with llama2: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with llama2: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with llama2: RedisVectorDB.search() got an unexpected keyword argument 'modality'"
+          ]
+        },
+        "weight_0.3": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with llama2: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with llama2: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with llama2: RedisVectorDB.search() got an unexpected keyword argument 'modality'"
+          ]
+        },
+        "weight_0.5": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with llama2: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with llama2: RedisVectorDB.search() got an unexpected keyword argument 'modality'",
+            "Error processing query with llama2: RedisVectorDB.search() got an unexpected keyword argument 'modality'"
+          ]
+        }
+      },
+      "qdrant": {
+        "weight_0.0": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with llama2: Unsupported vector type <class 'dict'>",
+            "Error processing query with llama2: Unsupported vector type <class 'dict'>",
+            "Error processing query with llama2: Unsupported vector type <class 'dict'>"
+          ]
+        },
+        "weight_0.3": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with llama2: Unsupported vector type <class 'dict'>",
+            "Error processing query with llama2: Unsupported vector type <class 'dict'>",
+            "Error processing query with llama2: Unsupported vector type <class 'dict'>"
+          ]
+        },
+        "weight_0.5": {
+          "response_times": [],
+          "context_lengths": [],
+          "source_counts": [],
+          "avg_response_time": 0.0,
+          "response_time_std": 0.0,
+          "avg_context_length": 0.0,
+          "avg_source_count": 0.0,
+          "success_count": 0,
+          "error_count": 3,
+          "error_messages": [
+            "Error processing query with llama2: Unsupported vector type <class 'dict'>",
+            "Error processing query with llama2: Unsupported vector type <class 'dict'>",
+            "Error processing query with llama2: Unsupported vector type <class 'dict'>"
+          ]
+        }
+      }
+    }
+  }
+}

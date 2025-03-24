@@ -1,2 +1,10 @@
-.venv
-# Add directories or file patterns to ignore during indexing (e.g. foo/ or *.csv)
+# Python virtual environment
+venv/
+env/
+.env/
+.venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
