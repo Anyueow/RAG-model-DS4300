@@ -226,7 +226,7 @@ if search_type == "Text Search":
     query = st.text_area(
         "Query",
         height=150,  # Increased height for better visibility
-        placeholder="Enter your query here...\nYou can use multiple lines to format your query.\nThe formatting will be preserved."
+        placeholder="multiple line query ftw"
     )
     if st.button("Search"):
         if not st.session_state.initialized:
@@ -335,7 +335,7 @@ else:
             st.error(f"Error processing image: {str(e)}")
 
 # Help section
-with st.expander("Help"):
+#with st.expander("Help"):
     st.markdown("""
     ### How to use this RAG system:
     
