@@ -9,23 +9,41 @@ def check_python_version():
         print("Error: Python 3.8 or higher is required")
         sys.exit(1)
 
-def create_virtual_environment():
-    """Create and activate a virtual environment."""
-    print("Creating virtual environment...")
-    subprocess.run(["python", "-m", "venv", "venv"])
+def create_conda_environment():
+    """ Activate a conda environment."""
+    print("conda environment...")
+    subprocess.run(["conda", "activate", "ds-4300_project"])
     
-    # Determine the activation script based on OS
-    if os.name == 'nt':  # Windows
-        activate_script = "venv\\Scripts\\activate"
-    else:  # Unix/Linux/MacOS
-        activate_script = "source venv/bin/activate"
-    
-    print(f"\nVirtual environment created. Activate it with:\n{activate_script}")
+    print("\nConda environment created. Activate it with:")
+    print("conda activate rag-model")
 
 def install_dependencies():
-    """Install required dependencies."""
+    """Install required dependencies using conda and pip."""
     print("\nInstalling dependencies...")
-    subprocess.run(["pip", "install", "-r", "requirements.txt"])
+    
+    # Install packages available in conda
+    conda_packages = [
+        "numpy",
+        "pandas",
+        "torch",
+        "transformers",
+        "sentence-transformers",
+        "chromadb",
+        "redis",
+        "pytest"
+    ]
+    
+    subprocess.run(["conda", "install", "-n", "rag-model", "-c", "conda-forge"] + conda_packages + ["-y"])
+    
+    # Install remaining packages via pip
+    pip_packages = [
+        "pypdf",
+        "faiss-cpu",
+        "nltk",
+        "ollama"
+    ]
+    
+    subprocess.run(["conda", "run", "-n", "rag-model", "pip", "install"] + pip_packages)
 
 def setup_directories():
     """Create necessary directories."""
@@ -66,8 +84,8 @@ def main():
     # Check Python version
     check_python_version()
     
-    # Create virtual environment
-    create_virtual_environment()
+    # Create conda environment
+    create_conda_environment()
     
     # Install dependencies
     install_dependencies()
@@ -83,7 +101,7 @@ def main():
     
     print("\nSetup completed successfully!")
     print("\nTo get started:")
-    print("1. Activate the virtual environment")
+    print("1. Activate the conda environment: conda activate rag-model")
     print("2. Place your course notes in the data/raw_notes directory")
     print("3. Run example.py to test the system")
     print("4. Run tests/test_rag.py to verify functionality")

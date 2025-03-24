@@ -1,3 +1,26 @@
-.env
+# Python virtual environment
+venv/
+env/
+.env/
+.venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Project specific
+chroma_db/
+data/raw_notes/*
+!data/raw_notes/.gitkeep
+
 node_modules
-.venv

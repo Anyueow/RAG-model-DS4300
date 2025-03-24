@@ -78,14 +78,19 @@ python setup.py
 
 ## Usage
 
-1. Place your course notes in the `data/raw_notes` directory
+1. Activate the conda environment:
+```bash
+conda activate rag-model
+```
 
-2. Run the example script to test the system:
+2. Place your course notes in the `data/raw_notes` directory
+
+3. Run the example script to test the system:
 ```bash
 python example.py
 ```
 
-3. Run the tests to verify functionality:
+4. Run the tests to verify functionality:
 ```bash
 pytest tests/
 ```
