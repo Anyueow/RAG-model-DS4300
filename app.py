@@ -253,7 +253,9 @@ if search_type == "Text Search":
                             st.subheader("Relevant Contexts")
                             if 'contexts' in result and result['contexts']:
                                 for idx, context in enumerate(result['contexts'], 1):
-                                    with st.expander(f"Context {idx} (Score: {context.get('combined_score', 'N/A'):.3f})"):
+                                    score = context.get('combined_score', 'N/A')
+                                    score_str = f"{score:.3f}" if isinstance(score, float) else str(score)
+                                    with st.expander(f"Context {idx} (Score: {score_str})"):
                                         if 'text' in context:
                                             st.write(context['text'])
                                         if 'metadata' in context:

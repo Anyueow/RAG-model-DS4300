@@ -61,7 +61,12 @@ class OllamaLLM(BaseLLM):
             if images:
                 messages.append({
                     'role': 'system',
-                    'content': 'You are a helpful assistant that can understand both text and images. When referring to images, use their reference numbers [Image #].'
+                    'content': 'You are a helpful assistant that can understand both text and images. When referring to images, use their reference numbers [Image #]. Always respond in English only.'
+                })
+            else:
+                messages.append({
+                    'role': 'system',
+                    'content': 'You are a helpful assistant. Always respond in English only, regardless of the input language.'
                 })
             
             # Add images if provided
