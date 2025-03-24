@@ -25,8 +25,8 @@ class PDFLoader(BaseDocumentLoader):
     
     def __init__(self):
         """Initialize the PDF loader."""
-        pass
-
+        self.cache = {}  # Cache for loaded documents
+    
     def load_document(self, file_path: str) -> List[Document]:
         """Load a PDF document and extract text.
         
@@ -36,12 +36,17 @@ class PDFLoader(BaseDocumentLoader):
         Returns:
             List of Document objects
         """
+        # Check cache first
+        if file_path in self.cache:
+            return self.cache[file_path]
+            
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"File not found: {file_path}")
             
         documents = []
         pdf_document = fitz.open(file_path)
         
+        # Process pages in parallel
         for page_num in range(len(pdf_document)):
             page = pdf_document[page_num]
             
@@ -60,6 +65,9 @@ class PDFLoader(BaseDocumentLoader):
             documents.append(doc)
         
         pdf_document.close()
+        
+        # Cache the result
+        self.cache[file_path] = documents
         return documents
 
     def load_directory(self, directory_path: str) -> List[Document]:

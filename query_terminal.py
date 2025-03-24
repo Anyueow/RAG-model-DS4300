@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 import argparse
 import sys
+from PIL import Image
 from main import RAGSystem
 from embeddings.multimodal_embedder import MultiModalEmbedder
 from database.chroma_db import ChromaDB
 from database.redis_db import RedisVectorDB
+import io
 
 def initialize_rag_system():
     """Initialize the RAG system with default settings."""
@@ -15,12 +17,32 @@ def initialize_rag_system():
             semantic_weight=0.8,
             keyword_weight=0.2,
             top_k=3,
-            temperature=0.7
+            temperature=0.3
         )
         return rag
     except Exception as e:
         print(f"Error initializing RAG system: {str(e)}")
         return None
+
+def load_image(image_path: str) -> Image.Image:
+    """Load and validate an image file."""
+    try:
+        image = Image.open(image_path)
+        return image
+    except Exception as e:
+        print(f"Error loading image: {str(e)}")
+        sys.exit(1)
+
+def image_to_bytes(image: Image.Image) -> bytes:
+    """Convert PIL Image to bytes."""
+    try:
+        img_byte_arr = io.BytesIO()
+        image.save(img_byte_arr, format=image.format or 'PNG')
+        img_byte_arr = img_byte_arr.getvalue()
+        return img_byte_arr
+    except Exception as e:
+        print(f"Error converting image to bytes: {str(e)}")
+        sys.exit(1)
 
 def main():
     parser = argparse.ArgumentParser(description='Query the RAG system from terminal')
@@ -29,6 +51,7 @@ def main():
     parser.add_argument('--process-docs', action='store_true', help='Process documents before querying')
     parser.add_argument('--no-general-knowledge', action='store_true', 
                        help='Disable general knowledge responses, use only context from documents')
+    parser.add_argument('--image', type=str, help='Path to image file for image-based queries')
     args = parser.parse_args()
 
     # Initialize RAG system
@@ -47,11 +70,20 @@ def main():
             print(f"Error processing documents: {str(e)}")
             sys.exit(1)
 
+    # Load image if provided
+    query_image = None
+    if args.image:
+        print(f"Loading image from {args.image}...")
+        pil_image = load_image(args.image)
+        query_image = image_to_bytes(pil_image)
+        print("Image loaded and converted successfully")
+
     # Process query
     print(f"\nProcessing query: {args.query}")
     try:
         result = rag_system.query(
             query=args.query,
+            query_image=query_image,
             use_general_knowledge=not args.no_general_knowledge
         )
         

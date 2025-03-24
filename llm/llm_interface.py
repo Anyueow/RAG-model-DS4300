@@ -35,6 +35,8 @@ class OllamaLLM(BaseLLM):
         """
         self.model_name = model_name
         self.temperature = temperature
+        self.max_query_length = 1000  # Maximum length for user queries
+        self.max_context_chunks = 3   # Maximum number of context chunks to include
     
     def generate_response(self, 
                          prompt: str, 
@@ -53,16 +55,44 @@ class OllamaLLM(BaseLLM):
             Generated response text
         """
         try:
-            # Prepare messages
+            # Validate input length
+            if len(prompt) > self.max_query_length:
+                return f"Query is too long. Please keep queries under {self.max_query_length} characters."
+            
+            # Limit context chunks if provided
+            if context:
+                context = context[:self.max_context_chunks]
+            
             messages = []
             
-            # Add system message
-            system_message = """You are a helpful assistant that can provide both specific information from the provided context and general knowledge when needed. 
-            When using information from the context, cite the source. When using general knowledge, be transparent about it.
-            Always respond in English only."""
+            # Enhanced system message with better technical capabilities
+            system_message = """You are an expert assistant with deep knowledge in computer science, algorithms, data structures, and technical topics.
+            You always answer the question provided and then provide an explanation. 
+            
+            Key capabilities:
+            1. Technical Expertise: You excel at explaining complex technical concepts, algorithms, and data structures
+            2. Context Integration: When using information from the context, cite the source
+            3. General Knowledge: When context is insufficient, provide detailed technical explanations
+            4. Image Analysis: You can analyze technical diagrams, flowcharts, and code snippets in images
+            5. Language: Always respond in English only
+            
+            When explaining technical concepts:
+            - Start with the answer to the question
+            - Provide step-by-step explanations
+            - Use proper technical terminology"""
             
             if images:
-                system_message += " You can also understand and analyze images. When referring to images, use their reference numbers [Image #]."
+                system_message += """
+                For image analysis:
+                - Identify B tree and B+ tree
+                - Identify AVL trees 
+                - Be able to traverse a tree 
+                - Be able to a balance a AVL tree
+                - Be able to insert and delete a node in a B tree and B+ tree
+                - Be able to insert and delete a node in a AVL tree
+                - Analyze code snippets and algorithms
+                - Describe visual patterns and structures
+                - Reference specific parts of the image using [Image #]"""
             
             messages.append({
                 'role': 'system',
@@ -73,10 +103,8 @@ class OllamaLLM(BaseLLM):
             if images:
                 for img_data in images:
                     if 'data' in img_data:
-                        # If image is already base64 encoded
                         if isinstance(img_data['data'], str):
                             img_base64 = img_data['data']
-                        # If image is bytes
                         else:
                             img_base64 = base64.b64encode(img_data['data']).decode()
                             
@@ -86,41 +114,47 @@ class OllamaLLM(BaseLLM):
                             'images': [img_base64]
                         })
             
-            # Construct the prompt based on context and general knowledge setting
+            # Enhanced prompt construction for technical topics
             if context and not use_general_knowledge:
-                # Use only context-based prompt
                 full_prompt = self._construct_prompt(prompt, context)
             elif context and use_general_knowledge:
-                # Use context but allow general knowledge
-                full_prompt = f"""Based on the following context and your general knowledge, please answer the question.
-                If the context is insufficient, feel free to use your general knowledge, but please indicate when you're doing so.
+                full_prompt = f"""Based on the following context and your technical expertise, please provide a comprehensive answer.
+                If the context is insufficient, use your general knowledge to provide a detailed technical explanation.
 
                 Question: {prompt}
 
                 Context:
                 {self._format_context(context)}
 
-                Please provide a comprehensive answer, using both the context and your general knowledge as needed."""
+                Please provide:
+                1. A clear technical explanation
+                2. Key concepts and principles
+                3. Relevant examples or comparisons
+                4. Any additional technical details that would be helpful"""
             else:
-                # Use only general knowledge
-                full_prompt = f"""Please answer the following question using your general knowledge:
+                full_prompt = f"""Please provide a comprehensive technical explanation for the following question:
 
                 Question: {prompt}
 
-                Please provide a comprehensive answer based on your knowledge."""
+                Please include:
+                1. the answer to the question
+                1. Clear definitions and key principles
+                2. Step-by-step explanation
+                3. Relevant examples
+                4. Comparisons with related concepts
+                5. Technical terminology and best practices"""
             
-            # Add main prompt
             messages.append({
                 'role': 'user',
                 'content': full_prompt
             })
             
-            # Generate response with temperature
+            # Generate response with adjusted temperature for technical accuracy
             response = ollama.chat(
                 model=self.model_name,
                 messages=messages,
                 options={
-                    'temperature': self.temperature
+                    'temperature': 0.3  # Lower temperature for more focused technical responses
                 }
             )
             return response['message']['content']

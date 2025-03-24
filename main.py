@@ -23,45 +23,47 @@ class RAGSystem:
     
     def __init__(
         self,
-        embedder: Optional[BaseEmbedder] = None,
-        vector_db: ChromaDB = None,
-        document_loader: PDFLoader = None,
+        embedder: BaseEmbedder,
+        vector_db: Any = None,
+        document_loader: Any = None,
         llm: OllamaLLM = None,
         prompt_generator: PromptGenerator = None,
         semantic_weight: float = 0.7,
         keyword_weight: float = 0.3,
-        top_k: int = 5,
+        top_k: int = 3,
         temperature: float = 0.7
     ):
         """Initialize the RAG system.
         
         Args:
-            embedder: Text/image embedder instance (defaults to MultiModalEmbedder)
+            embedder: Embedder for text and images
             vector_db: Vector database instance
             document_loader: Document loader instance
             llm: LLM interface instance
             prompt_generator: Prompt generator instance
-            semantic_weight: Weight for semantic search (default: 0.7)
-            keyword_weight: Weight for keyword search (default: 0.3)
-            top_k: Number of contexts to retrieve
-            temperature: Temperature for LLM response generation (default: 0.7)
+            semantic_weight: Weight for semantic search
+            keyword_weight: Weight for keyword search
+            top_k: Number of results to return
+            temperature: Temperature for response generation
         """
         # Initialize components with defaults if not provided
         self.embedder = embedder or MultiModalEmbedder()
         self.vector_db = vector_db or ChromaDB()
         self.document_loader = document_loader or PDFLoader()
-        self.llm = llm or OllamaLLM("qwen:7b", temperature=temperature)
+        self.llm = llm or OllamaLLM(model_name="qwen:7b", temperature=temperature)
         self.prompt_generator = prompt_generator or PromptGenerator()
         
-        # Initialize hybrid search
+        # Initialize hybrid search with adjusted weights
         self.search = HybridSearch(
             vector_db=self.vector_db,
+            embedder=self.embedder,  # Pass embedder directly
             semantic_weight=semantic_weight,
-            keyword_weight=keyword_weight
+            keyword_weight=keyword_weight,
+            top_k=top_k
         )
         
-        self.top_k = top_k
         self.documents = []
+        self.query_cache = {}  # Cache for query results
 
     def ingest_documents(self, data_dir: str) -> None:
         """Ingest documents from a directory.
@@ -72,12 +74,32 @@ class RAGSystem:
         # Load documents
         self.documents = self.document_loader.load_directory(data_dir)
         
-        # Process documents
-        texts = [doc.text for doc in self.documents]
-        embeddings = self.embedder.embed_texts(texts)
+        # Process documents in chunks for better memory management
+        chunk_size = 10  # Process 10 documents at a time
+        for i in range(0, len(self.documents), chunk_size):
+            chunk = self.documents[i:i + chunk_size]
+            texts = [doc.text for doc in chunk]
+            
+            # Generate embeddings for the chunk
+            embeddings = self.embedder.embed_texts(texts)
+            
+            # Prepare metadata for the chunk
+            metadata = [
+                {
+                    'text': doc.text,
+                    'source': doc.metadata.get('source'),
+                    'page': doc.metadata.get('page'),
+                    'doc_idx': idx + i,  # Maintain correct document index
+                    'type': 'text'
+                }
+                for idx, doc in enumerate(chunk)
+            ]
+            
+            # Add chunk to vector database
+            self.vector_db.add_vectors(embeddings, metadata)
         
-        # Prepare metadata
-        metadata = [
+        # Index documents for hybrid search
+        self.search.index_documents([
             {
                 'text': doc.text,
                 'source': doc.metadata.get('source'),
@@ -86,48 +108,46 @@ class RAGSystem:
                 'type': 'text'
             }
             for idx, doc in enumerate(self.documents)
-        ]
-        
-        # Add to vector database
-        self.vector_db.add_vectors(embeddings, metadata)
-        
-        # Index documents for hybrid search
-        self.search.index_documents(metadata)
+        ])
 
-    def query(self, query: str, query_image: Optional[Image.Image] = None) -> Dict[str, Any]:
-        """Process a query and generate a response.
+    def query(self, 
+              query_text: str, 
+              query_image: Optional[bytes] = None,
+              use_general_knowledge: bool = True) -> Dict[str, Any]:
+        """Process a query and return results.
         
         Args:
-            query: User query string
-            query_image: Optional image for image-based search
+            query_text: Text query
+            query_image: Optional image query
+            use_general_knowledge: Whether to use general knowledge
             
         Returns:
-            Dictionary containing response and metadata
+            Dictionary containing response and contexts
         """
-        # Get query embedding based on modality
-        if query_image is not None:
-            query_embedding = self.embedder.embed_image(query_image)
-            modality = "image"
-        else:
-            query_embedding = self.embedder.embed_text(query)
-            modality = "text"
+        # Check cache first
+        cache_key = f"{query_text}_{query_image is not None}_{use_general_knowledge}"
+        if cache_key in self.query_cache:
+            return self.query_cache[cache_key]
         
-        # Perform hybrid search
-        results = self.search.search(
-            query=query,
-            query_embedding=query_embedding,
-            k=self.top_k,
-            modality=modality
+        # Process query
+        contexts = self.search.search(query_text, query_image)
+        
+        # Generate response
+        response = self.llm.generate_response(
+            query_text,
+            contexts,
+            [{'data': query_image, 'index': 0}] if query_image else None,
+            use_general_knowledge=use_general_knowledge
         )
         
-        # Generate response using LLM
-        response = self.llm.generate_response(query, results)
-        
-        return {
+        result = {
             'response': response,
-            'contexts': results,
-            'modality': modality
+            'contexts': contexts
         }
+        
+        # Cache the result
+        self.query_cache[cache_key] = result
+        return result
 
 def setup_streamlit():
     """Set up Streamlit interface."""
@@ -172,8 +192,14 @@ def setup_streamlit():
                 os.remove(os.path.join(temp_dir, file))
             os.rmdir(temp_dir)
     
-    # Query interface
-    query = st.text_input("Enter your query:")
+    # Query interface with multi-line support
+    st.subheader("Enter your query:")
+    query = st.text_area(
+        "Query",
+        height=150,  # Increased height for better visibility
+        placeholder="Enter your query here...\nYou can use multiple lines to format your query.\nThe formatting will be preserved."
+    )
+    
     if query:
         with st.spinner("Processing query..."):
             result = st.session_state.rag_system.query(query)

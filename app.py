@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 # Set page config - this must be the first Streamlit command
 st.set_page_config(
-    page_title="RAG Document Search System",
+    page_title="RAG Ds4300 Midterm Cheat Sheet",
     page_icon="📚",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -114,7 +114,7 @@ if 'vector_dbs' not in st.session_state:
     }
 
 # Main title
-st.title("RAG Document Search System")
+st.title("RAG Ds4300 Midterm Cheat Sheet")
 
 # Sidebar with settings
 with st.sidebar:
@@ -211,8 +211,7 @@ with st.sidebar:
                     os.remove(os.path.join(temp_dir, file))
                 os.rmdir(temp_dir)
 
-# Main content area
-st.header("Search")
+
 
 # Search type selection
 search_type = st.radio(
@@ -223,7 +222,12 @@ search_type = st.radio(
 
 if search_type == "Text Search":
     # Text search interface
-    query = st.text_input("Enter your query:")
+    st.subheader("Enter your query:")
+    query = st.text_area(
+        "Query",
+        height=150,  # Increased height for better visibility
+        placeholder="Enter your query here...\nYou can use multiple lines to format your query.\nThe formatting will be preserved."
+    )
     if st.button("Search"):
         if not st.session_state.initialized:
             st.error("Please initialize the RAG system first!")
@@ -303,7 +307,7 @@ else:
                     with st.spinner("Searching..."):
                         try:
                             result = st.session_state.rag_system.query(
-                                query=query or "Find similar images",
+                                query_text=query or "Find similar images",
                                 query_image=image
                             )
                             
