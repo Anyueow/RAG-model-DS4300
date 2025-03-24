@@ -20,7 +20,7 @@ class BaseChunker(ABC):
 class TokenChunker(BaseChunker):
     """Chunker that splits text based on token count."""
     
-    def __init__(self, chunk_size: int = 500, overlap: int = 50):
+    def __init__(self, chunk_size: int = 400, overlap: int = 30):
         """Initialize the chunker.
         
         Args:

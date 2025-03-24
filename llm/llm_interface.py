@@ -39,35 +39,35 @@ class OllamaLLM(BaseLLM):
     def generate_response(self, 
                          prompt: str, 
                          context: Optional[List[Dict[str, Any]]] = None,
-                         images: Optional[List[Dict[str, Any]]] = None) -> str:
+                         images: Optional[List[Dict[str, Any]]] = None,
+                         use_general_knowledge: bool = True) -> str:
         """Generate a response using the Ollama model.
         
         Args:
             prompt: The prompt to send to the LLM
             context: Optional list of relevant context chunks
             images: Optional list of image data
+            use_general_knowledge: Whether to allow using general knowledge when context is insufficient
             
         Returns:
             Generated response text
         """
-        # Construct the full prompt with context if provided
-        full_prompt = self._construct_prompt(prompt, context)
-        
         try:
             # Prepare messages
             messages = []
             
-            # Add system message if needed
+            # Add system message
+            system_message = """You are a helpful assistant that can provide both specific information from the provided context and general knowledge when needed. 
+            When using information from the context, cite the source. When using general knowledge, be transparent about it.
+            Always respond in English only."""
+            
             if images:
-                messages.append({
-                    'role': 'system',
-                    'content': 'You are a helpful assistant that can understand both text and images. When referring to images, use their reference numbers [Image #]. Always respond in English only.'
-                })
-            else:
-                messages.append({
-                    'role': 'system',
-                    'content': 'You are a helpful assistant. Always respond in English only, regardless of the input language.'
-                })
+                system_message += " You can also understand and analyze images. When referring to images, use their reference numbers [Image #]."
+            
+            messages.append({
+                'role': 'system',
+                'content': system_message
+            })
             
             # Add images if provided
             if images:
@@ -85,6 +85,29 @@ class OllamaLLM(BaseLLM):
                             'content': f"[Image {img_data.get('index', 0)}]",
                             'images': [img_base64]
                         })
+            
+            # Construct the prompt based on context and general knowledge setting
+            if context and not use_general_knowledge:
+                # Use only context-based prompt
+                full_prompt = self._construct_prompt(prompt, context)
+            elif context and use_general_knowledge:
+                # Use context but allow general knowledge
+                full_prompt = f"""Based on the following context and your general knowledge, please answer the question.
+                If the context is insufficient, feel free to use your general knowledge, but please indicate when you're doing so.
+
+                Question: {prompt}
+
+                Context:
+                {self._format_context(context)}
+
+                Please provide a comprehensive answer, using both the context and your general knowledge as needed."""
+            else:
+                # Use only general knowledge
+                full_prompt = f"""Please answer the following question using your general knowledge:
+
+                Question: {prompt}
+
+                Please provide a comprehensive answer based on your knowledge."""
             
             # Add main prompt
             messages.append({
@@ -104,7 +127,17 @@ class OllamaLLM(BaseLLM):
             
         except Exception as e:
             print(f"Error generating response: {str(e)}")
-            return "Error: Failed to generate response"
+            return "I apologize, but I encountered an error while generating the response. Please try again."
+    
+    def _format_context(self, context: List[Dict[str, Any]]) -> str:
+        """Format context chunks into a readable string."""
+        formatted_context = []
+        for idx, chunk in enumerate(context, 1):
+            chunk_text = f"Context {idx}:\n{chunk.get('text', '')}"
+            if 'metadata' in chunk and 'source' in chunk['metadata']:
+                chunk_text += f"\nSource: {chunk['metadata']['source']}"
+            formatted_context.append(chunk_text)
+        return "\n\n".join(formatted_context)
     
     def _construct_prompt(self, 
                          prompt: str, 

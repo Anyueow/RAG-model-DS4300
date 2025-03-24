@@ -1,0 +1,84 @@
+#!/usr/bin/env python3
+import argparse
+import sys
+from main import RAGSystem
+from embeddings.multimodal_embedder import MultiModalEmbedder
+from database.chroma_db import ChromaDB
+from database.redis_db import RedisVectorDB
+
+def initialize_rag_system():
+    """Initialize the RAG system with default settings."""
+    try:
+        embedder = MultiModalEmbedder()
+        rag = RAGSystem(
+            embedder=embedder,
+            semantic_weight=0.8,
+            keyword_weight=0.2,
+            top_k=3,
+            temperature=0.7
+        )
+        return rag
+    except Exception as e:
+        print(f"Error initializing RAG system: {str(e)}")
+        return None
+
+def main():
+    parser = argparse.ArgumentParser(description='Query the RAG system from terminal')
+    parser.add_argument('query', type=str, help='The query to process')
+    parser.add_argument('--data-dir', type=str, default='data', help='Directory containing documents')
+    parser.add_argument('--process-docs', action='store_true', help='Process documents before querying')
+    parser.add_argument('--no-general-knowledge', action='store_true', 
+                       help='Disable general knowledge responses, use only context from documents')
+    args = parser.parse_args()
+
+    # Initialize RAG system
+    rag_system = initialize_rag_system()
+    if not rag_system:
+        print("Failed to initialize RAG system")
+        sys.exit(1)
+
+    # Process documents if requested
+    if args.process_docs:
+        print(f"Processing documents from {args.data_dir}...")
+        try:
+            rag_system.ingest_documents(args.data_dir)
+            print("Documents processed successfully")
+        except Exception as e:
+            print(f"Error processing documents: {str(e)}")
+            sys.exit(1)
+
+    # Process query
+    print(f"\nProcessing query: {args.query}")
+    try:
+        result = rag_system.query(
+            query=args.query,
+            use_general_knowledge=not args.no_general_knowledge
+        )
+        
+        if result:
+            print("\nResponse:")
+            print(result.get('response', 'No response generated'))
+            
+            if 'contexts' in result and result['contexts']:
+                print("\nRelevant Contexts:")
+                for idx, context in enumerate(result['contexts'], 1):
+                    score = context.get('combined_score', 'N/A')
+                    score_str = f"{score:.3f}" if isinstance(score, float) else str(score)
+                    print(f"\nContext {idx} (Score: {score_str}):")
+                    if 'text' in context:
+                        print(context['text'])
+                    if 'metadata' in context:
+                        metadata = context['metadata']
+                        if 'source' in metadata:
+                            print(f"Source: {metadata['source']}")
+                        if 'page' in metadata:
+                            print(f"Page: {metadata['page']}")
+        else:
+            print("No results found for your query.")
+            
+    except Exception as e:
+        print(f"Error processing query: {str(e)}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main() 

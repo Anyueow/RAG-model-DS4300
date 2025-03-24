@@ -11,6 +11,7 @@ A Retrieval-Augmented Generation (RAG) system for processing and querying course
 - Local LLM integration using Ollama
 - SOLID principles implementation
 - Comprehensive testing suite
+- Both web interface and terminal-based querying
 
 ## Project Structure
 
@@ -78,17 +79,51 @@ python setup.py
 
 ## Usage
 
-1. Place your course notes in the `data/raw_notes` directory
-
-2. Run the example script to test the system:
+### Web Interface
+1. Start the Streamlit app:
 ```bash
-python example.py
+streamlit run app.py
 ```
 
-3. Run the tests to verify functionality:
+2. Follow the web interface instructions to:
+   - Initialize the RAG system
+   - Upload and process documents
+   - Perform text or image searches
+
+### Terminal Interface
+1. Process documents (if not already done):
 ```bash
-pytest tests/
+python query_terminal.py "your query" --process-docs
 ```
+
+2. Query the system:
+```bash
+python query_terminal.py "your query"
+```
+
+3. Query with custom data directory:
+```bash
+python query_terminal.py "your query" --data-dir /path/to/documents
+```
+
+Example queries:
+```bash
+# Process documents and query
+python query_terminal.py "What are the advantages of B+ trees?" --process-docs
+
+# Query existing documents
+python query_terminal.py "Explain the concept of RAG"
+
+# Query with custom directory
+python query_terminal.py "What is the main topic of these notes?" --data-dir ./my_notes
+```
+
+The terminal interface provides:
+- Command-line argument support
+- Document processing option
+- Custom data directory specification
+- Formatted output with response and relevant contexts
+- Error handling and status messages
 
 ## Development
 
