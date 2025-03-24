@@ -1,53 +1,56 @@
 import os
-from typing import List, Dict, Any, Optional, Union
+from typing import List, Dict, Any, Optional
 from pathlib import Path
+import asyncio
+import streamlit as st
+from PIL import Image
+import io
 
 from ingestion.data_loader import DataLoader
 from preprocessing.chunker import TokenChunker, ChunkingPipeline
 from embeddings.base_embedder import BaseEmbedder
-from database.base_db import BaseVectorDB
+from database.chroma_db import ChromaDB
 from query.query_handler import VectorQueryHandler, QueryPipeline
 from llm.llm_interface import OllamaLLM, LLMPipeline
+from embeddings.sentence_transformer import SentenceTransformerEmbedder
 from embeddings.multimodal_embedder import MultiModalEmbedder
-from database.qdrant_db import QdrantDB
-from ingestion.multimodal_loader import MultiModalPDFLoader, MultiModalDocument
+from ingestion.multimodal_loader import PDFLoader, Document
 from query.hybrid_search import HybridSearch
 from llm.prompt_generator import PromptGenerator
-import base64
-from PIL import Image
-import io
 
 class RAGSystem:
-    """Multimodal RAG system that handles both text and image queries."""
+    """RAG system that handles document ingestion and querying."""
     
     def __init__(
         self,
-        embedder: MultiModalEmbedder = None,
-        vector_db: QdrantDB = None,
-        document_loader: MultiModalPDFLoader = None,
+        embedder: Optional[BaseEmbedder] = None,
+        vector_db: ChromaDB = None,
+        document_loader: PDFLoader = None,
         llm: OllamaLLM = None,
         prompt_generator: PromptGenerator = None,
         semantic_weight: float = 0.7,
         keyword_weight: float = 0.3,
-        top_k: int = 5
+        top_k: int = 5,
+        temperature: float = 0.7
     ):
         """Initialize the RAG system.
         
         Args:
-            embedder: Multimodal embedder instance
+            embedder: Text/image embedder instance (defaults to MultiModalEmbedder)
             vector_db: Vector database instance
             document_loader: Document loader instance
             llm: LLM interface instance
             prompt_generator: Prompt generator instance
-            semantic_weight: Weight for semantic search
-            keyword_weight: Weight for keyword search
+            semantic_weight: Weight for semantic search (default: 0.7)
+            keyword_weight: Weight for keyword search (default: 0.3)
             top_k: Number of contexts to retrieve
+            temperature: Temperature for LLM response generation (default: 0.7)
         """
         # Initialize components with defaults if not provided
         self.embedder = embedder or MultiModalEmbedder()
-        self.vector_db = vector_db or QdrantDB()
-        self.document_loader = document_loader or MultiModalPDFLoader()
-        self.llm = llm or OllamaLLM("qwen:7b")
+        self.vector_db = vector_db or ChromaDB()
+        self.document_loader = document_loader or PDFLoader()
+        self.llm = llm or OllamaLLM("qwen:7b", temperature=temperature)
         self.prompt_generator = prompt_generator or PromptGenerator()
         
         # Initialize hybrid search
@@ -60,83 +63,56 @@ class RAGSystem:
         self.top_k = top_k
         self.documents = []
 
-    def ingest_documents(self, directory_path: str) -> None:
+    def ingest_documents(self, data_dir: str) -> None:
         """Ingest documents from a directory.
         
         Args:
-            directory_path: Path to directory containing documents
+            data_dir: Directory containing documents to ingest
         """
         # Load documents
-        documents = self.document_loader.load_directory(directory_path)
-        self.documents = documents
+        self.documents = self.document_loader.load_directory(data_dir)
         
-        # Process text and images
-        for doc_idx, doc in enumerate(documents):
-            # Process text
-            text_embedding = self.embedder.embed_text(doc.text)
-            self.vector_db.add_vectors(
-                vectors=[text_embedding],
-                metadata=[{
-                    'text': doc.text,
-                    'source': doc.metadata.get('source'),
-                    'page': doc.metadata.get('page'),
-                    'doc_idx': doc_idx,
-                    'type': 'text'
-                }],
-                modality="text"
-            )
-            
-            # Process images
-            for img in doc.images:
-                image_data = img['data']
-                image_embedding = self.embedder.embed_image(image_data)
-                
-                # Add image vector
-                self.vector_db.add_vectors(
-                    vectors=[image_embedding],
-                    metadata=[{
-                        'image': image_data,
-                        'bbox': img.get('bbox'),
-                        'page': img.get('page'),
-                        'source': doc.metadata.get('source'),
-                        'doc_idx': doc_idx,
-                        'type': 'image'
-                    }],
-                    modality="image"
-                )
+        # Process documents
+        texts = [doc.text for doc in self.documents]
+        embeddings = self.embedder.embed_texts(texts)
         
-        # Index documents for keyword search
-        self.search.index_documents([
-            {'text': doc.text, 'doc_idx': idx}
-            for idx, doc in enumerate(documents)
-        ])
+        # Prepare metadata
+        metadata = [
+            {
+                'text': doc.text,
+                'source': doc.metadata.get('source'),
+                'page': doc.metadata.get('page'),
+                'doc_idx': idx,
+                'type': 'text'
+            }
+            for idx, doc in enumerate(self.documents)
+        ]
+        
+        # Add to vector database
+        self.vector_db.add_vectors(embeddings, metadata)
+        
+        # Index documents for hybrid search
+        self.search.index_documents(metadata)
 
-    def query(
-        self,
-        query: str,
-        image_query: Optional[Union[str, bytes, Image.Image]] = None,
-        modality: str = "text"
-    ) -> Dict[str, Any]:
-        """Process a query and return relevant results.
+    def query(self, query: str, query_image: Optional[Image.Image] = None) -> Dict[str, Any]:
+        """Process a query and generate a response.
         
         Args:
-            query: Text query
-            image_query: Optional image query
-            modality: Type of query ('text' or 'image')
+            query: User query string
+            query_image: Optional image for image-based search
             
         Returns:
-            Dictionary containing:
-            - response: Generated response
-            - sources: List of sources used
-            - images: List of relevant images
+            Dictionary containing response and metadata
         """
-        # Get query embeddings
-        if modality == "text":
-            query_embedding = self.embedder.embed_text(query)
+        # Get query embedding based on modality
+        if query_image is not None:
+            query_embedding = self.embedder.embed_image(query_image)
+            modality = "image"
         else:
-            query_embedding = self.embedder.embed_image(image_query)
+            query_embedding = self.embedder.embed_text(query)
+            modality = "text"
         
-        # Search for relevant contexts
+        # Perform hybrid search
         results = self.search.search(
             query=query,
             query_embedding=query_embedding,
@@ -144,57 +120,82 @@ class RAGSystem:
             modality=modality
         )
         
-        # Separate text and image contexts
-        text_contexts = []
-        image_contexts = []
-        
-        for result in results:
-            if result['metadata'].get('type') == 'text':
-                text_contexts.append(result)
-            else:
-                image_contexts.append(result)
-        
-        # Generate augmented prompt
-        prompt_data = self.prompt_generator.generate_prompt(
-            query=query,
-            text_contexts=text_contexts,
-            image_contexts=image_contexts
-        )
-        
         # Generate response using LLM
-        response = self.llm.generate_response(
-            prompt=prompt_data['prompt'],
-            images=prompt_data['images']
-        )
+        response = self.llm.generate_response(query, results)
         
-        # Format response with citations
-        formatted_response = self.prompt_generator.format_response(
-            response=response,
-            sources=results
-        )
-        
-        return formatted_response
+        return {
+            'response': response,
+            'contexts': results,
+            'modality': modality
+        }
 
-    def clear(self) -> None:
-        """Clear all data from the system."""
-        self.vector_db.clear()
-        self.documents = []
-
-def main():
-    """Main function to demonstrate RAG system usage."""
-    # Initialize components (implementations will be added later)
-    # embedder = SentenceTransformerEmbedder()
-    # vector_db = ChromaDB()
+def setup_streamlit():
+    """Set up Streamlit interface."""
+    st.set_page_config(
+        page_title="RAG System",
+        page_icon="📚",
+        layout="wide"
+    )
+    
+    st.title("RAG System Interface")
     
     # Initialize RAG system
-    # rag_system = RAGSystem(embedder, vector_db)
+    if 'rag_system' not in st.session_state:
+        st.session_state.rag_system = RAGSystem()
     
-    # Example usage
-    # rag_system.ingest_documents("data/raw_notes")
-    # result = rag_system.query("What is the main topic of the course?")
-    # print(result['response'])
-    # print("\nRelevant context:")
-    # print(result['formatted_results'])
+    # File uploader
+    uploaded_files = st.file_uploader(
+        "Upload PDF documents",
+        type=['pdf'],
+        accept_multiple_files=True
+    )
+    
+    if uploaded_files:
+        # Create temporary directory for uploaded files
+        temp_dir = "temp_uploads"
+        os.makedirs(temp_dir, exist_ok=True)
+        
+        try:
+            # Save uploaded files
+            for file in uploaded_files:
+                file_path = os.path.join(temp_dir, file.name)
+                with open(file_path, "wb") as f:
+                    f.write(file.getbuffer())
+            
+            # Ingest documents
+            st.session_state.rag_system.ingest_documents(temp_dir)
+            st.success("Documents ingested successfully!")
+            
+        finally:
+            # Clean up temporary files
+            for file in os.listdir(temp_dir):
+                os.remove(os.path.join(temp_dir, file))
+            os.rmdir(temp_dir)
+    
+    # Query interface
+    query = st.text_input("Enter your query:")
+    if query:
+        with st.spinner("Processing query..."):
+            result = st.session_state.rag_system.query(query)
+            
+            # Display response
+            st.subheader("Response")
+            st.write(result['response'])
+            
+            # Display contexts
+            st.subheader("Relevant Contexts")
+            for context in result['contexts']:
+                st.text_area(
+                    f"Context (Score: {context.get('combined_score', 'N/A'):.3f})",
+                    context['metadata']['text'],
+                    height=100
+                )
+
+def main():
+    """Main function to run the RAG system."""
+    # Set up Streamlit interface
+    setup_streamlit()
 
 if __name__ == "__main__":
+    # Run the Streamlit app
     main() 

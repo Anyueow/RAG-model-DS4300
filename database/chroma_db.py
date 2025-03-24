@@ -3,6 +3,8 @@ import numpy as np
 import chromadb
 from chromadb.config import Settings
 from .base_db import BaseVectorDB
+import time
+import random
 
 class ChromaDB(BaseVectorDB):
     """ChromaDB adapter implementation with multimodal support."""
@@ -40,8 +42,9 @@ class ChromaDB(BaseVectorDB):
             metadata: Optional list of metadata dictionaries for each vector
             modality: Type of vectors ('text' or 'image')
         """
-        # Generate IDs for the vectors
-        ids = [f"{modality}_{i}" for i in range(len(vectors))]
+        # Generate unique IDs using timestamp and random numbers
+        ids = [f"{modality}_{int(time.time())}_{random.randint(1000, 9999)}_{i}" 
+               for i in range(len(vectors))]
         
         # Convert vectors to list format for ChromaDB
         vectors_list = [v.tolist() for v in vectors]

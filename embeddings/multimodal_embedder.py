@@ -9,6 +9,7 @@ import io
 import base64
 import logging
 from typing import Optional
+import os
 
 class MultiModalEmbedder(BaseEmbedder):
     """Multimodal embedder that handles both text and image embeddings using CLIP and SentenceTransformer."""
@@ -28,6 +29,9 @@ class MultiModalEmbedder(BaseEmbedder):
             device: Device to run the models on (auto-detected if None)
             max_retries: Maximum number of retries for model loading
         """
+        # Set environment variable to disable tokenizer parallelism warnings
+        os.environ["TOKENIZERS_PARALLELISM"] = "false"
+        
         self.device = self._get_device(device)
         self.max_retries = max_retries
         

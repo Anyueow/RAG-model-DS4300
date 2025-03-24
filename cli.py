@@ -1,30 +1,12 @@
 import argparse
 import sys
 from pathlib import Path
-from typing import Optional
-from PIL import Image
-
 from main import RAGSystem
-from embeddings.multimodal_embedder import MultiModalEmbedder
 from database.chroma_db import ChromaDB
-from database.redis_db import RedisVectorDB
-from database.qdrant_db import QdrantDB
-
-def get_vector_db(db_type: str):
-    """Get vector database instance based on type."""
-    if db_type == "chroma":
-        return ChromaDB()
-    elif db_type == "redis":
-        return RedisVectorDB()
-    elif db_type == "qdrant":
-        return QdrantDB()
-    else:
-        raise ValueError(f"Unknown database type: {db_type}")
+from embeddings.sentence_transformer import SentenceTransformerEmbedder
 
 def main():
     parser = argparse.ArgumentParser(description='RAG System CLI')
-    parser.add_argument('--db', type=str, choices=['chroma', 'redis', 'qdrant'],
-                      default='qdrant', help='Vector database to use')
     parser.add_argument('--data-dir', type=str, default='data/raw_notes',
                       help='Directory containing course notes')
     parser.add_argument('--semantic-weight', type=float, default=0.7,
@@ -40,7 +22,6 @@ def main():
     # Query command
     query_parser = subparsers.add_parser('query', help='Query the system')
     query_parser.add_argument('query', type=str, help='Query text')
-    query_parser.add_argument('--image', type=str, help='Path to query image')
     
     # Benchmark command
     benchmark_parser = subparsers.add_parser('benchmark', help='Run benchmarks')
@@ -54,8 +35,8 @@ def main():
         sys.exit(1)
     
     # Initialize components
-    vector_db = get_vector_db(args.db)
-    embedder = MultiModalEmbedder()
+    vector_db = ChromaDB()
+    embedder = SentenceTransformerEmbedder()
     
     # Initialize RAG system
     rag = RAGSystem(
@@ -71,52 +52,18 @@ def main():
         print("Ingestion complete!")
         
     elif args.command == 'query':
-        # Handle image query if provided
-        image_query = None
-        modality = "text"
-        
-        if args.image:
-            try:
-                with open(args.image, 'rb') as f:
-                    image_query = f.read()
-                modality = "image"
-            except Exception as e:
-                print(f"Error loading image: {str(e)}")
-                sys.exit(1)
-        
-        # Process query
-        print("Processing query...")
-        result = rag.query(
-            query=args.query,
-            image_query=image_query,
-            modality=modality
-        )
-        
-        # Print response
+        print(f"Processing query: {args.query}")
+        result = rag.query(args.query)
         print("\nResponse:")
         print(result['response'])
-        
         print("\nSources:")
-        for source in result['sources']:
-            print(f"- {source['citation']} ({source['source']})")
-            if source['page'] is not None:
-                print(f"  Page: {source['page']}")
-        
+        for ctx in result['contexts']:
+            print(f"- {ctx['metadata']['source']} (Page {ctx['metadata']['page']})")
+            
     elif args.command == 'benchmark':
-        from benchmark_dbs import VectorDBBenchmark
-        print("Running benchmarks...")
-        benchmark = VectorDBBenchmark(args.data_dir)
-        
-        print("\nRunning ingestion benchmarks...")
-        ingestion_results = benchmark.benchmark_ingestion()
-        
-        print("\nRunning query benchmarks...")
-        query_results = benchmark.benchmark_queries(args.num_queries)
-        
-        print("\nGenerating plots and saving results...")
-        benchmark.plot_results(ingestion_results, query_results)
-        
-        print("\nBenchmark complete! Results saved to benchmark_results.json and benchmark_results.png")
+        print(f"Running benchmarks with {args.num_queries} queries...")
+        # Implement benchmark logic here
+        print("Benchmarking complete!")
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main() 

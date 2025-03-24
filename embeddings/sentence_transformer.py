@@ -15,6 +15,17 @@ class SentenceTransformerEmbedder(BaseEmbedder):
         self.model = SentenceTransformer(model_name)
         self.model_name = model_name
     
+    def embed_text(self, text: str) -> np.ndarray:
+        """Convert a single text to embedding.
+        
+        Args:
+            text: Text string to embed
+            
+        Returns:
+            numpy.ndarray: Text embedding
+        """
+        return self.model.encode(text, convert_to_numpy=True)
+    
     def embed_texts(self, texts: Union[str, List[str]]) -> np.ndarray:
         """Convert text(s) to embeddings using SentenceTransformer.
         

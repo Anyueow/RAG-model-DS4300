@@ -26,13 +26,15 @@ class BaseLLM(ABC):
 class OllamaLLM(BaseLLM):
     """Interface for Ollama-based local LLMs."""
     
-    def __init__(self, model_name:str):
+    def __init__(self, model_name: str, temperature: float = 0.7):
         """Initialize the LLM interface.
         
         Args:
             model_name: Name of the Ollama model to use
+            temperature: Temperature for response generation (default: 0.7)
         """
         self.model_name = model_name
+        self.temperature = temperature
     
     def generate_response(self, 
                          prompt: str, 
@@ -85,10 +87,13 @@ class OllamaLLM(BaseLLM):
                 'content': full_prompt
             })
             
-            # Generate response
+            # Generate response with temperature
             response = ollama.chat(
                 model=self.model_name,
-                messages=messages
+                messages=messages,
+                options={
+                    'temperature': self.temperature
+                }
             )
             return response['message']['content']
             
@@ -114,7 +119,9 @@ class OllamaLLM(BaseLLM):
         # Add context to the prompt
         context_text = "\n\nRelevant context:\n"
         for i, chunk in enumerate(context, 1):
-            context_text += f"\n{i}. {chunk['text']}"
+            # Get text from metadata if available, otherwise use empty string
+            text = chunk.get('metadata', {}).get('text', '')
+            context_text += f"\n{i}. {text}"
         
         return f"{prompt}{context_text}"
 
