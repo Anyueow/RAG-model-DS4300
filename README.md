@@ -1,103 +1,119 @@
 # RAG Model for Course Notes
 
-This project implements a Retrieval-Augmented Generation (RAG) system for processing and querying course notes. The system uses local LLMs and vector databases to provide accurate, context-aware responses to questions about course content.
+A Retrieval-Augmented Generation (RAG) system for processing and querying course notes using local LLMs.
 
 ## Features
 
-- Document ingestion from various formats (PDF, text)
-- Flexible text chunking strategies
-- Multiple embedding model support
-- Vector database integration (Redis, Chroma)
-- Local LLM integration via Ollama
-- Modular architecture following SOLID principles
+- Document ingestion from PDF files
+- Text chunking with configurable strategies
+- Vector embeddings using SentenceTransformer
+- Vector database support (ChromaDB and Redis)
+- Local LLM integration using Ollama
+- SOLID principles implementation
+- Comprehensive testing suite
 
 ## Project Structure
 
 ```
-project/
+rag-model/
 ├── data/
-│   └── raw_notes/          # Place course notes here
-├── ingestion/
-│   └── data_loader.py      # Document loading and preprocessing
-├── preprocessing/
-│   └── chunker.py          # Text chunking strategies
+│   └── raw_notes/          # Place your course notes here
+├── database/
+│   ├── base_db.py          # Base vector database interface
+│   ├── chroma_db.py        # ChromaDB implementation
+│   └── redis_db.py         # Redis vector database implementation
 ├── embeddings/
 │   ├── base_embedder.py    # Base embedding interface
-│   └── model_*.py          # Specific embedding model implementations
-├── database/
-│   ├── base_db.py          # Base vector DB interface
-│   └── db_*.py             # Specific DB implementations
-├── query/
-│   └── query_handler.py    # Query processing and retrieval
+│   └── sentence_transformer.py  # SentenceTransformer implementation
+├── ingestion/
+│   └── data_loader.py      # Document loading and processing
 ├── llm/
 │   └── llm_interface.py    # Local LLM integration
-└── main.py                 # Main RAG system implementation
+├── preprocessing/
+│   └── chunker.py          # Text chunking strategies
+├── query/
+│   └── query_handler.py    # Query processing
+├── tests/
+│   └── test_rag.py         # Test suite
+├── main.py                 # Main RAG system implementation
+├── example.py              # Example usage and benchmarking
+├── setup.py               # Setup script
+└── requirements.txt       # Project dependencies
 ```
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd rag-model-ds4300
+git clone https://github.com/yourusername/rag-model.git
+cd rag-model
 ```
 
-2. Create a virtual environment and activate it:
+2. Run the setup script:
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+python setup.py
 ```
 
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+3. Install Ollama:
+   - Visit [Ollama.ai](https://ollama.ai/) to download and install
+   - The setup script will automatically pull the required model
 
-4. Install Ollama and download required models:
-```bash
-# Follow Ollama installation instructions for your OS
-ollama pull llama2
-```
+4. Set up Vector Database (Choose one or both):
+
+   ### Option 1: ChromaDB (Default)
+   - No additional setup required
+   - Data is stored locally in the `chroma_db` directory
+
+   ### Option 2: Redis Vector DB
+   - Install Docker if not already installed
+   - Start Redis container:
+     ```bash
+     # If container doesn't exist:
+     docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
+     
+     # If container exists but is stopped:
+     docker start redis-stack
+     ```
+   - Redis will be available at `localhost:6379`
 
 ## Usage
 
-1. Place your course notes in the `data/raw_notes` directory.
+1. Place your course notes in the `data/raw_notes` directory
 
-2. Initialize and use the RAG system:
-```python
-from main import RAGSystem
-from embeddings.sentence_transformer import SentenceTransformerEmbedder
-from database.chroma_db import ChromaDB
+2. Run the example script to test the system:
+```bash
+python example.py
+```
 
-# Initialize components
-embedder = SentenceTransformerEmbedder()
-vector_db = ChromaDB()
-
-# Create RAG system
-rag_system = RAGSystem(embedder, vector_db)
-
-# Ingest documents
-rag_system.ingest_documents("data/raw_notes")
-
-# Query the system
-result = rag_system.query("What is the main topic of the course?")
-print(result['response'])
+3. Run the tests to verify functionality:
+```bash
+pytest tests/
 ```
 
 ## Development
 
-The project follows SOLID principles and uses abstract base classes to ensure modularity and extensibility. To add new features:
+### Adding New Components
 
-1. Create new implementations of base classes (e.g., new embedding models)
-2. Add new components following the existing patterns
-3. Update the main RAG system to support new features
+1. **New Embedding Model**:
+   - Implement `BaseEmbedder` interface
+   - Add to `embeddings/` directory
 
-## Testing
+2. **New Vector Database**:
+   - Implement `BaseVectorDB` interface
+   - Add to `database/` directory
 
-Run tests using pytest:
-```bash
-pytest tests/
-```
+3. **New Chunking Strategy**:
+   - Implement `BaseChunker` interface
+   - Add to `preprocessing/` directory
+
+4. **New LLM Interface**:
+   - Implement `BaseLLM` interface
+   - Add to `llm/` directory
+
+### Testing
+
+- Run all tests: `pytest tests/`
+- Run specific test: `pytest tests/test_rag.py -k "test_name"`
 
 ## Contributing
 

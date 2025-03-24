@@ -59,8 +59,14 @@ class ChromaDB(BaseVectorDB):
         Returns:
             List of dictionaries containing results and their metadata
         """
-        # Convert query vector to list format
-        query_vector_list = query_vector.tolist()
+        # Convert query vector to list format and ensure correct shape
+        if isinstance(query_vector, np.ndarray):
+            query_vector_list = query_vector.tolist()
+            # Handle case where query_vector has extra nesting
+            if isinstance(query_vector_list[0], list) and isinstance(query_vector_list[0][0], list):
+                query_vector_list = query_vector_list[0][0]
+            elif isinstance(query_vector_list[0], list):
+                query_vector_list = query_vector_list[0]
         
         # Search for similar vectors
         results = self.collection.query(
@@ -97,4 +103,8 @@ class ChromaDB(BaseVectorDB):
     
     def clear(self) -> None:
         """Clear all vectors from the database."""
-        self.collection.delete(where={}) 
+        # ChromaDB requires a where clause with at least one operator
+        # Using a condition that will match all documents
+        self.collection.delete(
+            where={"$and": [{"id": {"$exists": True}}]}
+        ) 
