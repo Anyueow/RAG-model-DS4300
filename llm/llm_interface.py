@@ -35,7 +35,7 @@ class OllamaLLM(BaseLLM):
         """
         self.model_name = model_name
         self.temperature = temperature
-        self.max_query_length = 1000  # Maximum length for user queries
+        self.max_query_length = 1500  # Maximum length for user queries
         self.max_context_chunks = 3   # Maximum number of context chunks to include
     
     def generate_response(self, 
@@ -66,17 +66,10 @@ class OllamaLLM(BaseLLM):
             messages = []
             
             # Enhanced system message with better technical capabilities
-            system_message = """You are an expert assistant with deep knowledge in computer science, algorithms, data structures, and technical topics.
+            system_message = """you're a whiz at balancing AVL trees. 
             You always answer the question provided and then provide an explanation. 
             
-            Key capabilities:
-            1. Technical Expertise: You excel at explaining complex technical concepts, algorithms, and data structures
-            2. Context Integration: When using information from the context, cite the source
-            3. General Knowledge: When context is insufficient, provide detailed technical explanations
-            4. Image Analysis: You can analyze technical diagrams, flowcharts, and code snippets in images
-            5. Language: Always respond in English only
-            
-            When explaining technical concepts:
+
             - Start with the answer to the question
             - Provide step-by-step explanations
             - Use proper technical terminology"""
