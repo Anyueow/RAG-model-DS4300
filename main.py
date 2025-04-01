@@ -6,7 +6,7 @@ import streamlit as st
 from PIL import Image
 import io
 
-from ingestion.data_loader import DataLoader
+from ingestion.data_loader import PDFLoader
 from preprocessing.chunker import TokenChunker, ChunkingPipeline
 from embeddings.base_embedder import BaseEmbedder
 from database.chroma_db import ChromaDB
@@ -14,7 +14,6 @@ from query.query_handler import VectorQueryHandler, QueryPipeline
 from llm.llm_interface import OllamaLLM, LLMPipeline
 from embeddings.sentence_transformer import SentenceTransformerEmbedder
 from embeddings.multimodal_embedder import MultiModalEmbedder
-from ingestion.multimodal_loader import PDFLoader, Document
 from query.hybrid_search import HybridSearch
 from llm.prompt_generator import PromptGenerator
 
