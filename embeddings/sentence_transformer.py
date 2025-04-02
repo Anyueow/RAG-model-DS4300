@@ -27,11 +27,14 @@ class BatchEmbeddings(tuple):
     
     def __len__(self):
         # Return the number of embeddings (rows) from the underlying array.
-        return self[0].shape[0]
+        return super().__getitem__(0).shape[0]
     
     def __getitem__(self, idx):
-        # Allow indexing into the underlying embeddings array.
-        return self[0][idx]
+        # If accessing the tuple directly (embeddings, metrics), use super
+        if isinstance(idx, int) and idx in (0, 1):
+            return super().__getitem__(idx)
+        # Otherwise, access the embeddings array
+        return super().__getitem__(0)[idx]
 
 class SentenceTransformerEmbedder(BaseEmbedder):
     """Embedder using Sentence Transformers."""
