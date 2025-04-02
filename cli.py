@@ -7,7 +7,7 @@ from embeddings.sentence_transformer import SentenceTransformerEmbedder
 
 def main():
     parser = argparse.ArgumentParser(description='RAG System CLI')
-    parser.add_argument('--data-dir', type=str, default='data/raw_notes',
+    parser.add_argument('--data-dir', type=str, default='data',
                       help='Directory containing course notes')
     parser.add_argument('--semantic-weight', type=float, default=0.7,
                       help='Weight for semantic search (0-1)')

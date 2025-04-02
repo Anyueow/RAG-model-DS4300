@@ -1,7 +1,10 @@
+"""Interface for LLM interactions."""
+
 from typing import List, Dict, Any, Optional
 from abc import ABC, abstractmethod
 import ollama
 import base64
+from database.base_db import SearchResult
 
 class BaseLLM(ABC):
     """Abstract base class for LLM interfaces."""
@@ -9,13 +12,13 @@ class BaseLLM(ABC):
     @abstractmethod
     def generate_response(self, 
                          prompt: str, 
-                         context: Optional[List[Dict[str, Any]]] = None,
+                         context: Optional[List[SearchResult]] = None,
                          images: Optional[List[Dict[str, Any]]] = None) -> str:
         """Generate a response using the LLM.
         
         Args:
             prompt: The prompt to send to the LLM
-            context: Optional list of relevant context chunks
+            context: Optional list of relevant search results
             images: Optional list of image data
             
         Returns:
@@ -40,14 +43,14 @@ class OllamaLLM(BaseLLM):
     
     def generate_response(self, 
                          prompt: str, 
-                         context: Optional[List[Dict[str, Any]]] = None,
+                         context: Optional[List[SearchResult]] = None,
                          images: Optional[List[Dict[str, Any]]] = None,
                          use_general_knowledge: bool = True) -> str:
         """Generate a response using the Ollama model.
         
         Args:
             prompt: The prompt to send to the LLM
-            context: Optional list of relevant context chunks
+            context: Optional list of relevant search results
             images: Optional list of image data
             use_general_knowledge: Whether to allow using general knowledge when context is insufficient
             
@@ -156,24 +159,24 @@ class OllamaLLM(BaseLLM):
             print(f"Error generating response: {str(e)}")
             return "I apologize, but I encountered an error while generating the response. Please try again."
     
-    def _format_context(self, context: List[Dict[str, Any]]) -> str:
-        """Format context chunks into a readable string."""
+    def _format_context(self, context: List[SearchResult]) -> str:
+        """Format search results into a readable string."""
         formatted_context = []
-        for idx, chunk in enumerate(context, 1):
-            chunk_text = f"Context {idx}:\n{chunk.get('text', '')}"
-            if 'metadata' in chunk and 'source' in chunk['metadata']:
-                chunk_text += f"\nSource: {chunk['metadata']['source']}"
+        for idx, result in enumerate(context, 1):
+            chunk_text = f"Context {idx}:\n{result.chunk}"
+            if result.metadata and 'source' in result.metadata:
+                chunk_text += f"\nSource: {result.metadata['source']}"
             formatted_context.append(chunk_text)
         return "\n\n".join(formatted_context)
     
     def _construct_prompt(self, 
                          prompt: str, 
-                         context: Optional[List[Dict[str, Any]]] = None) -> str:
+                         context: Optional[List[SearchResult]] = None) -> str:
         """Construct the full prompt with context.
         
         Args:
             prompt: Original prompt
-            context: Optional list of relevant context chunks
+            context: Optional list of relevant search results
             
         Returns:
             Constructed prompt with context
@@ -183,10 +186,10 @@ class OllamaLLM(BaseLLM):
         
         # Add context to the prompt
         context_text = "\n\nRelevant context:\n"
-        for i, chunk in enumerate(context, 1):
-            # Get text from metadata if available, otherwise use empty string
-            text = chunk.get('metadata', {}).get('text', '')
-            context_text += f"\n{i}. {text}"
+        for i, result in enumerate(context, 1):
+            context_text += f"\n{i}. {result.chunk}"
+            if result.metadata and 'source' in result.metadata:
+                context_text += f" (Source: {result.metadata['source']})"
         
         return f"{prompt}{context_text}"
 
@@ -203,12 +206,12 @@ class LLMPipeline:
     
     def generate_response(self, 
                          query: str, 
-                         context: Optional[List[Dict[str, Any]]] = None) -> str:
+                         context: Optional[List[SearchResult]] = None) -> str:
         """Generate a response using the LLM pipeline.
         
         Args:
             query: User query
-            context: Optional list of relevant context chunks
+            context: Optional list of relevant search results
             
         Returns:
             Generated response

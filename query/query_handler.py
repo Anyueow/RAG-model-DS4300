@@ -1,6 +1,6 @@
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from abc import ABC, abstractmethod
-from database.base_db import BaseVectorDB
+from database.base_db import BaseDB
 from embeddings.base_embedder import BaseEmbedder
 
 class BaseQueryHandler(ABC):
@@ -23,7 +23,7 @@ class VectorQueryHandler(BaseQueryHandler):
     """Query handler that uses vector similarity search."""
     
     def __init__(self, 
-                 vector_db: BaseVectorDB,
+                 vector_db: BaseDB,
                  embedder: BaseEmbedder):
         """Initialize the query handler.
         
@@ -55,25 +55,55 @@ class VectorQueryHandler(BaseQueryHandler):
 class QueryPipeline:
     """Pipeline for processing queries and generating responses."""
     
-    def __init__(self, query_handler: BaseQueryHandler):
+    def __init__(self, 
+                 embedder: BaseEmbedder,
+                 vector_db: BaseDB,
+                 llm: Any,
+                 prompt_generator: Any):
         """Initialize the pipeline.
         
         Args:
-            query_handler: Query handler instance
+            embedder: Embedding model instance
+            vector_db: Vector database instance
+            llm: Language model instance
+            prompt_generator: Prompt generator instance
         """
-        self.query_handler = query_handler
+        self.embedder = embedder
+        self.vector_db = vector_db
+        self.llm = llm
+        self.prompt_generator = prompt_generator
+        self.query_handler = VectorQueryHandler(vector_db, embedder)
     
-    def process_query(self, query: str, k: int = 5) -> List[Dict[str, Any]]:
+    def process(self, 
+                query_text: str, 
+                query_image: Optional[bytes] = None,
+                use_general_knowledge: bool = True) -> Dict[str, Any]:
         """Process a query through the pipeline.
         
         Args:
-            query: User query string
-            k: Number of results to return
+            query_text: User query string
+            query_image: Optional image query
+            use_general_knowledge: Whether to use general knowledge
             
         Returns:
-            List of relevant chunks with metadata
+            Dictionary containing response and contexts
         """
-        return self.query_handler.process_query(query, k)
+        # Get relevant contexts
+        contexts = self.query_handler.process_query(query_text)
+        
+        # Generate response using LLM
+        prompt = self.prompt_generator.generate_prompt(
+            query=query_text,
+            contexts=contexts,
+            use_general_knowledge=use_general_knowledge
+        )
+        
+        response = self.llm.generate(prompt)
+        
+        return {
+            'response': response,
+            'contexts': contexts
+        }
     
     def format_results(self, results: List[Dict[str, Any]]) -> str:
         """Format results into a readable string.

@@ -7,28 +7,24 @@ from pathlib import Path
 import json
 
 from database.chroma_db import ChromaDB
-from database.redis_db import RedisVectorDB
+from database.redis_db import RedisDB
 from database.qdrant_db import QdrantDB
-from embeddings.multimodal_embedder import MultiModalEmbedder
-from ingestion.multimodal_loader import MultiModalPDFLoader
 
 class VectorDBBenchmark:
     """Benchmark different vector databases for RAG system."""
     
-    def __init__(self, data_dir: str = "data/raw_notes"):
+    def __init__(self, data_dir: str = "data"):
         """Initialize benchmark with data directory.
         
         Args:
             data_dir: Directory containing PDF documents
         """
         self.data_dir = data_dir
-        self.embedder = MultiModalEmbedder()
-        self.loader = MultiModalPDFLoader()
-        
+      
         # Initialize databases
         self.dbs = {
             "ChromaDB": ChromaDB(),
-            "RedisDB": RedisVectorDB(),
+            "RedisDB": RedisDB(),
             "QdrantDB": QdrantDB()
         }
         
@@ -180,7 +176,7 @@ def main():
     """Run benchmarks and display results."""
     import argparse
     parser = argparse.ArgumentParser(description='Benchmark vector databases for RAG system')
-    parser.add_argument('--data-dir', type=str, default='data/raw_notes',
+    parser.add_argument('--data-dir', type=str, default='data',
                       help='Directory containing PDF documents')
     parser.add_argument('--num-queries', type=int, default=100,
                       help='Number of queries to run for benchmarking')

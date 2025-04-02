@@ -5,9 +5,9 @@ from typing import Dict, Any
 
 from embeddings.sentence_transformer import SentenceTransformerEmbedder
 from database.chroma_db import ChromaDB
-from database.redis_db import RedisVectorDB
+from database.redis_db import RedisDB
 from main import RAGSystem
-
+from embeddings.test_config import EMBEDDING_MODELS
 def benchmark_vector_db(db_name: str, 
                        vector_db: Any, 
                        rag_system: RAGSystem, 
@@ -27,7 +27,7 @@ def benchmark_vector_db(db_name: str,
     
     # Test ingestion time
     start_time = time.time()
-    rag_system.ingest_documents("data/raw_notes")
+    rag_system.ingest_documents("data")
     ingestion_time = time.time() - start_time
     
     # Test query times
@@ -52,7 +52,7 @@ def benchmark_vector_db(db_name: str,
 
 def main():
     # Create data directory if it doesn't exist
-    Path("data/raw_notes").mkdir(parents=True, exist_ok=True)
+    Path("data").mkdir(parents=True, exist_ok=True)
     
     # Test queries
     test_queries = [
@@ -62,9 +62,10 @@ def main():
     ]
     
     # Initialize components
-    embedder = SentenceTransformerEmbedder()
+    model_config = EMBEDDING_MODELS["nomic-embed-text-v2-moe"]
+    embedder = SentenceTransformerEmbedder(model_config)
     chroma_db = ChromaDB()
-    redis_db = RedisVectorDB()
+    redis_db = RedisDB()
     
     # Benchmark ChromaDB
     chroma_rag = RAGSystem(embedder, chroma_db)

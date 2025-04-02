@@ -3,63 +3,121 @@ import numpy as np
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from qdrant_client.http.models import Distance, VectorParams
-from .base_db import BaseVectorDB
+from .base_db import BaseDB, SearchResult
 import uuid
 import os
 import shutil
 
-class QdrantDB(BaseVectorDB):
-    """Qdrant adapter implementation with multimodal support."""
+class QdrantDB(BaseDB):
+    """Qdrant implementation for vector storage."""
     
-    def __init__(self, 
-                 collection_name: str = "course_notes",
-                 path: str = "./qdrant_db"):
-        """Initialize the Qdrant adapter.
+    def __init__(self, collection_name: str = "default"):
+        """Initialize Qdrant.
         
         Args:
-            collection_name: Base name for collections
-            path: Path to store the database
+            collection_name: Name of the collection to use
         """
-        # Clean up any existing lock files
-        lock_file = os.path.join(path, "lock")
-        if os.path.exists(lock_file):
-            try:
-                os.remove(lock_file)
-            except:
-                pass
+        super().__init__()
+        self.client = QdrantClient(":memory:")  # Use in-memory storage for testing
+        self.collection_name = collection_name
         
-        # If path exists and is locked, try to use a temporary directory
-        if os.path.exists(path):
-            try:
-                self.client = QdrantClient(path=path)
-            except RuntimeError:
-                # If locked, use a temporary directory
-                temp_path = os.path.join(os.path.dirname(path), "qdrant_db_temp")
-                if os.path.exists(temp_path):
-                    shutil.rmtree(temp_path)
-                self.client = QdrantClient(path=temp_path)
-        else:
-            self.client = QdrantClient(path=path)
-        
-        # Create separate collections for text and images
-        self.text_collection = f"{collection_name}_text"
-        self.image_collection = f"{collection_name}_images"
-        
-        # Create collections if they don't exist
-        collections = self.client.get_collections().collections
-        collection_names = [c.name for c in collections]
-        
-        if self.text_collection not in collection_names:
-            self.client.create_collection(
-                collection_name=self.text_collection,
-                vectors_config=VectorParams(size=512, distance=Distance.COSINE)
+        # Create collection if it doesn't exist
+        self.client.recreate_collection(
+            collection_name=collection_name,
+            vectors_config=models.VectorParams(
+                size=384,  # Default size, will be updated on first insert
+                distance=models.Distance.COSINE
             )
+        )
+    
+    def index(self, embeddings: List[List[float]], chunks: List[str], 
+              doc_ids: List[str], metadata: Optional[List[Dict[str, Any]]] = None) -> None:
+        """Index embeddings with their associated chunks and metadata.
+        
+        Args:
+            embeddings: List of embedding vectors
+            chunks: List of text chunks
+            doc_ids: List of document IDs
+            metadata: Optional list of metadata dictionaries
+        """
+        super().index(embeddings, chunks, doc_ids, metadata)
+    
+    def _index_impl(self, embeddings: List[List[float]], chunks: List[str], 
+                   doc_ids: List[str], metadata: Optional[List[Dict[str, Any]]] = None) -> None:
+        """Index embeddings using Qdrant.
+        
+        Args:
+            embeddings: List of embedding vectors
+            chunks: List of text chunks
+            doc_ids: List of document IDs
+            metadata: Optional list of metadata dictionaries
+        """
+        # Convert embeddings to numpy arrays if needed
+        embeddings = [np.array(emb) for emb in embeddings]
+        
+        # Prepare points for insertion
+        points = []
+        for i, (emb, chunk, doc_id) in enumerate(zip(embeddings, chunks, doc_ids)):
+            point_metadata = metadata[i] if metadata else {}
+            point_metadata['chunk'] = chunk
             
-        if self.image_collection not in collection_names:
-            self.client.create_collection(
-                collection_name=self.image_collection,
-                vectors_config=VectorParams(size=512, distance=Distance.COSINE)
+            points.append(models.PointStruct(
+                id=i,
+                vector=emb.tolist(),
+                payload={
+                    'doc_id': doc_id,
+                    'metadata': point_metadata
+                }
+            ))
+        
+        # Insert points into collection
+        self.client.upsert(
+            collection_name=self.collection_name,
+            points=points
+        )
+    
+    def _search_impl(self, query_embedding: List[float], k: int) -> List[SearchResult]:
+        """Search for similar vectors using Qdrant.
+        
+        Args:
+            query_embedding: Query vector to search for
+            k: Number of results to return
+            
+        Returns:
+            List of SearchResult objects containing matches
+        """
+        # Convert query to numpy array if needed
+        query_embedding = np.array(query_embedding)
+        
+        # Search collection
+        results = self.client.search(
+            collection_name=self.collection_name,
+            query_vector=query_embedding.tolist(),
+            limit=k
+        )
+        
+        # Convert results to SearchResult objects
+        search_results = []
+        for hit in results:
+            payload = hit.payload
+            search_results.append(SearchResult(
+                doc_id=payload['doc_id'],
+                chunk=payload['metadata']['chunk'],
+                score=float(hit.score),
+                metadata=payload['metadata']
+            ))
+        
+        return search_results
+    
+    def clear(self) -> None:
+        """Clear all data from the collection."""
+        self.client.recreate_collection(
+            collection_name=self.collection_name,
+            vectors_config=models.VectorParams(
+                size=384,  # Default size
+                distance=models.Distance.COSINE
             )
+        )
 
     def add_vectors(
         self,
@@ -99,7 +157,7 @@ class QdrantDB(BaseVectorDB):
         
         # Add points to collection
         self.client.upsert(
-            collection_name=self.text_collection if modality == "text" else self.image_collection,
+            collection_name=self.collection_name,
             points=points
         )
         
@@ -133,7 +191,7 @@ class QdrantDB(BaseVectorDB):
         
         # Perform search
         results = self.client.search(
-            collection_name=self.text_collection if modality == "text" else self.image_collection,
+            collection_name=self.collection_name,
             query_vector=search_query,
             limit=k,
             **search_params
@@ -159,7 +217,7 @@ class QdrantDB(BaseVectorDB):
             ids: List of vector IDs to delete
         """
         self.client.delete(
-            collection_name=self.text_collection if ids[0].startswith("text_") else self.image_collection,
+            collection_name=self.collection_name,
             points_selector=models.PointIdsList(
                 points=ids
             )
@@ -167,40 +225,6 @@ class QdrantDB(BaseVectorDB):
 
     def get_vector_count(self) -> int:
         """Get the total number of vectors in the database."""
-        collection_info = self.client.get_collection(self.text_collection)
+        collection_info = self.client.get_collection(self.collection_name)
         return collection_info.vectors_count
-
-    def clear(self) -> None:
-        """Clear all vectors from the database."""
-        self.client.delete(
-            collection_name=self.text_collection,
-            points_selector=models.FilterSelector(
-                filter=models.Filter(
-                    must=[
-                        models.FieldCondition(
-                            key="doc_idx",
-                            match=models.MatchValue(
-                                value=-1,
-                                is_negative=True
-                            )
-                        )
-                    ]
-                )
-            )
-        )
-        self.client.delete(
-            collection_name=self.image_collection,
-            points_selector=models.FilterSelector(
-                filter=models.Filter(
-                    must=[
-                        models.FieldCondition(
-                            key="doc_idx",
-                            match=models.MatchValue(
-                                value=-1,
-                                is_negative=True
-                            )
-                        )
-                    ]
-                )
-            )
-        ) 
+ 

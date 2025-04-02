@@ -21,7 +21,7 @@ class Document:
         """
         self.text = text
         self.metadata = metadata or {}
-
+    
 
 class BaseDocumentLoader(ABC):
     """Abstract base class for document loaders."""

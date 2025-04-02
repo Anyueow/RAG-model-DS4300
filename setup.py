@@ -49,7 +49,7 @@ def setup_directories():
     """Create necessary directories."""
     print("\nSetting up directories...")
     directories = [
-        "data/raw_notes",
+        "data",
         "chroma_db",
         "tests"
     ]
@@ -102,7 +102,7 @@ def main():
     print("\nSetup completed successfully!")
     print("\nTo get started:")
     print("1. Activate the conda environment: conda activate rag-model")
-    print("2. Place your course notes in the data/raw_notes directory")
+    print("2. Place your course notes in the data directory")
     print("3. Run example.py to test the system")
     print("4. Run tests/test_rag.py to verify functionality")
 
