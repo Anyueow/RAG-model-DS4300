@@ -6,12 +6,12 @@ import sys
 import logging
 import socket
 import subprocess
+import traceback
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 
 # Third-party imports
 import streamlit as st
-from PIL import Image
 import sentence_transformers
 
 # Add the current directory to the path so we can import local modules
@@ -27,7 +27,7 @@ from embeddings.test_config import EMBEDDING_MODELS
 from main import RAGSystem
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 # Check sentence-transformers version
@@ -82,71 +82,56 @@ def check_ollama_status() -> tuple[bool, List[str]]:
 def initialize_rag_system() -> Optional[RAGSystem]:
     """Initialize the RAG system with default settings."""
     try:
+        logger.info("Initializing RAG system...")
+        
         # Use Nomic embedder as default
-        model_config = EMBEDDING_MODELS["nomic-embed-text-v2-moe"]
+        model_config = EMBEDDING_MODELS["nomic-ai/nomic-embed-text-v1.5"]
+        logger.debug(f"Using model config: {model_config}")
+        
         embedder = SentenceTransformerEmbedder(model_config)
+        logger.debug("Created embedder")
+        
+        # Initialize LLM with Mistral
+        llm = OllamaLLM(model_name="qwen:7b", temperature=0.4)
+        logger.debug("Created LLM with Qwen")
         
         # Initialize RAG system with optimized settings
         rag = RAGSystem(
             embedder=embedder,
-            vector_db=ChromaDB(),  # Use persistent storage
+            vector_db=ChromaDB(collection_name="app_collection"),
+            llm=llm,  # Explicitly pass the LLM instance
             semantic_weight=0.8,  # Increased semantic weight for better semantic understanding
             keyword_weight=0.2,   # Reduced keyword weight to focus more on semantic meaning
             top_k=3,              # Reduced number of contexts to focus on most relevant ones
             temperature=0.7,      # Added temperature for more focused responses
             model_config=model_config,  # Pass the model configuration
             chunk_size=512,       # Set chunk size for text chunking
-            chunk_overlap=50      # Set chunk overlap for text chunking
+            chunk_overlap=50,     # Set chunk overlap for text chunking
+            collection_name="app_collection"  # Set collection name for vector DB
         )
+        logger.info("RAG system initialized successfully")
         return rag
     except Exception as e:
         logger.error(f"Error initializing RAG system: {str(e)}")
-        # Add more detailed error information
-        import traceback
-        logger.error(f"Full error traceback: {traceback.format_exc()}")
+        logger.error(f"Full traceback: {traceback.format_exc()}")
         return None
-
-def process_uploaded_files(uploaded_files: List[Any], rag_system: RAGSystem) -> List[str]:
-    """Process uploaded files and return list of processed file names."""
-    processed_files = []
-    temp_dir = "data"
-    os.makedirs(temp_dir, exist_ok=True)
-    
-    try:
-        # Save uploaded files
-        for uploaded_file in uploaded_files:
-            file_path = os.path.join(temp_dir, uploaded_file.name)
-            with open(file_path, "wb") as f:
-                f.write(uploaded_file.getvalue())
-        
-        # Ingest documents
-        rag_system.ingest_documents(temp_dir)
-        processed_files = [f.name for f in uploaded_files]
-        return processed_files
-    except Exception as e:
-        logger.error(f"Error processing documents: {str(e)}")
-        raise
-    finally:
-        # Clean up temporary files
-        if os.path.exists(temp_dir):
-            for file in os.listdir(temp_dir):
-                os.remove(os.path.join(temp_dir, file))
-            os.rmdir(temp_dir)
 
 def process_data_directory(data_dir: str, rag_system: RAGSystem) -> List[str]:
     """Process files from a directory and return list of processed file paths."""
     processed_files = []
     try:
+        logger.info(f"Processing data directory: {data_dir}")
         rag_system.ingest_documents(data_dir)
-        # Add all files to processed list
         for root, _, files in os.walk(data_dir):
             for file in files:
                 if file.endswith('.pdf'):
                     file_path = os.path.join(root, file)
                     processed_files.append(file_path)
+        logger.info(f"Processed {len(processed_files)} files")
         return processed_files
     except Exception as e:
         logger.error(f"Error processing directory: {str(e)}")
+        logger.error(f"Full traceback: {traceback.format_exc()}")
         raise
 
 # Initialize session state
@@ -172,31 +157,27 @@ st.title("RAG Ds4300 Midterm Cheat Sheet")
 with st.sidebar:
     st.header("System Settings")
     
-    # System status
     st.subheader("System Status")
     
-    # Check Redis status
     redis_status = check_redis_status()
     st.write("Redis: ", "✅ Running" if redis_status else "❌ Not Running")
     
-    # Check Ollama status and models
     ollama_status, available_models = check_ollama_status()
     st.write("Ollama: ", "✅ Running" if ollama_status else "❌ Not Running")
     
     if not ollama_status:
         st.error("Please ensure Ollama is running")
     
-    # Initialize/Update RAG system
     if st.button("Initialize/Update RAG System"):
         st.session_state.rag_system = initialize_rag_system()
         if st.session_state.rag_system:
             st.session_state.initialized = True
             st.success("RAG system initialized successfully!")
+        else:
+            st.error("Failed to initialize RAG system. Check logs for details.")
     
-    # Document processing section
     st.header("Document Processing")
     
-    # Process data directory
     if st.button("Process Data Directory"):
         if not st.session_state.initialized:
             st.error("Please initialize the RAG system first!")
@@ -212,140 +193,64 @@ with st.sidebar:
                         st.success(f"Successfully processed documents from {data_dir}")
                     except Exception as e:
                         st.error(f"Error processing documents: {str(e)}")
+                        logger.error(f"Full traceback: {traceback.format_exc()}")
     
-    # Show processed files
     if st.session_state.processed_files:
         st.subheader("Processed Files")
         for file in st.session_state.processed_files:
             st.write(f"- {file}")
-    
-    # Document upload
-    st.header("Document Upload")
-    uploaded_files = st.file_uploader(
-        "Upload PDF documents",
-        type=["pdf"],
-        accept_multiple_files=True
-    )
-    
-    if uploaded_files and st.session_state.rag_system:
-        try:
-            new_processed_files = process_uploaded_files(uploaded_files, st.session_state.rag_system)
-            st.session_state.processed_files.extend(new_processed_files)
-            st.success(f"Successfully ingested {len(uploaded_files)} documents!")
-        except Exception as e:
-            st.error(f"Error processing documents: {str(e)}")
 
-# Search type selection
-search_type = st.radio(
-    "Search Type",
-    ["Text Search", "Image Search"],
-    horizontal=True
+
+st.subheader("Enter your query:")
+query = st.text_area(
+    "Query",
+    height=150,
+    placeholder="multiple line query ftw"
 )
-
-if search_type == "Text Search":
-    # Text search interface
-    st.subheader("Enter your query:")
-    query = st.text_area(
-        "Query",
-        height=150,
-        placeholder="multiple line query ftw"
-    )
-    if st.button("Search"):
-        if not st.session_state.initialized:
-            st.error("Please initialize the RAG system first!")
-        elif not st.session_state.processed_files:
-            st.warning("No documents have been processed yet!")
-        else:
-            with st.spinner("Searching..."):
-                try:
-                    if st.session_state.rag_system is not None:
-                        result = st.session_state.rag_system.query(query)
-                        
-                        if result:
-                            # Display response
-                            st.subheader("Response")
-                            if 'response' in result:
-                                st.write(result['response'])
-                            else:
-                                st.warning("No response generated.")
-                            
-                            # Display contexts
-                            st.subheader("Relevant Contexts")
-                            if 'contexts' in result and result['contexts']:
-                                for idx, context in enumerate(result['contexts'], 1):
-                                    score = context.get('combined_score', 'N/A')
-                                    score_str = f"{score:.3f}" if isinstance(score, float) else str(score)
-                                    with st.expander(f"Context {idx} (Score: {score_str})"):
-                                        if 'text' in context:
-                                            st.write(context['text'])
-                                        if 'metadata' in context:
-                                            if 'source' in context['metadata']:
-                                                st.caption(f"Source: {context['metadata']['source']}")
-                                            if 'page' in context['metadata']:
-                                                st.caption(f"Page: {context['metadata']['page']}")
-                            else:
-                                st.warning("No relevant contexts found.")
-                        else:
-                            st.warning("No results found for your query.")
-                    else:
-                        st.error("RAG system is not initialized. Please reinitialize the system.")
-                        
-                except Exception as e:
-                    logger.error(f"Error searching documents: {str(e)}")
-                    st.error(f"Error searching documents: {str(e)}")
-
-else:
-    # Image search interface
-    uploaded_image = st.file_uploader(
-        "Upload an image to search",
-        type=["jpg", "jpeg", "png"],
-        key="image_uploader"
-    )
-    
-    if uploaded_image and st.session_state.rag_system:
-        try:
-            # Convert uploaded image to PIL Image
-            image = Image.open(uploaded_image)
-            
-            # Display the uploaded image
-            st.image(image, caption="Uploaded Image", use_column_width=True)
-            
-            # Optional text query
-            query = st.text_input("Enter additional text query (optional):")
-            
-            if st.button("Search by Image"):
-                if not st.session_state.initialized:
-                    st.error("Please initialize the RAG system first!")
-                else:
-                    with st.spinner("Searching..."):
-                        try:
-                            result = st.session_state.rag_system.query(
-                                query_text=query or "Find similar images",
-                                query_image=image
-                            )
-                            
-                            # Display response
-                            st.subheader("Response")
+if st.button("Search"):
+    if not st.session_state.initialized:
+        st.error("Please initialize the RAG system first!")
+    elif not st.session_state.processed_files:
+        st.warning("No documents have been processed yet!")
+    else:
+        with st.spinner("Searching..."):
+            try:
+                if st.session_state.rag_system is not None:
+                    logger.info(f"Processing query: {query[:100]}...")
+                    result = st.session_state.rag_system.query(query)
+                    
+                    if result:
+                        st.subheader("Response")
+                        if 'response' in result:
                             st.write(result['response'])
-                            
-                            # Display contexts
-                            st.subheader("Relevant Contexts")
+                        else:
+                            st.warning("No response generated.")
+                            logger.warning("No response in result")
+                        
+                        st.subheader("Relevant Contexts")
+                        if 'contexts' in result and result['contexts']:
                             for idx, context in enumerate(result['contexts'], 1):
-                                with st.expander(f"Context {idx} (Score: {context.get('combined_score', 'N/A'):.3f})"):
-                                    if 'image' in context['metadata']:
-                                        # Convert base64 image to PIL Image and display
-                                        image_data = context['metadata']['image']
-                                        st.image(image_data, caption=f"Similar Image {idx}")
+                                score = context.get('combined_score', 'N/A')
+                                score_str = f"{score:.3f}" if isinstance(score, float) else str(score)
+                                with st.expander(f"Context {idx} (Score: {score_str})"):
                                     if 'text' in context:
                                         st.write(context['text'])
-                                    if 'source' in context['metadata']:
-                                        st.caption(f"Source: {context['metadata']['source']}")
-                                    if 'page' in context['metadata']:
-                                        st.caption(f"Page: {context['metadata']['page']}")
-                        except Exception as e:
-                            logger.error(f"Error searching documents: {str(e)}")
-                            st.error(f"Error searching documents: {str(e)}")
-        except Exception as e:
-            logger.error(f"Error processing image: {str(e)}")
-            st.error(f"Error processing image: {str(e)}")
-
+                                    if 'metadata' in context:
+                                        if 'source' in context['metadata']:
+                                            st.caption(f"Source: {context['metadata']['source']}")
+                                        if 'page' in context['metadata']:
+                                            st.caption(f"Page: {context['metadata']['page']}")
+                        else:
+                            st.warning("No relevant contexts found.")
+                            logger.warning("No contexts in result")
+                    else:
+                        st.warning("No results found for your query.")
+                        logger.warning("No results returned from query")
+                else:
+                    st.error("RAG system is not initialized. Please reinitialize the system.")
+                    logger.error("RAG system is None")
+                    
+            except Exception as e:
+                logger.error(f"Error searching documents: {str(e)}")
+                logger.error(f"Full traceback: {traceback.format_exc()}")
+                st.error(f"Error searching documents: {str(e)}")

@@ -35,13 +35,13 @@ EMBEDDING_MODELS = {
         description="Fast and efficient model for question-answering",
         use_flash_attention=False
     ),
-    "nomic-embed-text-v2-moe": EmbeddingModelConfig(
-        name="nomic-embed-text-v2-moe",
-        model_name="nomic-ai/nomic-embed-text-v2-moe",
+    "nomic-ai/nomic-embed-text-v1.5": EmbeddingModelConfig(
+        name="nomic-ai/nomic-embed-text-v1.5",
+        model_name="nomic-ai/nomic-embed-text-v1.5",
         embedding_dim=768,
         max_length=512,
-        description="State-of-the-art multilingual MoE text embedding model with flexible embedding dimensions",
-        model_type="sentence_transformer",
+        description="State-of-the-art multilingual text embedding model via Ollama",
+        model_type="ollama",
         use_flash_attention=False
     )
 }

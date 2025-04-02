@@ -9,7 +9,7 @@ class EmbedderFactory:
     """Factory class for creating embedder instances."""
     
     _embedders: Dict[str, Type[BaseEmbedder]] = {
-        "sentence_transformer": SentenceTransformerEmbedder
+        "sentence_transformer": SentenceTransformerEmbedder,
     }
     
     @classmethod

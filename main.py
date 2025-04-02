@@ -3,6 +3,7 @@
 from typing import List, Dict, Any, Optional
 from pathlib import Path
 import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from ingestion.data_loader import PDFLoader
 from preprocessing.chunker import TextChunker, ChunkingPipeline, ChunkingConfig
@@ -27,11 +28,12 @@ class RAGSystem:
         prompt_generator: PromptGenerator = None,
         semantic_weight: float = 0.7,
         keyword_weight: float = 0.3,
-        top_k: int = 3,
         temperature: float = 0.7,
         model_config: EmbeddingModelConfig = None,
         chunk_size: int = 512,
-        chunk_overlap: int = 50
+        chunk_overlap: int = 50,
+        collection_name: str = "default",
+        top_k: int = 3
     ):
         """Initialize the RAG system.
         
@@ -43,19 +45,21 @@ class RAGSystem:
             prompt_generator: Prompt generator instance
             semantic_weight: Weight for semantic search
             keyword_weight: Weight for keyword search
-            top_k: Number of results to return
             temperature: Temperature for response generation
             model_config: Configuration for the embedding model
             chunk_size: Size of text chunks for processing
             chunk_overlap: Overlap between chunks
+            collection_name: Name of the collection in vector DB
+            top_k: Number of results to return
         """
         # Initialize components with defaults if not provided
-        self.model_config = model_config or EMBEDDING_MODELS["nomic-embed-text-v2-moe"]
+        self.model_config = model_config or EMBEDDING_MODELS["nomic-ai/nomic-embed-text-v1.5"]
         self.embedder = embedder or SentenceTransformerEmbedder(self.model_config)
-        self.vector_db = vector_db or ChromaDB(persist_directory="chroma_db")
+        self.vector_db = vector_db or ChromaDB(collection_name=collection_name)
         self.document_loader = document_loader or PDFLoader()
-        self.llm = llm or OllamaLLM(model_name="qwen:7b", temperature=temperature)
+        self.llm = llm or OllamaLLM(model_name="mistral:7b", temperature=temperature)
         self.prompt_generator = prompt_generator or PromptGenerator()
+        self.top_k = top_k
         
         # Initialize chunking pipeline with provided parameters
         chunking_config = ChunkingConfig(
@@ -85,6 +89,8 @@ class RAGSystem:
         
         self.documents = []
         self.query_cache = {}  # Cache for query results
+        self.embedding_cache = {}  # Cache for embeddings
+        self.context_cache = {}  # Cache for contexts
 
     def ingest_documents(self, data_dir: str) -> None:
         """Ingest documents from a directory.
@@ -98,63 +104,66 @@ class RAGSystem:
         if os.path.exists(data_dir):
             documents.extend(self.document_loader.load_directory(data_dir))
             
-            
         # Validate documents
         if not documents:
             raise ValueError(f"No documents found in {data_dir}")
             
         self.documents = documents
         
-        # Process documents in chunks for better memory management
+        # Process documents in parallel chunks for better memory management
         chunk_size = 10  # Process 10 documents at a time
-        for i in range(0, len(self.documents), chunk_size):
-            chunk = self.documents[i:i + chunk_size]
-            
-            # Process each document through the chunking pipeline
+        
+        def process_document_chunk(chunk):
             chunked_texts = []
-            for doc in chunk:
+            doc_ids = []
+            metadata = []
+            
+            for doc_idx, doc in enumerate(chunk):
                 if doc is None or not doc.text:
                     continue
                     
                 try:
-                    chunks = self.chunking_pipeline.process(doc.text)
-                    if chunks:  # Only add if we got valid chunks
-                        chunked_texts.extend(chunks)
+                    # Get chunks for this document
+                    doc_chunks = self.chunking_pipeline.process(doc.text)
+                    if doc_chunks:  # Only add if we got valid chunks
+                        # Add chunks and their metadata
+                        for chunk_idx, chunk_data in enumerate(doc_chunks):
+                            chunked_texts.append(chunk_data['text'])
+                            doc_ids.append(f"doc_{doc_idx}_{chunk_idx}")
+                            metadata.append({
+                                'text': chunk_data['text'],
+                                'source': doc.metadata.get('source'),
+                                'page': doc.metadata.get('page'),
+                                'doc_idx': doc_idx,
+                                'chunk_idx': chunk_idx,
+                                'type': 'text'
+                            })
                 except Exception as e:
                     print(f"Error processing document: {str(e)}")
                     continue
             
-            if chunked_texts:  # Only proceed if we have chunks
-                # Generate embeddings for the chunks
-                embeddings = self.embedder.embed_batch(chunked_texts)
-                
-                # Prepare metadata for the chunks
-                metadata = []
-                for idx, doc in enumerate(chunk):
-                    if doc is None or not doc.text:
-                        continue
+            return chunked_texts, doc_ids, metadata
+            
+        # Process documents in parallel
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            futures = []
+            for i in range(0, len(self.documents), chunk_size):
+                chunk = self.documents[i:i + chunk_size]
+                futures.append(executor.submit(process_document_chunk, chunk))
+            
+            # Collect results
+            for future in as_completed(futures):
+                try:
+                    chunked_texts, doc_ids, metadata = future.result()
+                    if chunked_texts:  # Only proceed if we have chunks
+                        # Generate embeddings for the chunks
+                        embeddings, _ = self.embedder.embed_batch(chunked_texts)
                         
-                    try:
-                        for chunk_idx, chunk_text in enumerate(self.chunking_pipeline.process(doc.text)):
-                            metadata.append({
-                                'text': chunk_text,
-                                'source': doc.metadata.get('source'),
-                                'page': doc.metadata.get('page'),
-                                'doc_idx': idx + i,
-                                'chunk_idx': chunk_idx,
-                                'type': 'text'
-                            })
-                    except Exception as e:
-                        print(f"Error processing document metadata: {str(e)}")
-                        continue
-                
-                if metadata:  # Only proceed if we have valid metadata
-                    # Generate unique IDs for chunks
-                    doc_ids = [f"doc_{i}_{j}" for i in range(i, i + len(chunk)) 
-                              for j in range(len(self.chunking_pipeline.process(chunk[i-i].text)))]
-                    
-                    # Add chunks to vector database
-                    self.vector_db.index(embeddings, chunked_texts, doc_ids, metadata)
+                        # Add chunks to vector database
+                        self.vector_db.index(embeddings, chunked_texts, doc_ids, metadata)
+                except Exception as e:
+                    print(f"Error processing chunk: {str(e)}")
+                    continue
         
         # Index documents for hybrid search
         valid_documents = []
@@ -195,6 +204,22 @@ class RAGSystem:
         cache_key = f"{query_text}_{query_image is not None}_{use_general_knowledge}"
         if cache_key in self.query_cache:
             return self.query_cache[cache_key]
+        
+        # Check embedding cache
+        if query_text in self.embedding_cache:
+            query_embedding = self.embedding_cache[query_text]
+        else:
+            query_embedding, _ = self.embedder.embed_text(query_text)
+            self.embedding_cache[query_text] = query_embedding
+        
+        # Check context cache
+        context_cache_key = f"{query_text}_{self.top_k}"
+        if context_cache_key in self.context_cache:
+            contexts = self.context_cache[context_cache_key]
+        else:
+            # Get contexts from vector DB
+            contexts = self.vector_db.search(query_embedding, k=self.top_k)
+            self.context_cache[context_cache_key] = contexts
         
         # Process query through the query pipeline
         result = self.query_pipeline.process(

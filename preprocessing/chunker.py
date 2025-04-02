@@ -82,14 +82,14 @@ class ChunkingPipeline:
     def __init__(self, chunker: TextChunker):
         self.chunker = chunker
     
-    def process(self, text: str) -> List[str]:
+    def process(self, text: str) -> List[Dict[str, Any]]:
         """Process text through the chunker.
         
         Args:
             text: Text to be chunked
             
         Returns:
-            List of text chunks
+            List of chunks with text and metadata
         """
         if not text or not text.strip():
             return []
@@ -102,10 +102,7 @@ class ChunkingPipeline:
             }
             
             # Get chunks from the chunker
-            chunks = self.chunker.chunk_document(document)
-            
-            # Extract just the text from the chunks
-            return [chunk["text"] for chunk in chunks]
+            return self.chunker.chunk_document(document)
         except Exception as e:
             print(f"Error processing text: {e}")
             return []

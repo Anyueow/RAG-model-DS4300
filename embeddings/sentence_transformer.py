@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 from .base_embedder import BaseEmbedder
 from .test_config import EmbeddingModelConfig
+import psutil
 
 # Load environment variables
 load_dotenv()
@@ -135,32 +136,62 @@ class SentenceTransformerEmbedder(BaseEmbedder):
         }
         return embedding, metrics
     
-    def embed_batch(self, texts: List[str], is_query: bool = False) -> BatchEmbeddings:
-        """Embed a batch of texts with metrics.
+    def _normalize_embeddings(self, embeddings: np.ndarray) -> np.ndarray:
+        """Normalize embeddings using L2 norm.
         
         Args:
-            texts: List of texts to embed.
-            is_query: Whether these are queries or documents.
+            embeddings: NumPy array of embeddings
             
         Returns:
-            A BatchEmbeddings object that supports both tuple unpacking 
-            (returning (embeddings, metrics)) and behaves like the embeddings array.
+            Normalized embeddings array
         """
-        start_time = time.time()
-        formatted_texts = [self._format_text(text, is_query) for text in texts]
-        embeddings = self.model.encode(formatted_texts, convert_to_numpy=True)
-        # Normalize embeddings row-wise.
+        # Calculate L2 norms
         norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
-        norms[norms == 0] = 1  # Avoid division by zero.
-        embeddings = embeddings / norms
+        
+        # Avoid division by zero
+        norms[norms == 0] = 1
+        
+        # Normalize embeddings
+        return embeddings / norms
+
+    def embed_batch(self, texts: List[str], is_query: bool = False) -> Tuple[np.ndarray, Dict[str, Any]]:
+        """Embed a batch of texts.
+        
+        Args:
+            texts: List of texts to embed
+            is_query: Whether these are queries or documents
+            
+        Returns:
+            Tuple containing:
+            - embeddings: NumPy array of shape (n, embedding_dim)
+            - metrics: Dictionary of performance metrics
+        """
+        # Track time and memory
+        start_time = time.time()
+        start_memory = psutil.Process().memory_info().rss
+        
+        # Format texts if needed
+        if is_query:
+            texts = [self._format_text(text, is_query) for text in texts]
+        
+        # Generate embeddings
+        embeddings = self.model.encode(texts, convert_to_numpy=True)
+        
+        # Normalize embeddings
+        embeddings = self._normalize_embeddings(embeddings)
+        
+        # Calculate metrics
         end_time = time.time()
+        end_memory = psutil.Process().memory_info().rss
+        
         metrics = {
-            "time_taken": end_time - start_time,
-            "memory_used": 0,
-            "num_texts": len(texts),
-            "vector_dimension": embeddings.shape[1]
+            'time_taken': end_time - start_time,
+            'memory_used': end_memory - start_memory,
+            'num_texts': len(texts),
+            'vector_dimension': embeddings.shape[1]
         }
-        return BatchEmbeddings(embeddings, metrics)
+        
+        return embeddings, metrics
     
     def embed_chunks(self, chunks: List[Dict[str, Any]], is_query: bool = False) -> List[Dict[str, Any]]:
         """Embed a list of text chunks.
@@ -170,18 +201,32 @@ class SentenceTransformerEmbedder(BaseEmbedder):
             is_query: Whether these are queries or documents.
             
         Returns:
-            List of chunks with added embeddings and embedding_metrics.
+            List of chunks with added embeddings and metrics, preserving original metadata.
+            Each chunk will have:
+            - text: Original chunk text
+            - metadata: Original document metadata
+            - chunk_id: Original chunk ID
+            - token_count: Original token count
+            - embedding: Vector embedding of the text
+            - metrics: Embedding performance metrics
         """
         # Extract texts from chunks.
         texts = [chunk['text'] for chunk in chunks]
         batch_result = self.embed_batch(texts, is_query)
         embeddings = batch_result[0]  # Underlying NumPy array.
         batch_metrics = batch_result[1]
+        
+        # Add embeddings and metrics to chunks while preserving metadata
         for i, chunk in enumerate(chunks):
+            # Preserve all existing fields (text, metadata, chunk_id, token_count)
             chunk['embedding'] = embeddings[i].tolist()
-            chunk['embedding_metrics'] = {
+            chunk['metrics'] = {
                 'time_taken': batch_metrics.get('time_taken', 0) / len(chunks),
                 'memory_used': batch_metrics.get('memory_used', 0) / len(chunks),
                 'vector_dimension': batch_metrics['vector_dimension']
             }
+            # Ensure metadata exists
+            if 'metadata' not in chunk:
+                chunk['metadata'] = {}
+        
         return chunks 

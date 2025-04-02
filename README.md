@@ -1,163 +1,127 @@
-# RAG Model for Course Notes
+# RAG System for DS4300 Midterm Cheat Sheet
 
-A Retrieval-Augmented Generation (RAG) system for processing and querying course notes using local LLMs.
+A Retrieval-Augmented Generation (RAG) system built for DS4300 Midterm preparation, featuring a Streamlit-based user interface and multiple embedding model support.
 
-## Features
+## Prerequisites
 
-- Document ingestion from PDF files
-- Text chunking with configurable strategies
-- Vector embeddings using SentenceTransformer
-- Vector database support (ChromaDB and Redis)
-- Local LLM integration using Ollama
-- SOLID principles implementation
-- Comprehensive testing suite
-- Both web interface and terminal-based querying
+- Python 3.8+
+- Ollama installed and running locally
+- Redis server running locally (for vector database)
+- Required Python packages (install via `pip install -r requirements.txt`)
 
-## Project Structure
+## Ollama Models Required
 
-```
-rag-model/
-├── data/
-│   └── raw_notes/          # Place your course notes here
-├── database/
-│   ├── base_db.py          # Base vector database interface
-│   ├── chroma_db.py        # ChromaDB implementation
-│   └── redis_db.py         # Redis vector database implementation
-├── embeddings/
-│   ├── base_embedder.py    # Base embedding interface
-│   └── sentence_transformer.py  # SentenceTransformer implementation
-├── ingestion/
-│   └── data_loader.py      # Document loading and processing
-├── llm/
-│   └── llm_interface.py    # Local LLM integration
-├── preprocessing/
-│   └── chunker.py          # Text chunking strategies
-├── query/
-│   └── query_handler.py    # Query processing
-├── tests/
-│   └── test_rag.py         # Test suite
-├── main.py                 # Main RAG system implementation
-├── example.py              # Example usage and benchmarking
-├── setup.py               # Setup script
-└── requirements.txt       # Project dependencies
-```
+Before running the system, ensure you have the following Ollama models pulled:
 
-## Installation
-
-1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/rag-model.git
-cd rag-model
+ollama pull nomic-ai/nomic-embed-text-v1.5  # For embeddings
+ollama pull qwen:7b                          # For LLM
 ```
 
-2. Run the setup script:
+## Running the Streamlit UI
+
+1. First, ensure Redis is running:
 ```bash
-python setup.py
+redis-server
 ```
 
-3. Install Ollama:
-   - Visit [Ollama.ai](https://ollama.ai/) to download and install
-   - The setup script will automatically pull the required model
-
-4. Set up Vector Database (Choose one or both):
-
-   ### Option 1: ChromaDB (Default)
-   - No additional setup required
-   - Data is stored locally in the `chroma_db` directory
-
-   ### Option 2: Redis Vector DB
-   - Install Docker if not already installed
-   - Start Redis container:
-     ```bash
-     # If container doesn't exist:
-     docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
-     
-     # If container exists but is stopped:
-     docker start redis-stack
-     ```
-   - Redis will be available at `localhost:6379`
-
-## Usage
-
-### Web Interface
-1. Start the Streamlit app:
+2. In a new terminal, start the Streamlit app:
 ```bash
 streamlit run app.py
 ```
 
-2. Follow the web interface instructions to:
-   - Initialize the RAG system
-   - Upload and process documents
-   - Perform text or image searches
+3. The UI will open in your default web browser at `http://localhost:8501`
 
-### Terminal Interface
-1. Process documents (if not already done):
-```bash
-python query_terminal.py "your query" --process-docs
-```
+## Final RAG Configuration (Streamlit UI)
 
-2. Query the system:
-```bash
-python query_terminal.py "your query"
-```
+The Streamlit UI uses the following optimized configuration:
 
-3. Query with custom data directory:
-```bash
-python query_terminal.py "your query" --data-dir /path/to/documents
-```
+### Embedding Model
+- Model: `nomic-ai/nomic-embed-text-v1.5`
+- Type: Ollama-based embedding model
+- Embedding Dimension: 768
+- Max Length: 512 tokens
 
-Example queries:
-```bash
-# Process documents and query
-python query_terminal.py "What are the advantages of B+ trees?" --process-docs
+### LLM Configuration
+- Model: `qwen:7b`
+- Temperature: 0.4 (for balanced creativity and consistency)
+- Context Window: 4096 tokens
 
-# Query existing documents
-python query_terminal.py "Explain the concept of RAG"
+### Vector Database
+- Type: ChromaDB
+- Collection Name: "app_collection"
+- Distance Metric: Cosine Similarity
 
-# Query with custom directory
-python query_terminal.py "What is the main topic of these notes?" --data-dir ./my_notes
-```
+### Search Configuration
+- Semantic Weight: 0.8 (emphasizes semantic understanding)
+- Keyword Weight: 0.2 (supplementary keyword matching)
+- Top-k Results: 3 (number of contexts retrieved)
 
-The terminal interface provides:
-- Command-line argument support
-- Document processing option
-- Custom data directory specification
-- Formatted output with response and relevant contexts
-- Error handling and status messages
+### Text Processing
+- Chunk Size: 512 tokens
+- Chunk Overlap: 50 tokens
+- Tokenizer: tiktoken (for accurate token counting)
+
+### Caching
+- Query Results Cache: Enabled
+- Embedding Cache: Enabled
+- Context Cache: Enabled
+
+## Features
+
+- Interactive query interface
+- Real-time document processing
+- Support for PDF documents
+- Hybrid search (semantic + keyword)
+- Context-aware responses
+- Memory-efficient document processing
+- Parallel document ingestion
+- System status monitoring
+
+## Usage
+
+1. **Initialize the System**
+   - Click "Initialize/Update RAG System" in the sidebar
+   - Wait for the initialization to complete
+
+2. **Process Documents**
+   - Place your PDF documents in the `data` directory
+   - Click "Process Data Directory" in the sidebar
+   - Monitor the processing status
+
+3. **Query the System**
+   - Enter your question in the text area
+   - Click "Search"
+   - View the response and relevant contexts
+
+## Performance Considerations
+
+- The system uses parallel processing for document ingestion
+- Documents are processed in chunks of 10 for optimal memory usage
+- Embeddings and responses are cached for faster subsequent queries
+- The UI provides real-time feedback on system status and processing
+
+## Troubleshooting
+
+1. **Redis Connection Issues**
+   - Ensure Redis server is running: `redis-server`
+   - Check Redis port (default: 6379)
+
+2. **Ollama Issues**
+   - Verify Ollama is running: `ollama list`
+   - Ensure required models are pulled
+   - Check model availability in Ollama
+
+3. **Memory Issues**
+   - Monitor system memory usage
+   - Adjust chunk size if needed
+   - Clear vector database if necessary
 
 ## Development
 
-### Adding New Components
+For development and evaluation purposes, separate evaluation scripts are available:
+- `evaluate_mpnet.py`: For all-mpnet-base-v2 model
+- `evaluate_minilm.py`: For multi-qa-MiniLM-L6-cos-v1 model
+- `evaluate_nomic.py`: For nomic-ai/nomic-embed-text-v1.5 model
 
-1. **New Embedding Model**:
-   - Implement `BaseEmbedder` interface
-   - Add to `embeddings/` directory
-
-2. **New Vector Database**:
-   - Implement `BaseVectorDB` interface
-   - Add to `database/` directory
-
-3. **New Chunking Strategy**:
-   - Implement `BaseChunker` interface
-   - Add to `preprocessing/` directory
-
-4. **New LLM Interface**:
-   - Implement `BaseLLM` interface
-   - Add to `llm/` directory
-
-### Testing
-
-- Run all tests: `pytest tests/`
-- Run specific test: `pytest tests/test_rag.py -k "test_name"`
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details. 
+Each script can be run independently to evaluate different embedding models and configurations. 

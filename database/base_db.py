@@ -47,6 +47,13 @@ class BaseDB(ABC):
             doc_ids: List of document IDs
             metadata: Optional list of metadata dictionaries
         """
+        # Validate inputs
+        if len(embeddings) != len(chunks) or len(embeddings) != len(doc_ids):
+            raise ValueError("Length mismatch between embeddings, chunks, and doc_ids")
+            
+        if metadata is not None and len(metadata) != len(embeddings):
+            raise ValueError("Length mismatch between metadata and embeddings")
+            
         # Track start time and memory
         start_time = time.time()
         start_memory = psutil.Process().memory_info().rss

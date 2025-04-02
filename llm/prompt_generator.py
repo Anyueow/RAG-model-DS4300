@@ -37,27 +37,28 @@ When using general knowledge, mark it with [GK] and provide a brief explanation 
 
 Always provide citations for your information. If you're not sure about something, say so rather than making assumptions."""
 
-    def _format_text_context(self, search_results: List[SearchResult]) -> str:
+    def _format_text_context(self, contexts: List[Dict[str, Any]]) -> str:
         """Format text contexts with citations.
         
         Args:
-            search_results: List of search results from vector database
+            contexts: List of context dictionaries
             
         Returns:
             Formatted text context string
         """
         formatted_contexts = []
-        for idx, result in enumerate(search_results, 1):
-            chunk = result.chunk.strip()
-            source = result.metadata.get('source', 'Unknown')
-            page = result.metadata.get('page', None)
+        for idx, context in enumerate(contexts, 1):
+            text = context.get('text', '').strip()
+            metadata = context.get('metadata', {})
+            source = metadata.get('source', 'Unknown')
+            page = metadata.get('page', None)
             
             citation = f"[KB-Text {idx}] (Source: {source}"
             if page is not None:
                 citation += f", Page: {page}"
             citation += ")"
             
-            formatted_contexts.append(f"{citation}\n{chunk}\n")
+            formatted_contexts.append(f"{citation}\n{text}\n")
             
         return "\n".join(formatted_contexts)
 
@@ -101,42 +102,30 @@ Always provide citations for your information. If you're not sure about somethin
     def generate_prompt(
         self,
         query: str,
-        text_results: Optional[List[SearchResult]] = None,
-        image_results: Optional[List[SearchResult]] = None
+        contexts: List[Dict[str, Any]],
+        use_general_knowledge: bool = True
     ) -> Dict[str, Any]:
-        """Generate an augmented prompt combining query, text, and image contexts.
+        """Generate an augmented prompt combining query and contexts.
         
         Args:
             query: User query
-            text_results: List of relevant text search results
-            image_results: List of relevant image search results
+            contexts: List of relevant context dictionaries with text and metadata
+            use_general_knowledge: Whether to use general knowledge
             
         Returns:
             Dictionary containing:
             - prompt: Combined prompt string
-            - images: List of image data
             - context_length: Estimated context length
         """
         prompt_parts = [self.system_prompt, "\n\n"]
-        images = []
         
         # Add text contexts if available
-        if text_results:
+        if contexts:
             prompt_parts.extend([
                 "Knowledge Base Text Contexts:",
-                self._format_text_context(text_results),
+                self._format_text_context(contexts),
                 "\n"
             ])
-            
-        # Add image contexts if available
-        if image_results:
-            image_context, image_data = self._format_image_context(image_results)
-            prompt_parts.extend([
-                "Knowledge Base Images:",
-                image_context,
-                "\n"
-            ])
-            images = image_data
             
         # Add query
         prompt_parts.extend([
@@ -154,7 +143,6 @@ Always provide citations for your information. If you're not sure about somethin
         
         return {
             'prompt': prompt,
-            'images': images,
             'context_length': context_length
         }
 

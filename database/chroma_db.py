@@ -45,16 +45,24 @@ class ChromaDB(BaseDB):
             doc_ids: List of document IDs
             metadata: Optional list of metadata dictionaries
         """
-        # Convert embeddings to numpy arrays if needed
-        embeddings = [np.array(emb) for emb in embeddings]
+        # Convert embeddings to lists if they're numpy arrays
+        embeddings_list = []
+        for emb in embeddings:
+            if isinstance(emb, np.ndarray):
+                embeddings_list.append(emb.tolist())
+            else:
+                embeddings_list.append(emb)
         
         # Prepare metadata
         if metadata is None:
             metadata = [{} for _ in chunks]
+            
+        # Ensure metadata is a list of dictionaries
+        metadata = [dict(m) if m else {} for m in metadata]
         
         # Add documents to collection
         self.collection.add(
-            embeddings=embeddings,
+            embeddings=embeddings_list,
             documents=chunks,
             metadatas=metadata,
             ids=doc_ids
@@ -82,12 +90,14 @@ class ChromaDB(BaseDB):
         Returns:
             List of SearchResult objects containing matches
         """
-        # Convert query to numpy array if needed
-        query_embedding = np.array(query_embedding)
+        # Convert query to numpy array if needed and ensure it's 1D
+        if isinstance(query_embedding, tuple):
+            query_embedding = query_embedding[0]  # Extract just the embedding array
+        query_embedding = np.array(query_embedding).reshape(-1)
         
         # Search collection
         results = self.collection.query(
-            query_embeddings=[query_embedding],
+            query_embeddings=[query_embedding.tolist()],
             n_results=k
         )
         
