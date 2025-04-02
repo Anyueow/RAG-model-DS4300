@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "nomic_qwen_redis",
+    "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+    "llm_model": "qwen:7b",
+    "vector_db": "redis",
+    "chunking_strategy": "512_50",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 512,
+    "chunk_overlap": 50,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "Error: shapes (768,) and (384,) not aligned: 768 (dim 0) != 384 (dim 0)",
+      "execution_time": 0.24959087371826172,
+      "memory_usage": 24.46875,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "Error: shapes (768,) and (384,) not aligned: 768 (dim 0) != 384 (dim 0)",
+      "execution_time": 0.09376001358032227,
+      "memory_usage": 10.0625,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "Error: shapes (768,) and (384,) not aligned: 768 (dim 0) != 384 (dim 0)",
+      "execution_time": 0.08869194984436035,
+      "memory_usage": 9.765625,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "Error: shapes (768,) and (384,) not aligned: 768 (dim 0) != 384 (dim 0)",
+      "execution_time": 0.027376890182495117,
+      "memory_usage": 0.046875,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 19:38:02"
+}

@@ -1,4 +1,4 @@
-# RAG System for DS4300 Midterm Cheat Sheet
+# The Aces RAG Model
 
 A Retrieval-Augmented Generation (RAG) system built for DS4300 Midterm preparation, featuring a Streamlit-based user interface and multiple embedding model support.
 

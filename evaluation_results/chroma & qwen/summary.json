@@ -1,0 +1,33 @@
+{
+  "total_configurations": 3,
+  "total_questions": 4,
+  "configurations": [
+    {
+      "name": "nomic_qwen",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "qwen:7b",
+      "vector_db": "chroma",
+      "avg_time": 8.877478837966919,
+      "avg_memory": -173.12890625,
+      "total_questions": 4
+    },
+    {
+      "name": "minilm_qwen",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "qwen:7b",
+      "vector_db": "chroma",
+      "avg_time": 6.728993237018585,
+      "avg_memory": -6.73828125,
+      "total_questions": 4
+    },
+    {
+      "name": "mpnet_qwen",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "qwen:7b",
+      "vector_db": "chroma",
+      "avg_time": 7.575338065624237,
+      "avg_memory": -11.71484375,
+      "total_questions": 4
+    }
+  ]
+}

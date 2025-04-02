@@ -25,7 +25,7 @@ class QdrantDB(BaseDB):
         self.client.recreate_collection(
             collection_name=collection_name,
             vectors_config=models.VectorParams(
-                size=384,  # Default size, will be updated on first insert
+                size=768,  # Default to 768 dimensions for nomic-embed-text-v1.5
                 distance=models.Distance.COSINE
             )
         )
@@ -114,7 +114,7 @@ class QdrantDB(BaseDB):
         self.client.recreate_collection(
             collection_name=self.collection_name,
             vectors_config=models.VectorParams(
-                size=384,  # Default size
+                size=768,  # Default size
                 distance=models.Distance.COSINE
             )
         )

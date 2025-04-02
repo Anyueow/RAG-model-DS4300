@@ -1,3 +1,0 @@
-=== RAG Pipeline Evaluation Summary (all-MiniLM-L6-v2) ===
-
-Overall Statistics:

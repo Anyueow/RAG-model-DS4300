@@ -17,9 +17,9 @@ def test_data():
     """Create test data."""
     # Create sample embeddings and metadata
     embeddings = [
-        np.random.rand(384).tolist(),  # Using 384 dimensions as a default
-        np.random.rand(384).tolist(),
-        np.random.rand(384).tolist()
+        np.random.rand(768).tolist(),  # Using 768 dimensions for nomic-embed-text-v1.5
+        np.random.rand(768).tolist(),
+        np.random.rand(768).tolist()
     ]
     chunks = [
         "This is the first test chunk.",
@@ -97,7 +97,7 @@ class TestDatabases:
         )
         
         # Create a query vector
-        query_vector = np.random.rand(384).tolist()
+        query_vector = np.random.rand(768).tolist()
         
         # Test search
         start_time = time.time()
@@ -153,7 +153,7 @@ class TestDatabases:
         )
         
         # Perform search
-        query_vector = np.random.rand(384).tolist()
+        query_vector = np.random.rand(768).tolist()
         db.search(query_vector, k=2)
         
         # Check metrics

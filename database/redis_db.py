@@ -16,6 +16,7 @@ class RedisDB(BaseDB):
         super().__init__()
         self.client = redis.Redis(host='localhost', port=6379, db=0)
         self.collection_name = collection_name
+        self.embedding_dim = None  # Will be set on first insert
     
     def index(self, embeddings: List[List[float]], chunks: List[str], 
               doc_ids: List[str], metadata: Optional[List[Dict[str, Any]]] = None) -> None:
@@ -27,6 +28,15 @@ class RedisDB(BaseDB):
             doc_ids: List of document IDs
             metadata: Optional list of metadata dictionaries
         """
+        # Set embedding dimension on first insert if not set
+        if self.embedding_dim is None:
+            self.embedding_dim = len(embeddings[0])
+        else:
+            # Verify all embeddings have the same dimension
+            for emb in embeddings:
+                if len(emb) != self.embedding_dim:
+                    raise ValueError(f"Embedding dimension mismatch. Expected {self.embedding_dim}, got {len(emb)}")
+        
         super().index(embeddings, chunks, doc_ids, metadata)
     
     def _index_impl(self, embeddings: List[List[float]], chunks: List[str], 
@@ -47,6 +57,7 @@ class RedisDB(BaseDB):
             # Prepare metadata
             point_metadata = metadata[i] if metadata else {}
             point_metadata['chunk'] = chunk
+            point_metadata['embedding_dim'] = self.embedding_dim  # Store dimension in metadata
             
             # Store vector and metadata
             key = f"{self.collection_name}:{doc_id}:{i}"
@@ -71,6 +82,10 @@ class RedisDB(BaseDB):
         """
         # Convert query to numpy array
         query_embedding = np.array(query_embedding)
+        
+        # Verify query dimension matches stored dimension
+        if self.embedding_dim is not None and len(query_embedding) != self.embedding_dim:
+            raise ValueError(f"Query embedding dimension mismatch. Expected {self.embedding_dim}, got {len(query_embedding)}")
         
         # Get all keys in collection
         keys = self.client.keys(f"{self.collection_name}:*:vector")
@@ -127,4 +142,5 @@ class RedisDB(BaseDB):
         """Clear all data from the collection."""
         keys = self.client.keys(f"{self.collection_name}:*")
         if keys:
-            self.client.delete(*keys) 
+            self.client.delete(*keys)
+        self.embedding_dim = None  # Reset embedding dimension 
