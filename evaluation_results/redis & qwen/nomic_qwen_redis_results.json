@@ -15,31 +15,31 @@
     "question_1": {
       "question": "What is the difference between B-trees and B+ trees?",
       "response": "Error: shapes (768,) and (384,) not aligned: 768 (dim 0) != 384 (dim 0)",
-      "execution_time": 0.2782578468322754,
-      "memory_usage": 31.5625,
+      "execution_time": 0.23280000686645508,
+      "memory_usage": 24.484375,
       "contexts": []
     },
     "question_2": {
       "question": "Explain how AVL tree rotation works",
       "response": "Error: shapes (768,) and (384,) not aligned: 768 (dim 0) != 384 (dim 0)",
-      "execution_time": 0.10750007629394531,
-      "memory_usage": 8.984375,
+      "execution_time": 0.0948331356048584,
+      "memory_usage": 9.1875,
       "contexts": []
     },
     "question_3": {
       "question": "What are the main advantages of MongoDB?",
       "response": "Error: shapes (768,) and (384,) not aligned: 768 (dim 0) != 384 (dim 0)",
-      "execution_time": 0.09664511680603027,
-      "memory_usage": 9.328125,
+      "execution_time": 0.0909879207611084,
+      "memory_usage": 9.3125,
       "contexts": []
     },
     "question_4": {
       "question": "How does AWS S3 handle data replication?",
       "response": "Error: shapes (768,) and (384,) not aligned: 768 (dim 0) != 384 (dim 0)",
-      "execution_time": 0.027189970016479492,
-      "memory_usage": 0.015625,
+      "execution_time": 0.025975942611694336,
+      "memory_usage": 0.0,
       "contexts": []
     }
   },
-  "timestamp": "2025-04-02 19:58:25"
+  "timestamp": "2025-04-02 19:46:51"
 }

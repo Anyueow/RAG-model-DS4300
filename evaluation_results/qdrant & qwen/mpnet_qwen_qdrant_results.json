@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "mpnet_qwen_qdrant",
+    "embedding_model": "all-mpnet-base-v2",
+    "llm_model": "qwen:7b",
+    "vector_db": "qdrant",
+    "chunking_strategy": "512_50",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 512,
+    "chunk_overlap": 50,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "[KB] Knowledge Base - Information from the course materials and documents\n\nThe main difference between B-trees and B+ trees lies in their structure and how they are used for indexing in databases.\n\n1. **B-Trees (Variable)**: These trees have a variable number of children per node, typically between 2 and 25. The key property is that the tree remains balanced as nodes are added or removed.\n\n   Example: A B-tree with 3 children per node would be structured like this:\n\n   ```\n   Level 0 (Root)\n     - Child 1\n       - Child 1a, 1b, ...\n     - Child 2\n       - Child 2a, 2b, ...\n     - Child 3\n       - Child 3a, 3b, ...\n   ```\n\n2. **B+ Trees (Fixed)**: In contrast to B-trees, B+ trees have a fixed number of children per node, typically 1 or 2. The root node is always the leaf node in a B+ tree.\n\n   Example: A B+ tree with 1 child per node would be structured like this:\n\n   ```\n   Level 0 (Root)\n     - Child 1\n       - Leaf Node containing key-value pairs\n   ```\n\nIn summary, B-trees are more flexible in terms of the number of children per node, but they require more memory to maintain balance. B+ trees have a fixed number of children and a simpler structure, making them more efficient for large databases with frequent range queries.",
+      "execution_time": 11.152623891830444,
+      "memory_usage": -78.4375,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.\n\nThere are two types of AVL rotations: Left-rotation (LL) and Right-rotation (RR).\n\n1. **Left-rotation (LL)**:\n   - Imagine a node with two children, A and B.\n   - If the right child of A (B in this case)) becomes taller than its parent, an LL rotation is needed.\n   - The process involves moving the right subtree of A (B) to become the new left subtree of A's parent. Then, update the parent pointers accordingly.\n\n2. **Right-rotation (RR)**:\n   - Similar to an LL rotation, a RR rotation occurs when the left child of B (A in this case)) becomes taller than its parent.\n   - The process involves moving the left subtree of B (A) to become the new right subtree of B's parent. Then, update the parent pointers accordingly.\n\nBoth rotations are performed to maintain the AVL property, which ensures that the tree remains approximately balanced.",
+      "execution_time": 8.304721117019653,
+      "memory_usage": 11.4375,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "The main advantages of MongoDB include:\n\n1. **Document-oriented design**: MongoDB stores data in flexible document format, allowing for easy querying and updating.\n\n2. ** Scalability**: MongoDB is horizontally scalable, meaning you can add more servers to handle increased traffic without changing your schema.\n\n3. **High performance**: MongoDB's storage engine, called WiredTiger, is designed for high-performance reads and writes.\n\n4. **\u6613\u7528\u6027\u5de5\u5177**: MongoDB\u63d0\u4f9b\u4e86\u4e30\u5bcc\u7684\u547d\u4ee4\u884c\u5de5\u5177\u3001\u56fe\u5f62\u754c\u9762\u5de5\u5177\u4ee5\u53ca\u96c6\u6210\u5f00\u53d1\u73af\u5883\uff08IDE\uff09\uff0c\u65b9\u4fbf\u7528\u6237\u7ba1\u7406\u6570\u636e\u5e93\u3002\n\n5. **\u8de8\u5e73\u53f0\u652f\u6301**: MongoDB\u53ef\u4ee5\u5728\u591a\u79cd\u64cd\u4f5c\u7cfb\u7edf\uff0c\u5982Windows\u3001Linux\u548cmacOS\u4e0a\u8fd0\u884c\u3002",
+      "execution_time": 4.985604763031006,
+      "memory_usage": 14.953125,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "AWS S3 uses a multi-tiered replication strategy to ensure high availability and durability of data.\n\n1. **Base Storage** (Primary Replication):\n   - Each S3 bucket is replicated to at least one \"base storage\" location.\n   - The default base storage region for an S3 bucket in the US is US East (N.Y.).\n\n2. **Cross-Region Replication (CRR)**:\n   - For added durability and redundancy, S3 buckets can be configured with CRR.\n   - With CRR, data is replicated to a secondary location outside of the base storage region.\n   - The destination region for CRR can be chosen by the user.\n\nIn summary, AWS S3 handles data replication through a multi-tiered approach that includes base storage and cross-region replication. This ensures high availability and durability of data stored in S3 buckets.",
+      "execution_time": 6.252641916275024,
+      "memory_usage": -18.625,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 19:56:40"
+}

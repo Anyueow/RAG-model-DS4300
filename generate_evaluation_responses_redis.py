@@ -44,8 +44,46 @@ class ResponseGenerator:
         
         # Define configurations to test with Redis
         self.configurations = [
+            # Small chunks (256/25)
             {
-                "name": "nomic_qwen_redis",
+                "name": "nomic_qwen_redis_small",
+                "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+                "llm_model": "qwen:7b",
+                "vector_db": "redis",
+                "chunking_strategy": "256_25",
+                "semantic_weight": 0.8,
+                "keyword_weight": 0.2,
+                "chunk_size": 256,
+                "chunk_overlap": 25,
+                "top_k": 3
+            },
+            {
+                "name": "minilm_qwen_redis_small",
+                "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+                "llm_model": "qwen:7b",
+                "vector_db": "redis",
+                "chunking_strategy": "256_25",
+                "semantic_weight": 0.8,
+                "keyword_weight": 0.2,
+                "chunk_size": 256,
+                "chunk_overlap": 25,
+                "top_k": 3
+            },
+            {
+                "name": "mpnet_qwen_redis_small",
+                "embedding_model": "all-mpnet-base-v2",
+                "llm_model": "qwen:7b",
+                "vector_db": "redis",
+                "chunking_strategy": "256_25",
+                "semantic_weight": 0.8,
+                "keyword_weight": 0.2,
+                "chunk_size": 256,
+                "chunk_overlap": 25,
+                "top_k": 3
+            },
+            # Medium chunks (512/50) - current configuration
+            {
+                "name": "nomic_qwen_redis_medium",
                 "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
                 "llm_model": "qwen:7b",
                 "vector_db": "redis",
@@ -57,7 +95,7 @@ class ResponseGenerator:
                 "top_k": 3
             },
             {
-                "name": "minilm_qwen_redis",
+                "name": "minilm_qwen_redis_medium",
                 "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
                 "llm_model": "qwen:7b",
                 "vector_db": "redis",
@@ -69,7 +107,7 @@ class ResponseGenerator:
                 "top_k": 3
             },
             {
-                "name": "mpnet_qwen_redis",
+                "name": "mpnet_qwen_redis_medium",
                 "embedding_model": "all-mpnet-base-v2",
                 "llm_model": "qwen:7b",
                 "vector_db": "redis",
@@ -79,6 +117,43 @@ class ResponseGenerator:
                 "chunk_size": 512,
                 "chunk_overlap": 50,
                 "top_k": 3
+            },
+            # Large chunks (1024/100)
+            {
+                "name": "nomic_qwen_redis_large",
+                "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+                "llm_model": "qwen:7b",
+                "vector_db": "redis",
+                "chunking_strategy": "1024_100",
+                "semantic_weight": 0.8,
+                "keyword_weight": 0.2,
+                "chunk_size": 1024,
+                "chunk_overlap": 100,
+                "top_k": 3
+            },
+            {
+                "name": "minilm_qwen_redis_large",
+                "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+                "llm_model": "qwen:7b",
+                "vector_db": "redis",
+                "chunking_strategy": "1024_100",
+                "semantic_weight": 0.8,
+                "keyword_weight": 0.2,
+                "chunk_size": 1024,
+                "chunk_overlap": 100,
+                "top_k": 3
+            },
+            {
+                "name": "mpnet_qwen_redis_large",
+                "embedding_model": "all-mpnet-base-v2",
+                "llm_model": "qwen:7b",
+                "vector_db": "redis",
+                "chunking_strategy": "1024_100",
+                "semantic_weight": 0.8,
+                "keyword_weight": 0.2,
+                "chunk_size": 1024,
+                "chunk_overlap": 100,
+                "top_k": 3
             }
         ]
     
@@ -87,22 +162,31 @@ class ResponseGenerator:
         process = psutil.Process()
         return process.memory_info().rss / 1024 / 1024
     
-    def create_rag_system(self, config: Dict[str, Any]) -> RAGSystem:
-        """Create a RAG system with the given configuration."""
-        # Create a unique collection name for this configuration
-        collection_name = f"{config['name']}_{config['embedding_model'].replace('/', '_')}"
+    def create_rag_system(self, config: Dict) -> RAGSystem:
+        """Create a RAG system with the specified configuration."""
+        # Initialize embedder
+        model_config = EMBEDDING_MODELS[config["embedding_model"]]
+        embedder = SentenceTransformerEmbedder(model_config)
         
-        # Initialize vector database
-        vector_db = RedisDB(collection_name=collection_name)
+        # Initialize Redis vector database with the correct embedding model
+        vector_db = RedisDB(
+            collection_name=f"eval_{config['name']}",
+            embedding_model=config["embedding_model"]
+        )
         
-        # Create RAG system
+        # Initialize LLM
+        llm = OllamaLLM(model_name=config["llm_model"], temperature=0.4)
+        
+        # Create and return RAG system
         return RAGSystem(
-            embedding_model=config['embedding_model'],
-            llm_model=config['llm_model'],
+            embedder=embedder,
             vector_db=vector_db,
-            chunk_size=config['chunk_size'],
-            chunk_overlap=config['chunk_overlap'],
-            search_config=config['search_config']
+            llm=llm,
+            semantic_weight=config["semantic_weight"],
+            keyword_weight=config["keyword_weight"],
+            chunk_size=config["chunk_size"],
+            chunk_overlap=config["chunk_overlap"],
+            top_k=config["top_k"]
         )
     
     def process_question(self, rag: RAGSystem, question: str, config: Dict) -> Dict:

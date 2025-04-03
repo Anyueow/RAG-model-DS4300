@@ -45,8 +45,46 @@ class ResponseGenerator:
         
         # Define configurations to test with Qdrant
         self.configurations = [
+            # Small chunks (256/25)
             {
-                "name": "nomic_qwen_qdrant",
+                "name": "nomic_qwen_qdrant_small",
+                "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+                "llm_model": "qwen:7b",
+                "vector_db": "qdrant",
+                "chunking_strategy": "256_25",
+                "semantic_weight": 0.8,
+                "keyword_weight": 0.2,
+                "chunk_size": 256,
+                "chunk_overlap": 25,
+                "top_k": 3
+            },
+            {
+                "name": "minilm_qwen_qdrant_small",
+                "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+                "llm_model": "qwen:7b",
+                "vector_db": "qdrant",
+                "chunking_strategy": "256_25",
+                "semantic_weight": 0.8,
+                "keyword_weight": 0.2,
+                "chunk_size": 256,
+                "chunk_overlap": 25,
+                "top_k": 3
+            },
+            {
+                "name": "mpnet_qwen_qdrant_small",
+                "embedding_model": "all-mpnet-base-v2",
+                "llm_model": "qwen:7b",
+                "vector_db": "qdrant",
+                "chunking_strategy": "256_25",
+                "semantic_weight": 0.8,
+                "keyword_weight": 0.2,
+                "chunk_size": 256,
+                "chunk_overlap": 25,
+                "top_k": 3
+            },
+            # Medium chunks (512/50) - current configuration
+            {
+                "name": "nomic_qwen_qdrant_medium",
                 "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
                 "llm_model": "qwen:7b",
                 "vector_db": "qdrant",
@@ -58,7 +96,7 @@ class ResponseGenerator:
                 "top_k": 3
             },
             {
-                "name": "minilm_qwen_qdrant",
+                "name": "minilm_qwen_qdrant_medium",
                 "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
                 "llm_model": "qwen:7b",
                 "vector_db": "qdrant",
@@ -70,7 +108,7 @@ class ResponseGenerator:
                 "top_k": 3
             },
             {
-                "name": "mpnet_qwen_qdrant",
+                "name": "mpnet_qwen_qdrant_medium",
                 "embedding_model": "all-mpnet-base-v2",
                 "llm_model": "qwen:7b",
                 "vector_db": "qdrant",
@@ -79,6 +117,43 @@ class ResponseGenerator:
                 "keyword_weight": 0.2,
                 "chunk_size": 512,
                 "chunk_overlap": 50,
+                "top_k": 3
+            },
+            # Large chunks (1024/100)
+            {
+                "name": "nomic_qwen_qdrant_large",
+                "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+                "llm_model": "qwen:7b",
+                "vector_db": "qdrant",
+                "chunking_strategy": "1024_100",
+                "semantic_weight": 0.8,
+                "keyword_weight": 0.2,
+                "chunk_size": 1024,
+                "chunk_overlap": 100,
+                "top_k": 3
+            },
+            {
+                "name": "minilm_qwen_qdrant_large",
+                "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+                "llm_model": "qwen:7b",
+                "vector_db": "qdrant",
+                "chunking_strategy": "1024_100",
+                "semantic_weight": 0.8,
+                "keyword_weight": 0.2,
+                "chunk_size": 1024,
+                "chunk_overlap": 100,
+                "top_k": 3
+            },
+            {
+                "name": "mpnet_qwen_qdrant_large",
+                "embedding_model": "all-mpnet-base-v2",
+                "llm_model": "qwen:7b",
+                "vector_db": "qdrant",
+                "chunking_strategy": "1024_100",
+                "semantic_weight": 0.8,
+                "keyword_weight": 0.2,
+                "chunk_size": 1024,
+                "chunk_overlap": 100,
                 "top_k": 3
             }
         ]
@@ -94,8 +169,11 @@ class ResponseGenerator:
         model_config = EMBEDDING_MODELS[config["embedding_model"]]
         embedder = SentenceTransformerEmbedder(model_config)
         
-        # Initialize Qdrant vector database
-        vector_db = QdrantDB(collection_name=f"eval_{config['name']}")
+        # Initialize Qdrant vector database with the correct embedding model
+        vector_db = QdrantDB(
+            collection_name=f"eval_{config['name']}",
+            embedding_model=config["embedding_model"]
+        )
         
         # Initialize LLM
         llm = OllamaLLM(model_name=config["llm_model"], temperature=0.4)
@@ -118,8 +196,21 @@ class ResponseGenerator:
         start_memory = self.get_memory_usage()
         
         try:
+            # Debug: Print question and configuration
+            print(f"\n[DEBUG] Processing question: {question}")
+            print(f"[DEBUG] Using configuration: {config['name']}")
+            print(f"[DEBUG] Embedding model: {config['embedding_model']}")
+            
             # Get response
             result = rag.query(question)
+            
+            # Debug: Print response information
+            print(f"[DEBUG] Response type: {type(result)}")
+            print(f"[DEBUG] Response keys: {result.keys()}")
+            if 'contexts' in result:
+                print(f"[DEBUG] Number of contexts: {len(result['contexts'])}")
+                if result['contexts']:
+                    print(f"[DEBUG] First context type: {type(result['contexts'][0])}")
             
             end_time = time.time()
             end_memory = self.get_memory_usage()
@@ -133,6 +224,10 @@ class ResponseGenerator:
             }
         except Exception as e:
             logger.error(f"Error processing question: {str(e)}")
+            # Debug: Print full exception information
+            import traceback
+            print(f"\n[DEBUG] Full error traceback:")
+            print(traceback.format_exc())
             return {
                 "question": question,
                 "response": f"Error: {str(e)}",
