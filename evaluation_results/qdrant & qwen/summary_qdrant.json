@@ -1,0 +1,87 @@
+{
+  "total_configurations": 9,
+  "total_questions": 4,
+  "configurations": [
+    {
+      "name": "nomic_qwen_qdrant_small",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "qwen:7b",
+      "vector_db": "qdrant",
+      "avg_time": 7.4637632966041565,
+      "avg_memory": -173.125,
+      "total_questions": 4
+    },
+    {
+      "name": "minilm_qwen_qdrant_small",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "qwen:7b",
+      "vector_db": "qdrant",
+      "avg_time": 6.873232126235962,
+      "avg_memory": -9.8515625,
+      "total_questions": 4
+    },
+    {
+      "name": "mpnet_qwen_qdrant_small",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "qwen:7b",
+      "vector_db": "qdrant",
+      "avg_time": 8.045300900936127,
+      "avg_memory": -17.62890625,
+      "total_questions": 4
+    },
+    {
+      "name": "nomic_qwen_qdrant_medium",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "qwen:7b",
+      "vector_db": "qdrant",
+      "avg_time": 7.4356982707977295,
+      "avg_memory": -70.4375,
+      "total_questions": 4
+    },
+    {
+      "name": "minilm_qwen_qdrant_medium",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "qwen:7b",
+      "vector_db": "qdrant",
+      "avg_time": 7.24440598487854,
+      "avg_memory": -7.640625,
+      "total_questions": 4
+    },
+    {
+      "name": "mpnet_qwen_qdrant_medium",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "qwen:7b",
+      "vector_db": "qdrant",
+      "avg_time": 6.700269103050232,
+      "avg_memory": -83.91015625,
+      "total_questions": 4
+    },
+    {
+      "name": "nomic_qwen_qdrant_large",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "qwen:7b",
+      "vector_db": "qdrant",
+      "avg_time": 8.94549709558487,
+      "avg_memory": -69.75390625,
+      "total_questions": 4
+    },
+    {
+      "name": "minilm_qwen_qdrant_large",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "qwen:7b",
+      "vector_db": "qdrant",
+      "avg_time": 8.210358738899231,
+      "avg_memory": -24.7890625,
+      "total_questions": 4
+    },
+    {
+      "name": "mpnet_qwen_qdrant_large",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "qwen:7b",
+      "vector_db": "qdrant",
+      "avg_time": 7.772155225276947,
+      "avg_memory": -15.21484375,
+      "total_questions": 4
+    }
+  ]
+}

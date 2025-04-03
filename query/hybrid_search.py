@@ -2,14 +2,14 @@ from typing import List, Dict, Any, Union, Optional
 import numpy as np
 from rank_bm25 import BM25Okapi
 from sklearn.preprocessing import MinMaxScaler
-from database.base_db import BaseVectorDB
+from database.base_db import BaseDB
 
 class HybridSearch:
     """Hybrid search combining semantic and keyword-based search."""
     
     def __init__(
         self,
-        vector_db: BaseVectorDB,
+        vector_db: BaseDB,
         embedder: Any,
         semantic_weight: float = 0.7,
         keyword_weight: float = 0.3,

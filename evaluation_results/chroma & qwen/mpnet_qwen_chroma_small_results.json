@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "mpnet_qwen_chroma_small",
+    "embedding_model": "all-mpnet-base-v2",
+    "llm_model": "qwen:7b",
+    "vector_db": "chroma",
+    "chunking_strategy": "256_25",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 256,
+    "chunk_overlap": 25,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "[KB] Knowledge Base - Information from the course materials and documents\n\nThe key differences between B-trees and B+ trees lie in their node structure, leaf organization, and overall purpose:\n\n1. **Node Structure**:\n   - **B-Trees**: Each node can have multiple keys (up to a maximum specified). The tree is balanced by having roughly the same number of children per non-leaf node.\n   - **B+ Trees**: Each node has exactly one key, and all the pointers point to the next record in the sorted order. Leaf nodes contain actual data, while inner nodes serve as indexes.\n\n2. **Leaf Organization**:\n   - **B-Trees**: The leaf nodes can be unbalanced due to the balance condition. This can lead to longer search paths.\n   - **B+ Trees**: All leaf nodes are at the same level and contain sorted records. This results in a more balanced structure, which typically leads to faster search times.\n\n3. **Overall Purpose**:\n   - **B-Trees**: Originally designed for disk-based storage systems where random access is slower than sequential access. They provide good performance for read operations.\n   - **B+ Trees**: Commonly used in modern database management systems due to their efficient handling of large datasets, especially when combined with indexing. They are particularly well-suited for write-intensive workloads.\n\nIn summary, B-trees and B+ trees differ mainly in their node structure, leaf organization, and intended use. While both are designed for efficient storage and retrieval of data, B+ trees generally offer better performance in modern database systems.",
+      "execution_time": 11.270607233047485,
+      "memory_usage": -79.140625,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.\n\nThere are two types of rotations in AVL trees:\n\n1. Left Rotation (LR):\n   - Situation: A node with two children is inserted or deleted, causing a violation of the AVL height difference condition.\n   - Operation: Move the rightmost child of the affected node to become its new left child. Update the parent pointers accordingly.\n   - Example: ![Left Rotation](https://i.imgur.com/3eJvZb.png) (Assuming 'A' is the original node)\n\n2. Right Rotation (RR):\n   - Situation: Similar to a Left Rotation, but with the rightmost child on the left and the second-rightmost child on the right.\n   - Operation: Move the second-rightmost child of the affected node to become its new right child. Update the parent pointers accordingly.\n   - Example: ![Right Rotation](https://i.imgur.com/4s1U6L.png) (Assuming 'A' is the original node)\n\nAfter performing either a Left or Right Rotation, the AVL tree will be rebalanced, ensuring that the height difference condition is maintained.",
+      "execution_time": 9.14625096321106,
+      "memory_usage": -3.46875,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "The main advantages of MongoDB include:\n\n1. **Document-oriented design**: MongoDB stores data in flexible document-based structures, which makes it easier to model complex real-world relationships.\n\n2. **High scalability and performance**: MongoDB is designed for horizontal scaling, allowing you to add more servers to handle increased traffic. Its query optimizer and indexing capabilities help improve read and write speeds.\n\n3. **Flexible schema and versioning**: MongoDB allows documents to have dynamic schemas, which means you can easily modify or add fields without affecting existing data.\n\n4. **Integration with other languages and tools**: MongoDB has a rich ecosystem of drivers, libraries, and tools for various programming languages like Python, Java, C#, and more.\n\n5. **No-SQL alternative to traditional RDBMSs**: MongoDB provides a non-relational database (NoSQL) solution that can handle unstructured data and scale horizontally without the need for complex normalization.",
+      "execution_time": 6.613637208938599,
+      "memory_usage": 56.859375,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "AWS S3 uses a multi-tiered replication strategy to ensure high availability and durability of data.\n\n1. **Base Storage**: All objects uploaded to S3 are initially stored in the primary region where the bucket is created. This region acts as the authoritative copy for all data.\n\n2. **Replication**: To improve data availability, AWS replicates the base storage across multiple regions. The replication process can be manual or automated based on your S3 settings.\n\n3. **Read Replicas**: In addition to cross-regional replication, S3 also supports read replicas. A read replica is a secondary copy of an S3 bucket that can be accessed for read-only operations. This improves query performance and scalability.\n\nIn summary, AWS S3 uses a combination of multi-regional replication and read replicas to ensure data durability and high availability across its infrastructure.",
+      "execution_time": 5.908551931381226,
+      "memory_usage": -7.921875,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:14:47"
+}

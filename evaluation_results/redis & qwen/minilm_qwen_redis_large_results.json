@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "minilm_qwen_redis_large",
+    "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+    "llm_model": "qwen:7b",
+    "vector_db": "redis",
+    "chunking_strategy": "1024_100",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 1024,
+    "chunk_overlap": 100,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "[KB] Knowledge Base - Information from the course materials and documents\n\nThe main difference between B-trees and B+ trees lies in their structure and how they are used for indexing in databases.\n\n1. **B-Trees**:\n   - Structure: B-trees are balanced, which means that the height of the tree is minimized. Each node has a fixed number of children (usually 2 or 4).\n   - Indexing: B-trees are commonly used in databases to store and index data. They allow for efficient search, insertion, and deletion operations.\n   - Trade-off: The main trade-off with B-trees is their balance requirement, which can lead to more nodes per level compared to other tree structures.\n\n2. **B+ Trees**:\n   - Structure: B+ trees are similar to B-trees but with an additional leaf node at the bottom of each internal node. This leaf node holds the actual data.\n   - Indexing: B+ trees are often used in databases for large datasets, as they allow for more direct access to data without traversing through multiple nodes.\n   - Trade-off: The main trade-off with B+ trees is that they may have a slightly higher overhead per node due to the leaf node.\n\nIn summary, while both B- and B+ trees are balanced tree structures used for indexing in databases, B+ trees typically have an additional leaf node, allowing for more direct access to data. This makes B+ trees more suitable for managing large datasets.",
+      "execution_time": 10.549789905548096,
+      "memory_usage": -56.84375,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "AVL trees are self-balancing binary search trees where the height difference between left and right subtrees is at most 1.\n\nRotation operations in an AVL tree are performed to restore balance after a node's subtree heights have changed. There are four types of rotations:\n\n1. Left Rotation (LR):\n   - If a node has two or more right children, a left rotation is needed.\n   - The root becomes the rightmost child of the rotated node.\n   - The original right child of the rotated node becomes the new root.\n   - Citation: [KB-Text 'AVL Tree Left Rotation']].\n\n2. Right Rotation (RR):\n   - Similar to left rotations, a right rotation is required when a node has two or more left children.\n   - The root becomes the leftmost child of the rotated node.\n   - The original left child of the rotated node becomes the new root.\n   - Citation: [KB-Text 'AVL Tree Right Rotation']].\n\n3. Left-Right (LR/RL) Rotation:\n   - This type of rotation is needed when a node's left and right subtrees have different heights, causing a 2-level imbalance.\n   - Depending on which subtree has the higher height, either a left rotation followed by a right rotation (LR/RR), or vice versa (RR/LR) is performed.\n   - Citation: [KB-Text 'AVL Tree Left-Right Rotation']].\n\n4. Right-Left (RL/LR) Rotation:\n   - Similar to LR/RL rotations, this type of rotation is needed when a node's right and left subtrees have different heights, causing a 2-level imbalance.\n   - Depending on which subtree has the higher height, either a right rotation followed by a left rotation (RL/LR), or vice versa (LR/RL) is performed.\n   - Citation: [KB-Text 'AVL Tree Right-Left Rotation']].\n\nIn summary, AVL tree rotations are used to maintain balance by adjusting node positions and reassigning parent pointers. These operations ensure that the tree's height difference between left and right subtrees remains at most 1.",
+      "execution_time": 14.98273777961731,
+      "memory_usage": 11.359375,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "The main advantages of MongoDB include:\n\n1. **Document-oriented design**: MongoDB stores data as documents, which allows for flexible and nested structures. This is in contrast to relational databases like MySQL that use tables with predefined columns.\n\n2. **High scalability and performance**: MongoDB's sharding capability allows it to scale horizontally across multiple servers. This results in better read and write performance compared to monolithic systems.\n\n3. **Automatic indexing and query optimization**: MongoDB automatically creates indexes on fields that are frequently queried or sorted. This helps optimize queries, resulting in faster response times.\n\n4. **Easy integration with other technologies**: MongoDB can be easily integrated with other programming languages like Python, Java, or C++. This allows developers to leverage the strengths of both MongoDB and their chosen language.\n\nThese advantages make MongoDB a popular choice for modern applications that require flexible data modeling and high scalability.",
+      "execution_time": 6.166088104248047,
+      "memory_usage": 4.078125,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "AWS S3 uses a multi-factor approach to handle data replication. Here's a step-by-step explanation based on [KB]:\n\n1. **S3 Replication**: When you create a bucket and set up replication, S3 replicates the objects in the source bucket to one or more destination buckets.\n\n2. **Data Selection**: AWS automatically selects objects for replication based on configurable rules like object size, modification time, or content type.\n\n3. **Replication Factors**: You can choose how many replicas of an object you want across your S3 accounts and regions. This helps ensure availability and redundancy.\n\n4. **Syncing and Conflict Resolution**: As objects are replicated, S3 constantly monitors for conflicts (i.e., two replicas with different versions). When a conflict is detected, S3 applies a predefined resolution strategy.\n\nIn summary, AWS S3 handles data replication through automatic selection of objects, configurable replication factors, constant syncing, and conflict resolution strategies.",
+      "execution_time": 7.450915098190308,
+      "memory_usage": -6.671875,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:11:51"
+}

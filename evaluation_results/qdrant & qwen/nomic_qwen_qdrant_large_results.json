@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "nomic_qwen_qdrant_large",
+    "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+    "llm_model": "qwen:7b",
+    "vector_db": "qdrant",
+    "chunking_strategy": "1024_100",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 1024,
+    "chunk_overlap": 100,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "[KB] Knowledge Base - Information from the course materials and documents\n\nThe main difference between B-trees and B+ trees lies in their storage and organization of data.\n\n1. **B-Trees**:\n   - B-trees are designed for disk-based storage, where random access is slower than sequential.\n   - They have a balanced structure with a minimum of n/2 nodes (where n is the number of keys).\n   - Each node can have multiple keys and pointers to child nodes.\n   - The main advantage of B-trees is their ability to maintain good balance even when inserting or deleting data.\n\n2. **B+ Trees**:\n   - B+ trees are a variation of B-trees, designed specifically for disk-based storage.\n   - They have a slightly different structure where all leaf nodes are located at the end of the tree, and internal nodes point only to their right child.\n   - This arrangement allows for more direct access to data (since you can traverse from root to leaf in a single direction).\n   - The main advantage of B+ trees is their improved efficiency when accessing data by reducing the number of pointer traversals.\n\nIn summary, while both B- and B+ trees are used for disk-based storage, B+ trees have a more direct access structure, which makes them slightly more efficient.",
+      "execution_time": 9.391062021255493,
+      "memory_usage": -319.734375,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.\n\nThere are two main types of AVL rotations:\n\n1. Left-rotation (LR):\n   - Suppose we have a node `A` with a right subtree (`B`) that is too large.\n   - To rotate `A` leftwards, we create a new root at the position of `B`, which becomes `A`'s new right child.\n   - The old position of `B` (now `A`), becomes the new root (`C`). So, the rotation can be represented as:\n     ```markdown\n       A\n      / \\\n     B   C\n        \\\n         D\n     ```\n   - After the LR, the tree is now balanced.\n\n2. Right-rotation (RR):\n   - The scenario for a right rotation is similar to that of a left rotation, but with the roles of nodes reversed.\n   - For example, suppose we have a node `A` with a left subtree (`B`) that is too small.\n   - To rotate `A` rightwards, we create a new root at the position of `B`, which becomes `A`'s new left child.\n   - The old position of `B` (now `A`)), becomes the new root (`C`). So, the rotation can be represented as:\n     ```markdown\n       A\n      / \\\n     B   C\n        \\\n         D\n     ```\n   - After the RR, the tree is now balanced.\n\nIn both cases, after the rotation, the balance property of AVL trees is restored.",
+      "execution_time": 12.078041076660156,
+      "memory_usage": 36.890625,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "The main advantages of MongoDB include:\n\n1. **Document-oriented model**: MongoDB stores data as flexible documents instead of fixed tables. This allows for easy querying and updating of nested structures.\n\n2. **High scalability and horizontal scaling**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This makes it well-suited for applications with unpredictable traffic loads.\n\n3. **Automatic sharding and partitioning**: MongoDB automatically shards data across multiple servers based on predefined rules (sharding keys). This not only improves performance but also simplifies data management.\n\n4. **Rich query language (SQL-like) and aggregation framework**: MongoDB supports a query language similar to SQL, allowing for complex queries. Additionally, it has a powerful aggregation framework that enables grouping, filtering, and transforming data in real-time.\n\n5. **Integration with other technologies**: MongoDB can easily integrate with other technologies such as Node.js, Python, Java, and web frameworks like Express.js or Django. This allows developers to leverage the strengths of different languages and tools for their projects.",
+      "execution_time": 7.367452144622803,
+      "memory_usage": -7.40625,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "AWS S3 uses a multi-tiered replication strategy to ensure data availability and durability.\n\n1. **Primary Replication**: When you upload a file to S3, it is first stored in the primary region where you created the bucket. The primary region is typically the closest location for your users or applications.\n\n2. **Secondary Replication (Cross-Region Replication, CRR))**: To improve data availability and protect against regional failures, S3 replicates objects to one or more secondary regions. You can choose which regions to replicate to, based on factors like cost, distance, and compliance requirements.\n\n3. **Replication Durability**: AWS ensures that your replicated data is durable and consistent across all replicas. This means that even if there are temporary issues with a specific region, the replicated data will remain available in other regions.\n\nIn summary, AWS S3 handles data replication by first storing objects in the primary region, then replicating those objects to one or more secondary regions for improved availability and durability.",
+      "execution_time": 6.945433139801025,
+      "memory_usage": 11.234375,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:05:21"
+}

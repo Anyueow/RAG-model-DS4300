@@ -1,11 +1,11 @@
 # Core dependencies
 numpy>=1.24.0
 pandas>=2.0.0
-torch==2.1.2
-transformers==4.36.2
+torch>=2.0.0
+transformers>=4.30.0
 accelerate==0.25.0
-huggingface-hub==0.20.3
-sentence-transformers==2.2.2
+huggingface-hub>=0.20.3
+sentence-transformers==2.5.1
 Pillow>=10.0.0
 
 # Vector Databases
@@ -21,13 +21,13 @@ pytesseract>=0.3.10
 # Text Processing
 nltk>=3.8.0
 rank-bm25==0.2.2
-scikit-learn==1.4.0
+scikit-learn>=1.0.0
 
 # LLM Integration
 ollama>=0.1.0
 
 # Testing
-pytest>=7.4.0
+pytest>=8.0.0
 
 # UI and visualization
 streamlit==1.32.0
@@ -40,5 +40,8 @@ seaborn>=0.12.0
 # Utilities
 python-dotenv>=1.0.0
 requests>=2.31.0
-
+tiktoken>=0.9.0
 PyMuPDF==1.23.8
+tabulate
+plotly 
+sqlite3 >= 3.35.0

@@ -1,0 +1,42 @@
+{
+  "total_configurations": 9,
+  "total_questions": 4,
+  "configurations": [
+    {
+      "name": "medium_mpnet_chroma_mistral",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "mistral:latest",
+      "vector_db": "chroma",
+      "avg_time": 26.31290054321289,
+      "avg_memory": -4.71875,
+      "total_questions": 4
+    },
+    {
+      "name": "large_nomic_chroma_mistral",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "mistral:latest",
+      "vector_db": "chroma",
+      "avg_time": 28.027418434619904,
+      "avg_memory": -16.921875,
+      "total_questions": 4
+    },
+    {
+      "name": "large_minilm_chroma_mistral",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "mistral:latest",
+      "vector_db": "chroma",
+      "avg_time": 29.432912707328796,
+      "avg_memory": -8.5390625,
+      "total_questions": 4
+    },
+    {
+      "name": "large_mpnet_chroma_mistral",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "mistral:latest",
+      "vector_db": "chroma",
+      "avg_time": 31.85434800386429,
+      "avg_memory": -14.27734375,
+      "total_questions": 4
+    }
+  ]
+}

@@ -1,37 +1,39 @@
-import os
+"""Main RAG system implementation."""
+
 from typing import List, Dict, Any, Optional
 from pathlib import Path
-import asyncio
-import streamlit as st
-from PIL import Image
-import io
+import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from ingestion.data_loader import DataLoader
-from preprocessing.chunker import TokenChunker, ChunkingPipeline
+from ingestion.data_loader import PDFLoader
+from preprocessing.chunker import TextChunker, ChunkingPipeline, ChunkingConfig
 from embeddings.base_embedder import BaseEmbedder
 from database.chroma_db import ChromaDB
-from query.query_handler import VectorQueryHandler, QueryPipeline
+from query.query_handler import QueryPipeline
 from llm.llm_interface import OllamaLLM, LLMPipeline
 from embeddings.sentence_transformer import SentenceTransformerEmbedder
-from embeddings.multimodal_embedder import MultiModalEmbedder
-from ingestion.multimodal_loader import PDFLoader, Document
 from query.hybrid_search import HybridSearch
 from llm.prompt_generator import PromptGenerator
+from embeddings.test_config import EMBEDDING_MODELS, EmbeddingModelConfig
 
 class RAGSystem:
     """RAG system that handles document ingestion and querying."""
     
     def __init__(
         self,
-        embedder: BaseEmbedder,
+        embedder: BaseEmbedder = None,
         vector_db: Any = None,
         document_loader: Any = None,
         llm: OllamaLLM = None,
         prompt_generator: PromptGenerator = None,
         semantic_weight: float = 0.7,
         keyword_weight: float = 0.3,
-        top_k: int = 3,
-        temperature: float = 0.7
+        temperature: float = 0.7,
+        model_config: EmbeddingModelConfig = None,
+        chunk_size: int = 512,
+        chunk_overlap: int = 50,
+        collection_name: str = "default",
+        top_k: int = 3
     ):
         """Initialize the RAG system.
         
@@ -43,20 +45,43 @@ class RAGSystem:
             prompt_generator: Prompt generator instance
             semantic_weight: Weight for semantic search
             keyword_weight: Weight for keyword search
-            top_k: Number of results to return
             temperature: Temperature for response generation
+            model_config: Configuration for the embedding model
+            chunk_size: Size of text chunks for processing
+            chunk_overlap: Overlap between chunks
+            collection_name: Name of the collection in vector DB
+            top_k: Number of results to return
         """
         # Initialize components with defaults if not provided
-        self.embedder = embedder or MultiModalEmbedder()
-        self.vector_db = vector_db or ChromaDB()
+        self.model_config = model_config or EMBEDDING_MODELS["nomic-ai/nomic-embed-text-v1.5"]
+        self.embedder = embedder or SentenceTransformerEmbedder(self.model_config)
+        self.vector_db = vector_db or ChromaDB(collection_name=collection_name)
         self.document_loader = document_loader or PDFLoader()
-        self.llm = llm or OllamaLLM(model_name="qwen:7b", temperature=temperature)
+        self.llm = llm or OllamaLLM(model_name="mistral:7b", temperature=temperature)
         self.prompt_generator = prompt_generator or PromptGenerator()
+        self.top_k = top_k
+        
+        # Initialize chunking pipeline with provided parameters
+        chunking_config = ChunkingConfig(
+            chunk_size=chunk_size,
+            overlap=chunk_overlap,
+            use_tiktoken=True
+        )
+        self.chunker = TextChunker(config=chunking_config)
+        self.chunking_pipeline = ChunkingPipeline(self.chunker)
+        
+        # Initialize query pipeline
+        self.query_pipeline = QueryPipeline(
+            embedder=self.embedder,
+            vector_db=self.vector_db,
+            llm=self.llm,
+            prompt_generator=self.prompt_generator
+        )
         
         # Initialize hybrid search with adjusted weights
         self.search = HybridSearch(
             vector_db=self.vector_db,
-            embedder=self.embedder,  # Pass embedder directly
+            embedder=self.embedder,
             semantic_weight=semantic_weight,
             keyword_weight=keyword_weight,
             top_k=top_k
@@ -64,6 +89,8 @@ class RAGSystem:
         
         self.documents = []
         self.query_cache = {}  # Cache for query results
+        self.embedding_cache = {}  # Cache for embeddings
+        self.context_cache = {}  # Cache for contexts
 
     def ingest_documents(self, data_dir: str) -> None:
         """Ingest documents from a directory.
@@ -71,44 +98,93 @@ class RAGSystem:
         Args:
             data_dir: Directory containing documents to ingest
         """
-        # Load documents
-        self.documents = self.document_loader.load_directory(data_dir)
+        documents = []
         
-        # Process documents in chunks for better memory management
+        # Load from main directory
+        if os.path.exists(data_dir):
+            documents.extend(self.document_loader.load_directory(data_dir))
+            
+        # Validate documents
+        if not documents:
+            raise ValueError(f"No documents found in {data_dir}")
+            
+        self.documents = documents
+        
+        # Process documents in parallel chunks for better memory management
         chunk_size = 10  # Process 10 documents at a time
-        for i in range(0, len(self.documents), chunk_size):
-            chunk = self.documents[i:i + chunk_size]
-            texts = [doc.text for doc in chunk]
+        
+        def process_document_chunk(chunk):
+            chunked_texts = []
+            doc_ids = []
+            metadata = []
             
-            # Generate embeddings for the chunk
-            embeddings = self.embedder.embed_texts(texts)
+            for doc_idx, doc in enumerate(chunk):
+                if doc is None or not doc.text:
+                    continue
+                    
+                try:
+                    # Get chunks for this document
+                    doc_chunks = self.chunking_pipeline.process(doc.text)
+                    if doc_chunks:  # Only add if we got valid chunks
+                        # Add chunks and their metadata
+                        for chunk_idx, chunk_data in enumerate(doc_chunks):
+                            chunked_texts.append(chunk_data['text'])
+                            doc_ids.append(f"doc_{doc_idx}_{chunk_idx}")
+                            metadata.append({
+                                'text': chunk_data['text'],
+                                'source': doc.metadata.get('source'),
+                                'page': doc.metadata.get('page'),
+                                'doc_idx': doc_idx,
+                                'chunk_idx': chunk_idx,
+                                'type': 'text'
+                            })
+                except Exception as e:
+                    print(f"Error processing document: {str(e)}")
+                    continue
             
-            # Prepare metadata for the chunk
-            metadata = [
-                {
+            return chunked_texts, doc_ids, metadata
+            
+        # Process documents in parallel
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            futures = []
+            for i in range(0, len(self.documents), chunk_size):
+                chunk = self.documents[i:i + chunk_size]
+                futures.append(executor.submit(process_document_chunk, chunk))
+            
+            # Collect results
+            for future in as_completed(futures):
+                try:
+                    chunked_texts, doc_ids, metadata = future.result()
+                    if chunked_texts:  # Only proceed if we have chunks
+                        # Generate embeddings for the chunks
+                        embeddings, _ = self.embedder.embed_batch(chunked_texts)
+                        
+                        # Add chunks to vector database
+                        self.vector_db.index(embeddings, chunked_texts, doc_ids, metadata)
+                except Exception as e:
+                    print(f"Error processing chunk: {str(e)}")
+                    continue
+        
+        # Index documents for hybrid search
+        valid_documents = []
+        for idx, doc in enumerate(self.documents):
+            if doc is None or not doc.text:
+                continue
+                
+            try:
+                valid_documents.append({
                     'text': doc.text,
                     'source': doc.metadata.get('source'),
                     'page': doc.metadata.get('page'),
-                    'doc_idx': idx + i,  # Maintain correct document index
+                    'doc_idx': idx,
                     'type': 'text'
-                }
-                for idx, doc in enumerate(chunk)
-            ]
-            
-            # Add chunk to vector database
-            self.vector_db.add_vectors(embeddings, metadata)
+                })
+            except Exception as e:
+                print(f"Error processing document for hybrid search: {str(e)}")
+                continue
         
-        # Index documents for hybrid search
-        self.search.index_documents([
-            {
-                'text': doc.text,
-                'source': doc.metadata.get('source'),
-                'page': doc.metadata.get('page'),
-                'doc_idx': idx,
-                'type': 'text'
-            }
-            for idx, doc in enumerate(self.documents)
-        ])
+        if valid_documents:
+            self.search.index_documents(valid_documents)
 
     def query(self, 
               query_text: str, 
@@ -129,99 +205,29 @@ class RAGSystem:
         if cache_key in self.query_cache:
             return self.query_cache[cache_key]
         
-        # Process query
-        contexts = self.search.search(query_text, query_image)
+        # Check embedding cache
+        if query_text in self.embedding_cache:
+            query_embedding = self.embedding_cache[query_text]
+        else:
+            query_embedding, _ = self.embedder.embed_text(query_text)
+            self.embedding_cache[query_text] = query_embedding
         
-        # Generate response
-        response = self.llm.generate_response(
-            query_text,
-            contexts,
-            [{'data': query_image, 'index': 0}] if query_image else None,
+        # Check context cache
+        context_cache_key = f"{query_text}_{self.top_k}"
+        if context_cache_key in self.context_cache:
+            contexts = self.context_cache[context_cache_key]
+        else:
+            # Get contexts from vector DB
+            contexts = self.vector_db.search(query_embedding, k=self.top_k)
+            self.context_cache[context_cache_key] = contexts
+        
+        # Process query through the query pipeline
+        result = self.query_pipeline.process(
+            query_text=query_text,
+            query_image=query_image,
             use_general_knowledge=use_general_knowledge
         )
         
-        result = {
-            'response': response,
-            'contexts': contexts
-        }
-        
         # Cache the result
         self.query_cache[cache_key] = result
-        return result
-
-def setup_streamlit():
-    """Set up Streamlit interface."""
-    st.set_page_config(
-        page_title="RAG System",
-        page_icon="📚",
-        layout="wide"
-    )
-    
-    st.title("RAG System Interface")
-    
-    # Initialize RAG system
-    if 'rag_system' not in st.session_state:
-        st.session_state.rag_system = RAGSystem()
-    
-    # File uploader
-    uploaded_files = st.file_uploader(
-        "Upload PDF documents",
-        type=['pdf'],
-        accept_multiple_files=True
-    )
-    
-    if uploaded_files:
-        # Create temporary directory for uploaded files
-        temp_dir = "temp_uploads"
-        os.makedirs(temp_dir, exist_ok=True)
-        
-        try:
-            # Save uploaded files
-            for file in uploaded_files:
-                file_path = os.path.join(temp_dir, file.name)
-                with open(file_path, "wb") as f:
-                    f.write(file.getbuffer())
-            
-            # Ingest documents
-            st.session_state.rag_system.ingest_documents(temp_dir)
-            st.success("Documents ingested successfully!")
-            
-        finally:
-            # Clean up temporary files
-            for file in os.listdir(temp_dir):
-                os.remove(os.path.join(temp_dir, file))
-            os.rmdir(temp_dir)
-    
-    # Query interface with multi-line support
-    st.subheader("Enter your query:")
-    query = st.text_area(
-        "Query",
-        height=150,  # Increased height for better visibility
-        placeholder="Enter your query here...\nYou can use multiple lines to format your query.\nThe formatting will be preserved."
-    )
-    
-    if query:
-        with st.spinner("Processing query..."):
-            result = st.session_state.rag_system.query(query)
-            
-            # Display response
-            st.subheader("Response")
-            st.write(result['response'])
-            
-            # Display contexts
-            st.subheader("Relevant Contexts")
-            for context in result['contexts']:
-                st.text_area(
-                    f"Context (Score: {context.get('combined_score', 'N/A'):.3f})",
-                    context['metadata']['text'],
-                    height=100
-                )
-
-def main():
-    """Main function to run the RAG system."""
-    # Set up Streamlit interface
-    setup_streamlit()
-
-if __name__ == "__main__":
-    # Run the Streamlit app
-    main() 
+        return result 

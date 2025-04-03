@@ -1,107 +1,114 @@
-from typing import List, Dict, Any
+from dataclasses import dataclass
+from typing import List, Dict, Any, Optional
+import tiktoken  
 import re
-from abc import ABC, abstractmethod
 
-class BaseChunker(ABC):
-    """Abstract base class for text chunking strategies."""
-    
-    @abstractmethod
-    def chunk_text(self, text: str) -> List[str]:
-        """Split text into chunks.
-        
-        Args:
-            text: Text to split into chunks
-            
-        Returns:
-            List of text chunks
-        """
-        pass
+@dataclass
+class ChunkingConfig:
+    """Configuration for text chunking."""
+    chunk_size: int = 400  # In tokens
+    overlap: int = 30      # Token overlap between chunks
+    use_tiktoken: bool = True  # Whether to use tiktoken for tokenization
 
-class TokenChunker(BaseChunker):
-    """Chunker that splits text based on token count."""
+class TextChunker:
+    """Handles document chunking with token-based strategy."""
     
-    def __init__(self, chunk_size: int = 400, overlap: int = 30):
-        """Initialize the chunker.
+    def __init__(self, config: ChunkingConfig = None):
+        self.config = config or ChunkingConfig()
+        self.tokenizer = tiktoken.get_encoding("cl100k_base") if self.config.use_tiktoken else None
+
+    def _count_tokens(self, text: str) -> int:
+        """Count tokens in text using either tiktoken or simple word count."""
+        if self.config.use_tiktoken:
+            return len(self.tokenizer.encode(text))
+        return len(text.split())
+
+    def _encode_text(self, text: str) -> List[str]:
+        """Encode text into tokens using either tiktoken or simple word split."""
+        if self.config.use_tiktoken:
+            return self.tokenizer.encode(text)
+        return text.split()
+
+    def _decode_tokens(self, tokens: List[str]) -> str:
+        """Decode tokens back to text using either tiktoken or simple join."""
+        if self.config.use_tiktoken:
+            return self.tokenizer.decode(tokens)
+        return " ".join(tokens)
+
+    def chunk_document(self, document: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Chunk a document based on token count."""
+        text = document.get("text", "")
+        metadata = document.get("metadata", {})
         
-        Args:
-            chunk_size: Target size for each chunk in tokens
-            overlap: Number of tokens to overlap between chunks
-        """
-        self.chunk_size = chunk_size
-        self.overlap = overlap
-    
-    def chunk_text(self, text: str) -> List[str]:
-        """Split text into chunks based on token count.
-        
-        Args:
-            text: Text to split into chunks
+        if not text.strip():
+            return []
             
-        Returns:
-            List of text chunks
-        """
-        # Simple tokenization by splitting on whitespace
-        tokens = text.split()
+        return self._token_based_chunking(text, metadata)
+
+    def _token_based_chunking(self, text: str, metadata: dict) -> List[Dict[str, Any]]:
+        """Split text into chunks based on token count."""
+        tokens = self._encode_text(text)
         chunks = []
         start = 0
         
         while start < len(tokens):
-            end = start + self.chunk_size
-            chunk = ' '.join(tokens[start:end])
-            chunks.append(chunk)
-            start = end - self.overlap
+            # Calculate end position for this chunk
+            end = min(start + self.config.chunk_size, len(tokens))
             
-        return chunks
-
-class SentenceChunker(BaseChunker):
-    """Chunker that splits text based on sentence boundaries."""
-    
-    def __init__(self, chunk_size: int = 5, overlap: int = 1):
-        """Initialize the chunker.
-        
-        Args:
-            chunk_size: Number of sentences per chunk
-            overlap: Number of sentences to overlap between chunks
-        """
-        self.chunk_size = chunk_size
-        self.overlap = overlap
-    
-    def chunk_text(self, text: str) -> List[str]:
-        """Split text into chunks based on sentence boundaries.
-        
-        Args:
-            text: Text to split into chunks
+            # Get the chunk tokens and decode back to text
+            chunk_tokens = tokens[start:end]
+            chunk_text = self._decode_tokens(chunk_tokens)
             
-        Returns:
-            List of text chunks
-        """
-        # Simple sentence splitting
-        sentences = re.split(r'[.!?]+', text)
-        sentences = [s.strip() for s in sentences if s.strip()]
-        
-        chunks = []
-        start = 0
-        
-        while start < len(sentences):
-            end = start + self.chunk_size
-            chunk = '. '.join(sentences[start:end])
-            chunks.append(chunk)
-            start = end - self.overlap
+            # Create chunk with metadata
+            chunks.append({
+                "text": chunk_text,
+                "metadata": metadata,
+                "chunk_id": f"{metadata.get('source', 'doc')}_{len(chunks)}",
+                "token_count": len(chunk_tokens)
+            })
             
+            # Break if we've reached the end
+            if end >= len(tokens):
+                break
+                
+            # Move start position with overlap, ensuring we don't go backwards
+            start = max(end - self.config.overlap, start + 1)
+        
         return chunks
 
 class ChunkingPipeline:
-    """Pipeline for processing documents into chunks."""
+    """Orchestrates the chunking process."""
     
-    def __init__(self, chunker: BaseChunker):
-        """Initialize the pipeline.
-        
-        Args:
-            chunker: Chunking strategy to use
-        """
+    def __init__(self, chunker: TextChunker):
         self.chunker = chunker
     
+    def process(self, text: str) -> List[Dict[str, Any]]:
+        """Process text through the chunker.
+        
+        Args:
+            text: Text to be chunked
+            
+        Returns:
+            List of chunks with text and metadata
+        """
+        if not text or not text.strip():
+            return []
+            
+        try:
+            # Create a document dict for the chunker
+            document = {
+                "text": text,
+                "metadata": {}
+            }
+            
+            # Get chunks from the chunker
+            return self.chunker.chunk_document(document)
+        except Exception as e:
+            print(f"Error processing text: {e}")
+            return []
+    
     def process_documents(self, documents: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Process documents into chunks.
+        """Process multiple documents through the chunker.
         
         Args:
             documents: List of documents to process
@@ -109,16 +116,14 @@ class ChunkingPipeline:
         Returns:
             List of processed chunks with metadata
         """
-        processed_chunks = []
+        all_chunks = []
         
         for doc in documents:
-            chunks = self.chunker.chunk_text(doc['text'])
-            for i, chunk in enumerate(chunks):
-                processed_chunks.append({
-                    'text': chunk,
-                    'document_id': doc['file_path'],
-                    'chunk_id': f"{doc['file_path']}_{i}",
-                    'file_type': doc['file_type']
-                })
-        
-        return processed_chunks 
+            try:
+                chunks = self.chunker.chunk_document(doc)
+                all_chunks.extend(chunks)
+            except Exception as e:
+                print(f"Failed to chunk document: {e}")
+                continue
+                
+        return all_chunks

@@ -1,0 +1,87 @@
+{
+  "total_configurations": 9,
+  "total_questions": 4,
+  "configurations": [
+    {
+      "name": "nomic_qwen_redis_small",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "qwen:7b",
+      "vector_db": "redis",
+      "avg_time": 8.047339797019958,
+      "avg_memory": -141.16015625,
+      "total_questions": 4
+    },
+    {
+      "name": "minilm_qwen_redis_small",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "qwen:7b",
+      "vector_db": "redis",
+      "avg_time": 8.701826333999634,
+      "avg_memory": -10.04296875,
+      "total_questions": 4
+    },
+    {
+      "name": "mpnet_qwen_redis_small",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "qwen:7b",
+      "vector_db": "redis",
+      "avg_time": 7.191643297672272,
+      "avg_memory": -5.515625,
+      "total_questions": 4
+    },
+    {
+      "name": "nomic_qwen_redis_medium",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "qwen:7b",
+      "vector_db": "redis",
+      "avg_time": 7.39899480342865,
+      "avg_memory": -75.17578125,
+      "total_questions": 4
+    },
+    {
+      "name": "minilm_qwen_redis_medium",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "qwen:7b",
+      "vector_db": "redis",
+      "avg_time": 9.15939849615097,
+      "avg_memory": -5.61328125,
+      "total_questions": 4
+    },
+    {
+      "name": "mpnet_qwen_redis_medium",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "qwen:7b",
+      "vector_db": "redis",
+      "avg_time": 7.953380227088928,
+      "avg_memory": -12.69921875,
+      "total_questions": 4
+    },
+    {
+      "name": "nomic_qwen_redis_large",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "qwen:7b",
+      "vector_db": "redis",
+      "avg_time": 7.694058001041412,
+      "avg_memory": -67.76171875,
+      "total_questions": 4
+    },
+    {
+      "name": "minilm_qwen_redis_large",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "qwen:7b",
+      "vector_db": "redis",
+      "avg_time": 9.78738272190094,
+      "avg_memory": -12.01953125,
+      "total_questions": 4
+    },
+    {
+      "name": "mpnet_qwen_redis_large",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "qwen:7b",
+      "vector_db": "redis",
+      "avg_time": 7.92421692609787,
+      "avg_memory": 0.09375,
+      "total_questions": 4
+    }
+  ]
+}

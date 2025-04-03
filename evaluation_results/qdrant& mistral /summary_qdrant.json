@@ -1,0 +1,42 @@
+{
+  "total_configurations": 9,
+  "total_questions": 4,
+  "configurations": [
+    {
+      "name": "medium_mpnet_qdrant_mistral",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "mistral:latest",
+      "vector_db": "qdrant",
+      "avg_time": 16.010598242282867,
+      "avg_memory": -4.07421875,
+      "total_questions": 4
+    },
+    {
+      "name": "large_nomic_qdrant_mistral",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "mistral:latest",
+      "vector_db": "qdrant",
+      "avg_time": 19.840193569660187,
+      "avg_memory": -81.9296875,
+      "total_questions": 4
+    },
+    {
+      "name": "large_minilm_qdrant_mistral",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "mistral:latest",
+      "vector_db": "qdrant",
+      "avg_time": 15.73419851064682,
+      "avg_memory": -19.828125,
+      "total_questions": 4
+    },
+    {
+      "name": "large_mpnet_qdrant_mistral",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "mistral:latest",
+      "vector_db": "qdrant",
+      "avg_time": 15.91657543182373,
+      "avg_memory": -12.3515625,
+      "total_questions": 4
+    }
+  ]
+}

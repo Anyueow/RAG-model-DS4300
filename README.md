@@ -1,163 +1,222 @@
-# RAG Model for Course Notes
+# Aces - Retrieval-Augmented Generation System for DS4300 Notes
+A RAG system that leverages course notes to provide accurate, context-aware responses to questions about DS4300 topics. 
 
-A Retrieval-Augmented Generation (RAG) system for processing and querying course notes using local LLMs.
+## Overview
+
+Retrieval-Augmented Generation (RAG) is an AI architecture that combines the power of large language models with external knowledge retrieval to provide more accurate and contextual responses. This project implements a local RAG system specifically designed to answer questions about data science topics using course notes as the knowledge base.
+
+The system's primary goal is to demonstrate the effectiveness of different RAG configurations by comparing various embedding models, vector databases, chunking strategies, and LLM models in a controlled environment.
+
+## Tech Stack
+
+- **Python 3.8+**: Core programming language
+- **Ollama**: Local LLM deployment
+  - Mistral: Latest version for primary testing
+  - Qwen: 7B model for comparative analysis
+- **Vector Databases**:
+  - Redis: High-performance in-memory vector store (fastest for real-time queries)
+  - Qdrant: Vector similarity search engine (best for complex similarity metrics)
+  - Chroma: Open-source vector database (easiest to set up and maintain)
+- **Embedding Models**:
+  - Nomic AI's nomic-embed-text-v1.5
+  - MiniLM (multi-qa-MiniLM-L6-cos-v1)
+  - MPNet (all-mpnet-base-v2)
+- **Additional Libraries**:
+  - Sentence Transformers for embeddings
+  - LangChain for text processing
+  - Plotly for visualization
+  - Pandas for data analysis
 
 ## Features
 
-- Document ingestion from PDF files
-- Text chunking with configurable strategies
-- Vector embeddings using SentenceTransformer
-- Vector database support (ChromaDB and Redis)
-- Local LLM integration using Ollama
-- SOLID principles implementation
-- Comprehensive testing suite
-- Both web interface and terminal-based querying
+- **Document Processing**:
+  - Automatic document ingestion from various formats
+  - Configurable text chunking with overlap control
+  - Metadata extraction and storage
+
+- **Embedding Pipeline**:
+  - Support for multiple embedding models
+  - Vector dimension validation
+  - Efficient batch processing
+
+- **Vector Database Integration**:
+  - Unified interface for multiple vector DBs
+  - Automatic collection management
+  - Configurable similarity search parameters
+
+- **LLM Integration**:
+  - Local LLM deployment via Ollama
+  - Configurable prompt templates
+  - Temperature and sampling controls
+
+- **Evaluation Framework**:
+  - Standardized question sets
+  - Performance metrics tracking
+  - Interactive visualization tools
+  - CSV export capabilities
 
 ## Project Structure
 
 ```
-rag-model/
-├── data/
-│   └── raw_notes/          # Place your course notes here
-├── database/
-│   ├── base_db.py          # Base vector database interface
-│   ├── chroma_db.py        # ChromaDB implementation
-│   └── redis_db.py         # Redis vector database implementation
-├── embeddings/
-│   ├── base_embedder.py    # Base embedding interface
-│   └── sentence_transformer.py  # SentenceTransformer implementation
-├── ingestion/
-│   └── data_loader.py      # Document loading and processing
-├── llm/
-│   └── llm_interface.py    # Local LLM integration
-├── preprocessing/
-│   └── chunker.py          # Text chunking strategies
-├── query/
-│   └── query_handler.py    # Query processing
-├── tests/
-│   └── test_rag.py         # Test suite
-├── main.py                 # Main RAG system implementation
-├── example.py              # Example usage and benchmarking
-├── setup.py               # Setup script
-└── requirements.txt       # Project dependencies
+.
+├── data/                   # Course notes and evaluation data
+├── database/              # Vector database implementations
+│   ├── chroma_db.py      # Chroma DB client
+│   ├── qdrant_db.py      # Qdrant DB client
+│   └── redis_db.py       # Redis DB client
+├── embeddings/           # Embedding model implementations
+│   ├── sentence_transformer.py
+│   └── test_config.py    # Model configurations
+├── llm/                  # LLM interface
+│   └── llm_interface.py  # Ollama integration
+├── evaluation/          # Evaluation scripts and tools
+│   ├── evaluate_rag.py  # Main evaluation script
+│   └── generate_evaluation_responses_*.py  # Response generators
+├── main.py             # Main RAG system implementation
+└── requirements.txt    # Project dependencies
 ```
 
 ## Installation
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/rag-model.git
-cd rag-model
-```
+1. **Set up Python Environment**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-2. Run the setup script:
-```bash
-python setup.py
-```
+2. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-3. Install Ollama:
-   - Visit [Ollama.ai](https://ollama.ai/) to download and install
-   - The setup script will automatically pull the required model
+3. **Set up Ollama**:
+   ```bash
+   # Install Ollama (follow instructions at https://ollama.ai)
+   # Pull the required models
+   ollama pull mistral:latest
+   ollama pull qwen:7b
+   ```
 
-4. Set up Vector Database (Choose one or both):
+4. **Vector Database Setup**:
+   ```bash
+   # Redis (if using)
+   docker run -d -p 6379:6379 redis
 
-   ### Option 1: ChromaDB (Default)
-   - No additional setup required
-   - Data is stored locally in the `chroma_db` directory
-
-   ### Option 2: Redis Vector DB
-   - Install Docker if not already installed
-   - Start Redis container:
-     ```bash
-     # If container doesn't exist:
-     docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
-     
-     # If container exists but is stopped:
-     docker start redis-stack
-     ```
-   - Redis will be available at `localhost:6379`
+   # Qdrant (if using)
+   docker run -d -p 6333:6333 qdrant/qdrant
+   ```
 
 ## Usage
 
-### Web Interface
-1. Start the Streamlit app:
-```bash
-streamlit run app.py
-```
+1. **Run Evaluation Pipeline**:
+   ```bash
+   # Generate responses with Redis
+   python generate_evaluation_responses_redis.py
 
-2. Follow the web interface instructions to:
-   - Initialize the RAG system
-   - Upload and process documents
-   - Perform text or image searches
+   # Generate responses with Qdrant
+   python generate_evaluation_responses_qdrant.py
 
-### Terminal Interface
-1. Process documents (if not already done):
-```bash
-python query_terminal.py "your query" --process-docs
-```
+   # Generate responses with Chroma
+   python generate_evaluation_responses_chroma.py
+   ```
 
-2. Query the system:
-```bash
-python query_terminal.py "your query"
-```
+2. **Evaluate Results**:
+   ```bash
+   python evaluate_rag.py
+   ```
 
-3. Query with custom data directory:
-```bash
-python query_terminal.py "your query" --data-dir /path/to/documents
-```
+3. **View Results**:
+   - Check `evaluation_results/` for JSON outputs
+   - View interactive visualizations in `evaluation_results/visualizations/`
+   - Access raw data in `evaluation_results/raw_responses.csv`
 
-Example queries:
-```bash
-# Process documents and query
-python query_terminal.py "What are the advantages of B+ trees?" --process-docs
+## Configuration
 
-# Query existing documents
-python query_terminal.py "Explain the concept of RAG"
+The system supports various configuration options:
 
-# Query with custom directory
-python query_terminal.py "What is the main topic of these notes?" --data-dir ./my_notes
-```
+1. **Chunking Strategies**:
+   ```json
+   {
+     "chunk_size": 256,  // or 512, 1024
+     "chunk_overlap": 25 // or 50, 100
+   }
+   ```
 
-The terminal interface provides:
-- Command-line argument support
-- Document processing option
-- Custom data directory specification
-- Formatted output with response and relevant contexts
-- Error handling and status messages
+2. **Embedding Models**:
+   ```python
+   EMBEDDING_MODELS = {
+       "nomic-ai/nomic-embed-text-v1.5": {...},
+       "multi-qa-MiniLM-L6-cos-v1": {...},
+       "all-mpnet-base-v2": {...}
+   }
+   ```
 
-## Development
+3. **Vector Database Settings**:
+   ```python
+   vector_db = RedisDB(
+       collection_name="eval_config_name",
+       embedding_model="model_name"
+   )
+   ```
 
-### Adding New Components
+4. **LLM Parameters**:
+   ```python
+   # Mistral configuration
+   llm = OllamaLLM(
+       model_name="mistral:latest",
+       temperature=0.4
+   )
+   
+   # Qwen configuration
+   llm = OllamaLLM(
+       model_name="qwen:7b",
+       temperature=0.4
+   )
+   ```
 
-1. **New Embedding Model**:
-   - Implement `BaseEmbedder` interface
-   - Add to `embeddings/` directory
+## Experiments
 
-2. **New Vector Database**:
-   - Implement `BaseVectorDB` interface
-   - Add to `database/` directory
+The system evaluates different configurations:
 
-3. **New Chunking Strategy**:
-   - Implement `BaseChunker` interface
-   - Add to `preprocessing/` directory
+1. **Chunking Strategies**:
+   - Small (256/25): Fine-grained retrieval
+   - Medium (512/50): Balanced approach
+   - Large (1024/100): Context preservation
 
-4. **New LLM Interface**:
-   - Implement `BaseLLM` interface
-   - Add to `llm/` directory
+2. **Embedding Models**:
+   - Nomic AI: Latest generation embeddings
+   - MiniLM: Fast and efficient
+   - MPNet: Strong semantic understanding
 
-### Testing
+3. **Vector Databases**:
+   - Redis: In-memory performance
+   - Qdrant: Advanced similarity search
+   - Chroma: Local persistence
 
-- Run all tests: `pytest tests/`
-- Run specific test: `pytest tests/test_rag.py -k "test_name"`
+4. **LLM Models**:
+   - Mistral: Latest version for primary testing
+   - Qwen: 7B model for comparative analysis
 
-## Contributing
+## Results
 
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+Key findings from the evaluation:
 
-## License
+1. **Performance Metrics**:
+   - Memory usage across configurations
+   - Execution time for different components
+   - Response quality and relevance
+   - LLM model comparison (Mistral vs. Qwen)
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+2. **Best Performing Configuration**:
+   - Optimal chunking strategy
+   - Most effective embedding model
+   - Preferred vector database
+   - Preferred LLM model
+
+3. **Trade-offs**:
+   - Speed vs. accuracy
+   - Memory usage vs. context size
+   - Local vs. distributed storage
+   - LLM performance vs. resource usage
+
+Detailed results and visualizations are available in the `evaluation_results/` directory. 

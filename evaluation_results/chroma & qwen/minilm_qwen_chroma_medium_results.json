@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "minilm_qwen_chroma_medium",
+    "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+    "llm_model": "qwen:7b",
+    "vector_db": "chroma",
+    "chunking_strategy": "512_50",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 512,
+    "chunk_overlap": 50,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "[KB] Knowledge Base - Information from the course materials and documents\n\nThe main difference between B-trees and B+ trees lies in their structure and how they are used for indexing in databases.\n\n1. **B-Tree (General Knowledge)****\n   A B-tree is a self-balancing search tree where each node can have multiple children. The number of children per node follows a specific pattern, usually 2 or 4.\n   \n   - **Insertion and Deletion**: In B-trees, insertions and deletions are performed recursively by splitting or merging nodes as needed to maintain the balance.\n   \n   - **Space Efficiency**: B-trees are more space-efficient than other balanced search trees like AVL trees because they can have fewer nodes per level.\n\n2. **B+ Tree (Knowledge Base)****\n   A B+ tree is a variation of B-trees that adds an ordered leaf node set, usually containing pointers to actual data records in the database.\n   \n   - **Leaf Nodes**: In B+ trees, all non-leaf nodes are used for indexing and have at most two children. Leaf nodes contain the actual data records.\n   \n   - **Efficient Range Queries**: B+ trees are particularly well-suited for range queries because leaf nodes are ordered, allowing for efficient traversal.\n\nIn summary, while both B- and B+ trees are self-balancing search structures, B+ trees have leaf nodes containing actual data records, making them more suitable for range queries in databases.",
+      "execution_time": 10.362936019897461,
+      "memory_usage": -58.046875,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "AVL trees are self-balancing binary search trees that maintain a balance factor (difference in height between left and right subtrees) for each node.\n\nRotation operations are performed when the balance factor becomes too extreme, either -2 or +2. There are three main types of rotations:\n\n1. Left Rotation (LR):\n   - This rotation is needed when a node's right subtree has become too large.\n   - The process involves moving the rightmost node to the left and adjusting the balance factors accordingly.\n   - Cite: [KB-Text 'AVL Tree Left Rotation']].\n\n2. Right Rotation (RR):\n   - Similar to LR, RR is required when the left subtree of a node becomes too large.\n   - The process involves shifting the leftmost node to the right and updating balance factors.\n   - Cite: [KB-Text 'AVL Tree Right Rotation']].\n\n3. Double Rotation (DR):\n   - This occurs when both left and right subtrees require rotation.\n   - There are two subcases for DR:\n     a) Left-Right Rotation (LR-RR):\n        - Perform an LR first, then an RR.\n        - Cite: [KB-Text 'AVL Tree Double Left-Right Rotation']].\n     b) Right-Left Rotation (RR-LR):\n        - Perform an RR first, then an LR.\n        - Cite: [KB-Text 'AVL Tree Double Right-Left Rotation']].\n\nRemember to cite your sources when providing information about AVL tree rotations.",
+      "execution_time": 10.499165773391724,
+      "memory_usage": 17.75,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "The main advantages of MongoDB include:\n\n1. **Flexible Data Model**: MongoDB uses a document-oriented model, allowing for flexible and nested data structures.\n\n2. **High Scalability**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This makes it suitable for handling large volumes of data.\n\n3. **Automatic Sharding**: MongoDB automatically shards data across multiple servers based on predefined rules. This simplifies the process of scaling your database.\n\n4. **Real-time Querying**: MongoDB's query language, called MongoDB Query Language (MQL), allows for real-time querying and aggregation of data.\n\n5. **Integration with Other Tools**: MongoDB can easily integrate with other programming languages, frameworks, and tools, making it a versatile choice for modern applications.",
+      "execution_time": 5.492229223251343,
+      "memory_usage": -3.109375,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "AWS S3 uses a multi-tiered replication strategy to ensure data availability and durability.\n\n1. **S3 Standard**: This is the default replication tier for new buckets. Data in S3 Standard is replicated across multiple Availability Zones within an Amazon Web Services (AWS) region. This provides high durability with 99.99% availability.\n\n2. **S3 Intelligent Tiering**: This is a cost-effective storage optimization feature that automatically moves data between S3 Standard and S3 Standard-Infrequent Access (S3 Standard-IA). The goal is to balance performance with cost, depending on the frequency of access to the data.\n\nIn summary, AWS S3 uses a combination of multi-tiered replication and intelligent storage optimization features to ensure high availability, durability, and cost-effectiveness for your data.",
+      "execution_time": 5.703428268432617,
+      "memory_usage": -16.859375,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:15:54"
+}

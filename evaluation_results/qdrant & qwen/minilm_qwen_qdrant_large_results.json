@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "minilm_qwen_qdrant_large",
+    "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+    "llm_model": "qwen:7b",
+    "vector_db": "qdrant",
+    "chunking_strategy": "1024_100",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 1024,
+    "chunk_overlap": 100,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "[KB] Knowledge Base - Information from the course materials and documents\n\nThe main difference between B-trees and B+ trees lies in their node structure and how they organize data.\n\n1. **B-Tree (General) or B+-Tree (Database)**:\n   - A B-tree is a balanced tree where each node can have multiple children, up to a maximum number (the branching factor).\n   - In a B+ tree, the leaf nodes represent actual data records, while inner nodes store pointers to those leaf nodes.\n   - The main advantage of B+ trees over B-trees is that they provide faster access to individual records since there are no gaps in the leaf node pointers.\n\n2. **Example Applications:**\n   - In databases, B+ trees are commonly used for index structures because they allow for efficient range queries.\n   - In file systems, B+ trees can be used to store directory information and efficiently locate files based on their names.\n\nIn summary, the main difference between B-trees and B+ trees is that B+ trees have leaf nodes containing actual data records, while B-trees can have more flexible node structures. This difference leads to faster access times in database applications.",
+      "execution_time": 8.253681898117065,
+      "memory_usage": -94.9375,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "AVL trees are self-balancing binary search trees that maintain a balance factor (difference in height between the left and right subtrees) for each node.\n\nRotation operations in an AVL tree occur when the balance factor becomes too large or too small, necessitating restructuring to restore balance.\n\nThere are three main types of rotations:\n\n1. Left Rotation (LR):\n   - This occurs when a node with a right child that is too far to the right needs to be moved one level down to its left.\n   - Example: If a node A with a right child B has a balance factor of -3, LR would rotate A' (A's new position) and B towards the left.\n\n2. Right Rotation (RR):\n   - This occurs when a node with a left child that is too far to the left needs to be moved one level down to its right.\n   - Example: If a node C with a left child D has a balance factor of +3, RR would rotate C' (C's new position) and D towards the right.\n\n3. Double Rotation (DR):\n   - This occurs when both LR and RR are needed in sequence to balance a node or its subtree.\n   - Example: If a node E with a left child F and a right child G has a balance factor of -5, DR would involve first performing an LR on F, then doing an RR on G.\n\nIn summary, AVL tree rotations are used to maintain balance by adjusting the positions of nodes. These adjustments can be single or double rotations depending on the specific imbalance encountered.",
+      "execution_time": 10.73187804222107,
+      "memory_usage": 41.40625,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "The main advantages of MongoDB include:\n\n1. **Document-oriented structure**: MongoDB stores data in flexible document-like structures, which makes it easier to model complex real-world relationships.\n\n2. **Scaling and sharding**: MongoDB supports horizontal scaling through sharding, allowing you to distribute your data across multiple servers for better performance and fault tolerance.\n\n3. **High-performance read/write operations**: MongoDB is optimized for high-speed read and write operations, making it suitable for applications that require quick access to data.\n\n4. **\u6613\u5b66\u548c\u6613\u7528\u7684API**: MongoDB\u63d0\u4f9b\u4e86\u6613\u4e8e\u5b66\u4e60\u548c\u4f7f\u7528\u7684API\uff0c\u5982Python's PyMongo or Java's MongoClient, which simplifies integration with other languages and frameworks.\n\n5. **Rich set of tools and utilities**: MongoDB comes with a suite of command-line tools and utilities for managing databases, backups, replication, and more.\n\nThese advantages make MongoDB a popular choice for applications that require flexible data modeling, scalability, and ease of use.",
+      "execution_time": 6.9465391635894775,
+      "memory_usage": -43.0625,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "AWS S3 uses a multi-tiered replication strategy to ensure data availability and durability.\n\n1. **Primary Replication**: When you upload a file to an S3 bucket, the default is for Amazon S3 to replicate this content across multiple Availability Zones (AZs) within the same region. For example, if your bucket is in the US East (N. Virginia) region, the data will be replicated to both the US East (Ohio) and US West (Oregon) AZs.\n\n2. **Cross-Region Replication (CRR)**: To further enhance data durability and availability, you can enable CRR between two S3 buckets or between an S3 bucket and another AWS service, such as Amazon DynamoDB. This replication happens at the object level and involves multiple AWS regions to ensure high availability.\n\nIn summary, AWS S3 uses a combination of primary replication across AZs within a region and cross-region replication for enhanced durability and availability.",
+      "execution_time": 6.9093358516693115,
+      "memory_usage": -2.5625,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:05:55"
+}

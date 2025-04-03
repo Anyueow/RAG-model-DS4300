@@ -2,6 +2,7 @@ from typing import List, Dict, Any, Optional
 import base64
 from PIL import Image
 import io
+from database.base_db import SearchResult
 
 class PromptGenerator:
     """Generator for creating augmented prompts that combine text and image contexts."""
@@ -40,17 +41,17 @@ Always provide citations for your information. If you're not sure about somethin
         """Format text contexts with citations.
         
         Args:
-            contexts: List of text contexts with metadata
+            contexts: List of context dictionaries
             
         Returns:
             Formatted text context string
         """
         formatted_contexts = []
-        for idx, ctx in enumerate(contexts, 1):
-            text = ctx.get('text', '').strip()
-            source = ctx.get('metadata', {}).get('source', 'Unknown')
-            page = ctx.get('metadata', {}).get('page', None)
-            
+        for idx, context in enumerate(contexts, 1):
+            text = context.get('text', '').strip()
+            metadata = context.get('metadata', {})
+            source = metadata.get('source', 'Unknown')
+            page = metadata.get('page', None)
             
             citation = f"[KB-Text {idx}] (Source: {source}"
             if page is not None:
@@ -61,11 +62,11 @@ Always provide citations for your information. If you're not sure about somethin
             
         return "\n".join(formatted_contexts)
 
-    def _format_image_context(self, contexts: List[Dict[str, Any]]) -> tuple[str, List[Dict]]:
+    def _format_image_context(self, search_results: List[SearchResult]) -> tuple[str, List[Dict]]:
         """Format image contexts and prepare images.
         
         Args:
-            contexts: List of image contexts with metadata
+            search_results: List of search results from vector database
             
         Returns:
             Tuple of (formatted context string, list of image data)
@@ -73,10 +74,10 @@ Always provide citations for your information. If you're not sure about somethin
         formatted_contexts = []
         image_data = []
         
-        for idx, ctx in enumerate(contexts, 1):
-            source = ctx.get('metadata', {}).get('source', 'Unknown')
-            page = ctx.get('metadata', {}).get('page', None)
-            caption = ctx.get('text', '')
+        for idx, result in enumerate(search_results, 1):
+            source = result.metadata.get('source', 'Unknown')
+            page = result.metadata.get('page', None)
+            caption = result.chunk.strip()
             
             citation = f"[KB-Image {idx}] (Source: {source}"
             if page is not None:
@@ -88,54 +89,43 @@ Always provide citations for your information. If you're not sure about somethin
             else:
                 formatted_contexts.append(f"{citation}\n")
                 
-            # Prepare image data
-            image_data.append({
-                'index': idx,
-                'data': ctx.get('image', None),
-                'metadata': ctx.get('metadata', {})
-            })
+            # Prepare image data if available
+            if 'image' in result.metadata:
+                image_data.append({
+                    'index': idx,
+                    'data': result.metadata['image'],
+                    'metadata': result.metadata
+                })
             
         return "\n".join(formatted_contexts), image_data
 
     def generate_prompt(
         self,
         query: str,
-        text_contexts: Optional[List[Dict[str, Any]]] = None,
-        image_contexts: Optional[List[Dict[str, Any]]] = None
+        contexts: List[Dict[str, Any]],
+        use_general_knowledge: bool = True
     ) -> Dict[str, Any]:
-        """Generate an augmented prompt combining query, text, and image contexts.
+        """Generate an augmented prompt combining query and contexts.
         
         Args:
             query: User query
-            text_contexts: List of relevant text contexts
-            image_contexts: List of relevant image contexts
+            contexts: List of relevant context dictionaries with text and metadata
+            use_general_knowledge: Whether to use general knowledge
             
         Returns:
             Dictionary containing:
             - prompt: Combined prompt string
-            - images: List of image data
             - context_length: Estimated context length
         """
         prompt_parts = [self.system_prompt, "\n\n"]
-        images = []
         
         # Add text contexts if available
-        if text_contexts:
+        if contexts:
             prompt_parts.extend([
                 "Knowledge Base Text Contexts:",
-                self._format_text_context(text_contexts),
+                self._format_text_context(contexts),
                 "\n"
             ])
-            
-        # Add image contexts if available
-        if image_contexts:
-            image_context, image_data = self._format_image_context(image_contexts)
-            prompt_parts.extend([
-                "Knowledge Base Images:",
-                image_context,
-                "\n"
-            ])
-            images = image_data
             
         # Add query
         prompt_parts.extend([
@@ -153,20 +143,19 @@ Always provide citations for your information. If you're not sure about somethin
         
         return {
             'prompt': prompt,
-            'images': images,
             'context_length': context_length
         }
 
     def format_response(
         self,
         response: str,
-        sources: List[Dict[str, Any]]
+        search_results: List[SearchResult]
     ) -> Dict[str, Any]:
         """Format the LLM response with proper citations and source information.
         
         Args:
             response: Raw LLM response
-            sources: List of source documents used
+            search_results: List of search results used
             
         Returns:
             Dictionary containing:
@@ -180,8 +169,8 @@ Always provide citations for your information. If you're not sure about somethin
         gk_citations = set()
         
         # First, process knowledge base citations
-        for source in sources:
-            citation = source.get('citation', '')
+        for result in search_results:
+            citation = result.metadata.get('citation', '')
             if citation.startswith('[KB-Text'):
                 kb_text_citations.add(citation)
             elif citation.startswith('[KB-Image'):
@@ -194,12 +183,12 @@ Always provide citations for your information. If you're not sure about somethin
         if kb_text_citations:
             formatted_sources.append({'header': 'Knowledge Base Text Sources:'})
             for citation in sorted(kb_text_citations):
-                source = next((s for s in sources if s.get('citation') == citation), None)
-                if source:
+                result = next((r for r in search_results if r.metadata.get('citation') == citation), None)
+                if result:
                     formatted_sources.append({
                         'citation': citation,
-                        'source': source.get('metadata', {}).get('source', 'Unknown'),
-                        'page': source.get('metadata', {}).get('page'),
+                        'source': result.metadata.get('source', 'Unknown'),
+                        'page': result.metadata.get('page'),
                         'type': 'kb_text'
                     })
         
@@ -207,12 +196,12 @@ Always provide citations for your information. If you're not sure about somethin
         if kb_image_citations:
             formatted_sources.append({'header': 'Knowledge Base Image Sources:'})
             for citation in sorted(kb_image_citations):
-                source = next((s for s in sources if s.get('citation') == citation), None)
-                if source:
+                result = next((r for r in search_results if r.metadata.get('citation') == citation), None)
+                if result:
                     formatted_sources.append({
                         'citation': citation,
-                        'source': source.get('metadata', {}).get('source', 'Unknown'),
-                        'page': source.get('metadata', {}).get('page'),
+                        'source': result.metadata.get('source', 'Unknown'),
+                        'page': result.metadata.get('page'),
                         'type': 'kb_image'
                     })
         

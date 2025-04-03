@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "mpnet_qwen_qdrant_large",
+    "embedding_model": "all-mpnet-base-v2",
+    "llm_model": "qwen:7b",
+    "vector_db": "qdrant",
+    "chunking_strategy": "1024_100",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 1024,
+    "chunk_overlap": 100,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "[KB] Knowledge Base - Information from the course materials and documents\n\nThe main difference between B-trees and B+ trees lies in their structure and how they are used for indexing in databases.\n\n1. **B-Trees (Balanced Trees):** These trees maintain a balance by having a maximum number of children per node. This ensures that the tree can be traversed efficiently, both for insertion and deletion operations.\n\n- Example: A typical 4-level B-tree would have nodes with up to 4 child nodes.\n  \n2. **B+ Trees (Append-only Trees):** In contrast to B-trees, B+ trees are \"flat\" and each node contains only a pointer to the next node in the sequence. The leaves of a B+ tree represent actual data records.\n\n- Example: A typical 4-level B+ tree would have nodes with up to 4 child pointers, and all leaf nodes containing actual data records.\n  \nIn summary, while both B- and B+ trees are used for indexing in databases, B-trees maintain balance by limiting the number of children per node, whereas B+ trees are \"flat\" and each node points to the next record.",
+      "execution_time": 8.725877046585083,
+      "memory_usage": -81.28125,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.\n\nThere are two main types of rotations in AVL trees:\n\n1. Left-rotation (LR):\n   - Suppose we have a node `x` with a right child `y`.\n   - To perform a left rotation on `x`, we first move `y` up to become the new root (`z`).\n   - Then, we reassign `x`'s left and right children. `x.left = y` and `x.right = z`.\n   - The result is that the height of the left subtree of `z` has decreased by one.\n\n2. Right-rotation (RR):\n   - A similar process occurs for a right rotation.\n   - Instead of moving the right child up, we move the left child down to become the new root (`w`).\n   - Then, we reassign `x`'s left and right children. `x.left = w` and `x.right = y`.\n   - The result is that the height of the right subtree of `y` has decreased by one.\n\nBoth rotations are performed to maintain the AVL property, which ensures that the difference in heights between the left and right subtrees of any node never exceeds one.",
+      "execution_time": 9.925611972808838,
+      "memory_usage": 19.34375,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "The main advantages of MongoDB include:\n\n1. **Document-oriented structure**: MongoDB stores data in flexible document format, allowing for nested structures and easy querying.\n\n2. **High scalability and performance**: MongoDB is designed to handle large amounts of data and can scale horizontally by adding more servers.\n\n3. **Automatic sharding and replication**: MongoDB automatically shards data across multiple servers based on predefined rules. Replication allows for creating copies of the database, providing redundancy and failover capabilities.\n\n4. **Easy querying with JSON-like syntax**: MongoDB queries are written in a JSON-like syntax called CQL (MongoDB Query Language). This makes querying complex structures intuitive.\n\n5. **Integration with other languages and tools**: MongoDB has strong integration with various programming languages like Python, Java, and Ruby. It also works seamlessly with popular tools and frameworks.",
+      "execution_time": 6.12877893447876,
+      "memory_usage": 0.171875,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "AWS S3 uses a multi-tiered replication strategy to ensure data availability and durability.\n\n1. **Base Storage** (SSE-S3): The default storage class for objects in S3 is SSE-S3. This means that the data is encrypted at rest by AWS, and decryption keys are not shared with the users.\n\n2. **Multi-Region Replication** (MRR): To provide high availability and redundancy across multiple regions, S3 supports MRR. When enabled, S3 replicates objects to a minimum of two geographically dispersed regions. If one region fails, data can still be accessed from another region.\n\nIn summary, AWS S3 handles data replication through a combination of base storage with encryption (SSE-S3) and multi-region replication (MRR). This ensures high availability and durability of your data across multiple locations.",
+      "execution_time": 6.308352947235107,
+      "memory_usage": 0.90625,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:06:29"
+}

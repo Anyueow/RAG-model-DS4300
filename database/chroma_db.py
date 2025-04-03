@@ -1,124 +1,119 @@
+"""ChromaDB implementation for vector storage."""
+
+import chromadb
 from typing import List, Dict, Any, Optional
 import numpy as np
-import chromadb
-from chromadb.config import Settings
-from .base_db import BaseVectorDB
-import time
-import random
+from .base_db import BaseDB, SearchResult
 
-class ChromaDB(BaseVectorDB):
-    """ChromaDB adapter implementation with multimodal support."""
+class ChromaDB(BaseDB):
+    """ChromaDB implementation for vector storage."""
     
-    def __init__(self, 
-                 collection_name: str = "course_notes",
-                 persist_directory: str = "chroma_db"):
-        """Initialize the ChromaDB adapter.
+    def __init__(self, collection_name: str = "default"):
+        """Initialize ChromaDB.
         
         Args:
-            collection_name: Base name for collections
-            persist_directory: Directory to persist the database
+            collection_name: Name of the collection to use
         """
-        self.client = chromadb.Client(Settings(
-            persist_directory=persist_directory,
-            anonymized_telemetry=False
-        ))
+        super().__init__()
+        self.client = chromadb.Client()
         
-        # Create separate collections for text and images
-        self.text_collection = self.client.get_or_create_collection(
-            name=f"{collection_name}_text"
-        )
-        self.image_collection = self.client.get_or_create_collection(
-            name=f"{collection_name}_images"
-        )
+        # Try to get existing collection or create new one
+        try:
+            self.collection = self.client.get_collection(name=collection_name)
+        except ValueError:
+            self.collection = self.client.create_collection(name=collection_name)
     
-    def add_vectors(self, 
-                   vectors: List[np.ndarray], 
-                   metadata: Optional[List[Dict[str, Any]]] = None,
-                   modality: str = "text") -> None:
-        """Add vectors to ChromaDB.
+    def index(self, embeddings: List[List[float]], chunks: List[str], 
+              doc_ids: List[str], metadata: Optional[List[Dict[str, Any]]] = None) -> None:
+        """Index embeddings with their associated chunks and metadata.
         
         Args:
-            vectors: List of vectors to add
-            metadata: Optional list of metadata dictionaries for each vector
-            modality: Type of vectors ('text' or 'image')
+            embeddings: List of embedding vectors
+            chunks: List of text chunks
+            doc_ids: List of document IDs
+            metadata: Optional list of metadata dictionaries
         """
-        # Generate unique IDs using timestamp and random numbers
-        ids = [f"{modality}_{int(time.time())}_{random.randint(1000, 9999)}_{i}" 
-               for i in range(len(vectors))]
+        super().index(embeddings, chunks, doc_ids, metadata)
+    
+    def _index_impl(self, embeddings: List[List[float]], chunks: List[str], 
+                   doc_ids: List[str], metadata: Optional[List[Dict[str, Any]]] = None) -> None:
+        """Index embeddings using ChromaDB.
         
-        # Convert vectors to list format for ChromaDB
-        vectors_list = [v.tolist() for v in vectors]
+        Args:
+            embeddings: List of embedding vectors
+            chunks: List of text chunks
+            doc_ids: List of document IDs
+            metadata: Optional list of metadata dictionaries
+        """
+        # Convert embeddings to lists if they're numpy arrays
+        embeddings_list = []
+        for emb in embeddings:
+            if isinstance(emb, np.ndarray):
+                embeddings_list.append(emb.tolist())
+            else:
+                embeddings_list.append(emb)
         
-        # Select appropriate collection
-        collection = self.text_collection if modality == "text" else self.image_collection
+        # Prepare metadata
+        if metadata is None:
+            metadata = [{} for _ in chunks]
+            
+        # Ensure metadata is a list of dictionaries
+        metadata = [dict(m) if m else {} for m in metadata]
         
-        # Add vectors to collection
-        collection.add(
-            embeddings=vectors_list,
-            documents=[meta.get('text', '') for meta in (metadata or [])],
+        # Add documents to collection
+        self.collection.add(
+            embeddings=embeddings_list,
+            documents=chunks,
             metadatas=metadata,
-            ids=ids
+            ids=doc_ids
         )
     
-    def search(self, 
-               query_vector: np.ndarray, 
-               k: int = 5,
-               modality: str = "text") -> List[Dict[str, Any]]:
-        """Search for similar vectors.
+    def search(self, query_embedding: List[float], k: int = 3) -> List[SearchResult]:
+        """Search for similar vectors using ChromaDB.
         
         Args:
-            query_vector: Query vector
+            query_embedding: Query vector to search for
             k: Number of results to return
-            modality: Type of query ('text' or 'image')
             
         Returns:
-            List of results with metadata and distances
+            List of SearchResult objects containing matches
         """
-        # Select appropriate collection
-        collection = self.text_collection if modality == "text" else self.image_collection
+        return self._search_impl(query_embedding, k)
+    
+    def _search_impl(self, query_embedding: List[float], k: int) -> List[SearchResult]:
+        """Search for similar vectors using ChromaDB.
         
-        # Convert query vector to list
-        query_list = query_vector.tolist()
+        Args:
+            query_embedding: Query vector to search for
+            k: Number of results to return
+            
+        Returns:
+            List of SearchResult objects containing matches
+        """
+        # Convert query to numpy array if needed and ensure it's 1D
+        if isinstance(query_embedding, tuple):
+            query_embedding = query_embedding[0]  # Extract just the embedding array
+        query_embedding = np.array(query_embedding).reshape(-1)
         
-        # Search in collection
-        results = collection.query(
-            query_embeddings=[query_list],
+        # Search collection
+        results = self.collection.query(
+            query_embeddings=[query_embedding.tolist()],
             n_results=k
         )
         
-        # Format results
-        formatted_results = []
-        if results['distances'] and results['metadatas']:
-            for i in range(len(results['ids'][0])):
-                formatted_results.append({
-                    'id': results['ids'][0][i],
-                    'metadata': results['metadatas'][0][i],
-                    'distance': results['distances'][0][i]
-                })
-                
-        return formatted_results
-
-    def delete_vectors(self, ids: List[str]) -> None:
-        """Delete vectors by their IDs.
+        # Convert results to SearchResult objects
+        search_results = []
+        for i in range(len(results['documents'][0])):
+            search_results.append(SearchResult(
+                doc_id=results['ids'][0][i],
+                chunk=results['documents'][0][i],
+                score=float(results['distances'][0][i]),
+                metadata=results['metadatas'][0][i]
+            ))
         
-        Args:
-            ids: List of vector IDs to delete
-        """
-        # Separate IDs by modality
-        text_ids = [id_ for id_ in ids if id_.startswith('text_')]
-        image_ids = [id_ for id_ in ids if id_.startswith('image_')]
-        
-        # Delete from respective collections
-        if text_ids:
-            self.text_collection.delete(ids=text_ids)
-        if image_ids:
-            self.image_collection.delete(ids=image_ids)
-
-    def get_vector_count(self) -> int:
-        """Get the total number of vectors in the database."""
-        return len(self.text_collection.get()['ids']) + len(self.image_collection.get()['ids'])
-
+        return search_results
+    
     def clear(self) -> None:
-        """Clear all vectors from the database."""
-        self.text_collection.delete(ids=self.text_collection.get()['ids'])
-        self.image_collection.delete(ids=self.image_collection.get()['ids']) 
+        """Clear all data from the collection."""
+        self.client.delete_collection(self.collection.name)
+        self.collection = self.client.create_collection(name=self.collection.name) 

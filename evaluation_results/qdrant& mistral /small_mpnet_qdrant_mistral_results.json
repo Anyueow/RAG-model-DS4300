@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "small_mpnet_qdrant_mistral",
+    "embedding_model": "all-mpnet-base-v2",
+    "llm_model": "mistral:latest",
+    "vector_db": "qdrant",
+    "chunking_strategy": "small",
+    "semantic_weight": 0.7,
+    "keyword_weight": 0.3,
+    "chunk_size": 256,
+    "chunk_overlap": 25,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": " The B-tree and B+ tree are both self-balancing search trees used for organizing data in databases and other applications that require efficient access to data. They differ primarily in their structure and usage of leaf nodes, which significantly impacts the way they handle data retrieval and insertion operations.\n\n1. **B-tree**: [KB-Text \"Introduction to Database Systems\" by C.J. Date]\n   The B-tree is a multi-layer tree where each non-leaf node can have up to M children, and each leaf node can have up to N keys and pointers to the data records. All internal nodes have M-1 keys, while leaf nodes only contain keys (no pointers). This structure allows for efficient range queries, as well as insertion and deletion operations.\n\n2. **B+ tree**: [KB-Text \"Introduction to Database Systems\" by C.J. Date]\n   The B+ tree is a variation of the B-tree where all non-leaf nodes have M keys and M+1 children, while leaf nodes contain only pointers to data records (no keys). This structure results in a higher density of pointers towards the leaves, making it more suitable for sequential access. Since all the keys are stored at the leaf level, B+ trees are particularly efficient when performing range scans and retrieving specific records.\n\nIn summary, the main difference between B-trees and B+ trees lies in their structure and usage of keys within the nodes. B-trees store keys in internal nodes, while B+ trees only store keys at the leaf level. This distinction affects the efficiency of range queries, sequential access, and insertion/deletion operations.\n\n[GK] It is important to note that both B-trees and B+ trees are widely used in various database management systems due to their ability to efficiently manage large amounts of data while ensuring fast search times. For example, MySQL uses the InnoDB storage engine, which employs a variant of the B+ tree known as the Adaptive Multi-Level Grid (AMLG) for indexing data.\n\n[KB-Image \"B-tree structure\"]: https://en.wikipedia.org/wiki/B-tree#/media/File:B-tree_structure.svg\n[KB-Image \"B+ tree structure\"]: https://en.wikipedia.org/wiki/B%2B_tree#/media/File:B+-tree_structure.svg",
+      "execution_time": 31.62897777557373,
+      "memory_usage": -55.4375,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": " AVL trees are self-balancing binary search trees that maintain the height of the two child subtrees of any node differ by at most one. This is achieved through a system of rotations and rebalancing operations. Here's an overview of how AVL tree rotations work, specifically focusing on single rotations (left and right) and double rotations (left-left and right-right).\n\n1. **Single Rotation:**\n   - Left Rotation: In a left rotation, the right child of the node becomes the new parent of the original root, and the left child of the old root becomes the new right child of the old right child. [KB-Image \"AVL Tree Left Rotation\"](https://en.wikipedia.org/wiki/File:Avl_tree_left_rotation.svg)\n   - Right Rotation: In a right rotation, the left child of the node becomes the new parent of the original root, and the right child of the old root becomes the new left child of the old left child. [KB-Image \"AVL Tree Right Rotation\"](https://en.wikipedia.org/wiki/File:Avl_tree_right_rotation.svg)\n\n2. **Double Rotations:**\n   - Left-Left (Double Left Rotation): When a node with a negative balance factor undergoes a left rotation, it results in a double left rotation. This can be visualized as first performing a right rotation on the left child and then a left rotation on the new root. [KB-Image \"AVL Tree Double Left Rotation\"](https://en.wikipedia.org/wiki/File:Avl_tree_double_left_rotation.svg)\n   - Right-Right (Double Right Rotation): Similar to the double left rotation, a right-right rotation can be achieved by first performing a left rotation on the right child and then a right rotation on the new root. [KB-Image \"AVL Tree Double Right Rotation\"](https://en.wikipedia.org/wiki/File:Avl_tree_double_right_rotation.svg)\n\nThese rotations help maintain the balance of the AVL tree, ensuring that the height difference between the two child subtrees of any node is at most one. For more complex scenarios, such as left-right or right-left rotations, they can be decomposed into a series of single rotations.\n\n[KB] The concept of AVL trees was introduced by Geodesic Inc.'s researchers Adelson-Velsky and Landis in 1962 as an improvement over the earlier B-trees. For further reading, you can refer to [this Wikipedia article on AVL Trees](https://en.wikipedia.org/wiki/AVL_tree).",
+      "execution_time": 38.53734493255615,
+      "memory_usage": -14.3125,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": " The main advantages of MongoDB [GK] include:\n\n1. Flexible Data Model (Document-oriented): Unlike traditional relational databases, MongoDB stores data in flexible JSON-like documents, making it easier to handle complex and dynamic data structures. This is particularly useful when dealing with unstructured or semi-structured data. [KB-Text \"Introduction to MongoDB\"]\n\n2. Scalability: MongoDB can easily scale both horizontally (across multiple machines) and vertically (within a single machine). It achieves this scalability by using sharding, which is the process of splitting collections across multiple databases. [KB-Text \"MongoDB Sharding\"]\n\n3. High Performance: MongoDB offers high performance due to its use of non-blocking I/O and map-reduce functions for complex data analysis tasks. It also supports indexing, which can significantly improve query performance. [KB-Text \"MongoDB Performance\"]\n\n4. Real-time Data Access: MongoDB provides real-time data access through its support for aggregation pipelines, which allow for the processing of large amounts of data in a single operation. This is particularly useful for applications that require real-time analytics or event-driven processing. [KB-Text \"MongoDB Aggregation\"]\n\n5. Automatic Failover and Replication: MongoDB automatically replicates data across multiple machines, ensuring high availability and data durability. In case of a server failure, another server can take over without any downtime. [KB-Text \"MongoDB Replication\"]",
+      "execution_time": 22.804967880249023,
+      "memory_usage": 20.453125,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": " In Amazon Web Services (AWS), the Simple Storage Service (S3) handles data replication using a feature called \"Bucket Replication\". This process involves creating copies of an object in one bucket and storing them in another bucket, either within the same region or across different regions.\n\nHere's how it works:\n\n1. You create a replication configuration that specifies the source and destination buckets, as well as the settings for the replication process (e.g., filtering rules, conditions, and error handling).\n\n2. Once you set up the replication configuration, S3 starts copying the objects from the source bucket to the destination bucket according to the specified schedule.\n\n3. By default, S3 replicates data synchronously within the same region. However, if you choose to use cross-region replication, it becomes asynchronous due to network latency and bandwidth considerations.\n\n4. You can also configure S3 to replicate only new objects or updated versions of existing objects by using a lifecycle rule that includes a filter for the replication configuration.\n\n5. It's worth noting that S3 automatically creates multiple copies of an object within a region, storing them in different Availability Zones (AZs) to ensure high durability and availability. This is known as \"Object Lifecycle Management.\"\n\nFor more information on Bucket Replication and Object Lifecycle Management, you can refer to the following resources:\n- [KB-Text] AWS S3 User Guide: https://docs.aws.amazon.com/AmazonS3/latest/userguide/WhatIsObjectLifecycleManagement.html\n- [KB-Text] AWS S3 Replication: https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucketReplication.html",
+      "execution_time": 24.338160037994385,
+      "memory_usage": 49.890625,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:57:45"
+}

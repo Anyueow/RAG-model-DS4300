@@ -1,0 +1,87 @@
+{
+  "total_configurations": 9,
+  "total_questions": 4,
+  "configurations": [
+    {
+      "name": "small_nomic_chroma_mistral",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+      "vector_db": "chroma",
+      "avg_time": 0.16432100534439087,
+      "avg_memory": 12.515625,
+      "total_questions": 4
+    },
+    {
+      "name": "small_minilm_chroma_mistral",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+      "vector_db": "chroma",
+      "avg_time": 0.07061523199081421,
+      "avg_memory": 7.16796875,
+      "total_questions": 4
+    },
+    {
+      "name": "small_mpnet_chroma_mistral",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+      "vector_db": "chroma",
+      "avg_time": 0.11744773387908936,
+      "avg_memory": 8.72265625,
+      "total_questions": 4
+    },
+    {
+      "name": "medium_nomic_chroma_mistral",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+      "vector_db": "chroma",
+      "avg_time": 0.055305540561676025,
+      "avg_memory": 9.25390625,
+      "total_questions": 4
+    },
+    {
+      "name": "medium_minilm_chroma_mistral",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+      "vector_db": "chroma",
+      "avg_time": 0.028540492057800293,
+      "avg_memory": 4.08203125,
+      "total_questions": 4
+    },
+    {
+      "name": "medium_mpnet_chroma_mistral",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+      "vector_db": "chroma",
+      "avg_time": 0.05000537633895874,
+      "avg_memory": 3.87890625,
+      "total_questions": 4
+    },
+    {
+      "name": "large_nomic_chroma_mistral",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+      "vector_db": "chroma",
+      "avg_time": 0.055694758892059326,
+      "avg_memory": 9.0078125,
+      "total_questions": 4
+    },
+    {
+      "name": "large_minilm_chroma_mistral",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+      "vector_db": "chroma",
+      "avg_time": 0.029141485691070557,
+      "avg_memory": 3.6484375,
+      "total_questions": 4
+    },
+    {
+      "name": "large_mpnet_chroma_mistral",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+      "vector_db": "chroma",
+      "avg_time": 0.06235074996948242,
+      "avg_memory": 4.1328125,
+      "total_questions": 4
+    }
+  ]
+}

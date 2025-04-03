@@ -1,0 +1,87 @@
+{
+  "total_configurations": 9,
+  "total_questions": 4,
+  "configurations": [
+    {
+      "name": "nomic_qwen_chroma_small",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "qwen:7b",
+      "vector_db": "chroma",
+      "avg_time": 8.931314408779144,
+      "avg_memory": -164.62890625,
+      "total_questions": 4
+    },
+    {
+      "name": "minilm_qwen_chroma_small",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "qwen:7b",
+      "vector_db": "chroma",
+      "avg_time": 7.232337594032288,
+      "avg_memory": -11.69921875,
+      "total_questions": 4
+    },
+    {
+      "name": "mpnet_qwen_chroma_small",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "qwen:7b",
+      "vector_db": "chroma",
+      "avg_time": 8.234761834144592,
+      "avg_memory": -8.41796875,
+      "total_questions": 4
+    },
+    {
+      "name": "nomic_qwen_chroma_medium",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "qwen:7b",
+      "vector_db": "chroma",
+      "avg_time": 7.376009225845337,
+      "avg_memory": -86.09375,
+      "total_questions": 4
+    },
+    {
+      "name": "minilm_qwen_chroma_medium",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "qwen:7b",
+      "vector_db": "chroma",
+      "avg_time": 8.014439821243286,
+      "avg_memory": -15.06640625,
+      "total_questions": 4
+    },
+    {
+      "name": "mpnet_qwen_chroma_medium",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "qwen:7b",
+      "vector_db": "chroma",
+      "avg_time": 7.194771587848663,
+      "avg_memory": -13.55078125,
+      "total_questions": 4
+    },
+    {
+      "name": "nomic_qwen_chroma_large",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "qwen:7b",
+      "vector_db": "chroma",
+      "avg_time": 7.907113254070282,
+      "avg_memory": -69.921875,
+      "total_questions": 4
+    },
+    {
+      "name": "minilm_qwen_chroma_large",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "qwen:7b",
+      "vector_db": "chroma",
+      "avg_time": 6.827735245227814,
+      "avg_memory": -19.86328125,
+      "total_questions": 4
+    },
+    {
+      "name": "mpnet_qwen_chroma_large",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "qwen:7b",
+      "vector_db": "chroma",
+      "avg_time": 8.282635807991028,
+      "avg_memory": 0.16796875,
+      "total_questions": 4
+    }
+  ]
+}

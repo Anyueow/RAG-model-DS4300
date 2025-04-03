@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "nomic_qwen_redis_medium",
+    "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+    "llm_model": "qwen:7b",
+    "vector_db": "redis",
+    "chunking_strategy": "512_50",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 512,
+    "chunk_overlap": 50,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "[KB] Knowledge Base - Information from the course materials and documents\n\nThe main difference between B-trees and B+ trees lies in their organization and how they handle data.\n\n1. **B-Trees (with duplicates)****\n   - B-trees are designed for use with datasets that may contain duplicate keys.\n   - Each node in a B-tree can have up to `m` children, where `m` is the maximum number of keys per node (usually 2 or 4).\n   - The tree structure allows for efficient search, insertion, and deletion operations.\n\n2. **B+ Trees (without duplicates)****\n   - B+ trees are a variant of B-trees that are optimized for handling large datasets without duplicates.\n   - In contrast to B-trees, all nodes in a B+ tree have only one child, which is used to store the next key or pointer.\n   - The leaf nodes of a B+ tree contain the actual data, while non-leaf nodes act as indexes.\n\nIn summary, B-trees are suitable for datasets with duplicates and can handle more complex structures. B+ trees, on the other hand, are optimized for handling large datasets without duplicates, making them more efficient in terms of memory usage.",
+      "execution_time": 9.070943117141724,
+      "memory_usage": -325.1875,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are used to restore balance.\n\nThere are two types of rotations in AVL trees:\n\n1. Left Rotation (LR):\n   - Consider a node `x` with a right child `y`.\n   - If `y`'s left child is not null, perform a left rotation around `x` and `y`. \n   - Otherwise, the tree structure would be invalid, so no rotation is needed.\n\n2. Right Rotation (RR):\n   - Similar to LR, consider a node `z` with a left child `w`.\n   - If `w`'s right child is not null, perform a right rotation around `z` and `w`. \n   - Otherwise, the tree structure would be invalid, so no rotation is needed.\n\nBoth rotations aim to balance the tree by adjusting the parent-child relationships. After the rotation, the AVL property is restored, ensuring efficient search operations in the balanced tree.",
+      "execution_time": 7.949842929840088,
+      "memory_usage": -7.46875,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "The main advantages of MongoDB include:\n\n1. **Document-oriented design**: MongoDB stores data in flexible document format, allowing for easy querying and updating.\n\n2. **High scalability and horizontal scaling**: MongoDB's architecture supports sharding, which allows you to distribute data across multiple servers. This enables high availability and linear scalability.\n\n3. **Fast read and write operations**: MongoDB is designed to provide fast access to data, even with a large number of documents.\n\n4. **\u6613\u7528\u7684\u67e5\u8be2\u8bed\u8a00 (SQL-like) -** MongoDB's query language, called the C# driver for MongoDB, allows developers to perform complex queries similar to SQL.\n\n5. **Integration with other languages and tools**: MongoDB supports integration with various programming languages, such as Python, Java, and C#. This enables seamless data manipulation across different systems.",
+      "execution_time": 6.374890089035034,
+      "memory_usage": -1.234375,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "AWS S3 uses a multi-tiered replication strategy to ensure data durability and availability.\n\n1. **Primary Replication**: When you upload a file to S3, it is first stored in the primary region where the bucket was created. This region is typically considered the \"home\" of your S3 bucket.\n\n2. **Cross-Region Replication (CRR)**: To improve data durability and availability, S3 supports CRR. With this feature, you can configure S3 to replicate objects from one primary region to one or more secondary regions. The replicated objects are stored in the secondary regions, providing an additional layer of protection.\n\nBy using a combination of primary replication and cross-region replication, AWS S3 ensures that your data is highly available and durable across multiple geographic locations.",
+      "execution_time": 6.200303077697754,
+      "memory_usage": 33.1875,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:09:22"
+}
