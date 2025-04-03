@@ -1,5 +1,5 @@
-# Local Retrieval-Augmented Generation System for DS4300 Notes
-A local RAG system that leverages course notes to provide accurate, context-aware responses to questions about data science topics.
+# Aces - Retrieval-Augmented Generation System for DS4300 Notes
+A RAG system that leverages course notes to provide accurate, context-aware responses to questions about DS4300 topics. 
 
 ## Overview
 
