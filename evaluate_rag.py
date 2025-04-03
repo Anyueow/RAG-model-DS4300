@@ -3,7 +3,8 @@ import json
 import pandas as pd
 from tabulate import tabulate
 import argparse
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import numpy as np
 import time
 import psutil
@@ -29,19 +30,28 @@ class RAGEvaluator:
         """Initialize the evaluator with path to results directory."""
         self.results_dir = Path(results_dir)
         self.results_dir.mkdir(exist_ok=True)
+        self.export_dir = Path("evaluation_analysis")
+        self.export_dir.mkdir(exist_ok=True)
         self.results = []
         self.load_results()
         
     def load_results(self) -> None:
         """Load all test results from the results directory using parallel processing."""
         logger.info("Loading evaluation results...")
-        json_files = list(self.results_dir.glob("*.json"))
+        json_files = list(self.results_dir.glob("**/*.json"))
         
         def load_single_file(file_path: Path) -> Dict:
             try:
                 with open(file_path, 'r') as f:
                     result = json.load(f)
                     if 'error' not in result:
+                        config_name = file_path.stem.replace('_results', '')
+                        parts = config_name.split('_')
+                        if len(parts) >= 4:
+                            result['embedding_model'] = parts[0]
+                            result['llm_model'] = parts[1]
+                            result['vector_db'] = parts[2]
+                            result['chunking_strategy'] = parts[3]
                         return result
             except json.JSONDecodeError:
                 logger.error(f"Could not parse {file_path}")
@@ -49,12 +59,38 @@ class RAGEvaluator:
                 logger.error(f"Error loading {file_path}: {str(e)}")
             return None
         
-        # Use ThreadPoolExecutor for parallel file loading
         with ThreadPoolExecutor(max_workers=min(32, len(json_files))) as executor:
             results = list(filter(None, executor.map(load_single_file, json_files)))
         
         self.results = results
         logger.info(f"Loaded {len(self.results)} valid results")
+        
+        # Export raw responses to CSV
+        self._export_raw_responses()
+    
+    def _export_raw_responses(self) -> None:
+        """Export all responses to a CSV file."""
+        rows = []
+        for result in self.results:
+            if 'responses' not in result:
+                continue
+                
+            for q_idx, (q_key, q_data) in enumerate(result['responses'].items()):
+                rows.append({
+                    'question_number': q_idx + 1,
+                    'question': q_data['question'],
+                    'response': q_data['response'],
+                    'embedding_model': result['embedding_model'],
+                    'llm_model': result['llm_model'],
+                    'vector_db': result['vector_db'],
+                    'chunking_strategy': result['chunking_strategy'],
+                    'execution_time': q_data['execution_time'],
+                    'memory_usage': q_data['memory_usage']
+                })
+        
+        df = pd.DataFrame(rows)
+        df.to_csv(self.export_dir / 'raw_responses.csv', index=False)
+        logger.info(f"Exported raw responses to {self.export_dir / 'raw_responses.csv'}")
     
     def compare_responses(self, question_idx: int = 0) -> None:
         """Compare responses from different configurations for a specific question."""
@@ -93,188 +129,248 @@ class RAGEvaluator:
         else:
             logger.warning(f"No responses found for question {question_idx+1}")
     
+    def analyze_performance_metrics(self) -> None:
+        """Analyze and display performance metrics across different configurations."""
+        # Prepare data for analysis
+        rows = []
+        for result in self.results:
+            if 'responses' not in result:
+                continue
+                
+            for q_data in result['responses'].values():
+                rows.append({
+                    'embedding_model': result['embedding_model'],
+                    'llm_model': result['llm_model'],
+                    'vector_db': result['vector_db'],
+                    'chunking_strategy': result['chunking_strategy'],
+                    'execution_time': q_data['execution_time'],
+                    'memory_usage': q_data['memory_usage']
+                })
+        
+        df = pd.DataFrame(rows)
+        
+        # Calculate average metrics for each configuration
+        metrics_df = df.groupby(['embedding_model', 'vector_db', 'chunking_strategy']).agg({
+            'execution_time': 'mean',
+            'memory_usage': 'mean'
+        }).reset_index()
+        
+        # Export metrics to CSV
+        metrics_df.to_csv(self.export_dir / 'performance_metrics.csv', index=False)
+        logger.info(f"Exported performance metrics to {self.export_dir / 'performance_metrics.csv'}")
+        
+        # Generate visualizations
+        self._generate_performance_visualizations(metrics_df)
+    
+    def _generate_performance_visualizations(self, df: pd.DataFrame) -> None:
+        """Generate Plotly visualizations for performance metrics."""
+        # 1. By Chunking Strategy
+        for chunking in df['chunking_strategy'].unique():
+            chunk_df = df[df['chunking_strategy'] == chunking]
+            
+            # Memory usage
+            fig = go.Figure()
+            for db in chunk_df['vector_db'].unique():
+                db_data = chunk_df[chunk_df['vector_db'] == db]
+                fig.add_trace(go.Bar(
+                    name=db,
+                    x=db_data['embedding_model'],
+                    y=db_data['memory_usage']
+                ))
+            
+            fig.update_layout(
+                title=f'Memory Usage by Embedding Model and Vector DB (Chunking: {chunking})',
+                xaxis_title='Embedding Model',
+                yaxis_title='Memory Usage (MB)',
+                barmode='group',
+                template='plotly_white'
+            )
+            fig.write_html(self.export_dir / f'memory_chunking_{chunking}.html')
+            
+            # Execution time
+            fig = go.Figure()
+            for db in chunk_df['vector_db'].unique():
+                db_data = chunk_df[chunk_df['vector_db'] == db]
+                fig.add_trace(go.Bar(
+                    name=db,
+                    x=db_data['embedding_model'],
+                    y=db_data['execution_time']
+                ))
+            
+            fig.update_layout(
+                title=f'Execution Time by Embedding Model and Vector DB (Chunking: {chunking})',
+                xaxis_title='Embedding Model',
+                yaxis_title='Execution Time (s)',
+                barmode='group',
+                template='plotly_white'
+            )
+            fig.write_html(self.export_dir / f'time_chunking_{chunking}.html')
+        
+        # 2. By Embedding Model
+        for model in df['embedding_model'].unique():
+            model_df = df[df['embedding_model'] == model]
+            
+            # Memory usage
+            fig = go.Figure()
+            for db in model_df['vector_db'].unique():
+                db_data = model_df[model_df['vector_db'] == db]
+                fig.add_trace(go.Bar(
+                    name=db,
+                    x=db_data['chunking_strategy'],
+                    y=db_data['memory_usage']
+                ))
+            
+            fig.update_layout(
+                title=f'Memory Usage by Chunking Strategy and Vector DB (Model: {model})',
+                xaxis_title='Chunking Strategy',
+                yaxis_title='Memory Usage (MB)',
+                barmode='group',
+                template='plotly_white'
+            )
+            fig.write_html(self.export_dir / f'memory_model_{model}.html')
+            
+            # Execution time
+            fig = go.Figure()
+            for db in model_df['vector_db'].unique():
+                db_data = model_df[model_df['vector_db'] == db]
+                fig.add_trace(go.Bar(
+                    name=db,
+                    x=db_data['chunking_strategy'],
+                    y=db_data['execution_time']
+                ))
+            
+            fig.update_layout(
+                title=f'Execution Time by Chunking Strategy and Vector DB (Model: {model})',
+                xaxis_title='Chunking Strategy',
+                yaxis_title='Execution Time (s)',
+                barmode='group',
+                template='plotly_white'
+            )
+            fig.write_html(self.export_dir / f'time_model_{model}.html')
+        
+        # 3. By Vector DB
+        for db in df['vector_db'].unique():
+            db_df = df[df['vector_db'] == db]
+            
+            # Memory usage
+            fig = go.Figure()
+            for model in db_df['embedding_model'].unique():
+                model_data = db_df[db_df['embedding_model'] == model]
+                fig.add_trace(go.Bar(
+                    name=model,
+                    x=model_data['chunking_strategy'],
+                    y=model_data['memory_usage']
+                ))
+            
+            fig.update_layout(
+                title=f'Memory Usage by Chunking Strategy and Embedding Model (DB: {db})',
+                xaxis_title='Chunking Strategy',
+                yaxis_title='Memory Usage (MB)',
+                barmode='group',
+                template='plotly_white'
+            )
+            fig.write_html(self.export_dir / f'memory_db_{db}.html')
+            
+            # Execution time
+            fig = go.Figure()
+            for model in db_df['embedding_model'].unique():
+                model_data = db_df[db_df['embedding_model'] == model]
+                fig.add_trace(go.Bar(
+                    name=model,
+                    x=model_data['chunking_strategy'],
+                    y=model_data['execution_time']
+                ))
+            
+            fig.update_layout(
+                title=f'Execution Time by Chunking Strategy and Embedding Model (DB: {db})',
+                xaxis_title='Chunking Strategy',
+                yaxis_title='Execution Time (s)',
+                barmode='group',
+                template='plotly_white'
+            )
+            fig.write_html(self.export_dir / f'time_db_{db}.html')
+        
+        # 4. Create a summary dashboard
+        fig = make_subplots(
+            rows=2, cols=2,
+            subplot_titles=(
+                'Memory Usage by Vector DB',
+                'Execution Time by Vector DB',
+                'Memory Usage by Embedding Model',
+                'Execution Time by Embedding Model'
+            )
+        )
+        
+        # Memory by Vector DB
+        for db in df['vector_db'].unique():
+            db_data = df[df['vector_db'] == db]
+            fig.add_trace(
+                go.Bar(name=db, x=db_data['chunking_strategy'], y=db_data['memory_usage']),
+                row=1, col=1
+            )
+        
+        # Time by Vector DB
+        for db in df['vector_db'].unique():
+            db_data = df[df['vector_db'] == db]
+            fig.add_trace(
+                go.Bar(name=db, x=db_data['chunking_strategy'], y=db_data['execution_time']),
+                row=1, col=2
+            )
+        
+        # Memory by Embedding Model
+        for model in df['embedding_model'].unique():
+            model_data = df[df['embedding_model'] == model]
+            fig.add_trace(
+                go.Bar(name=model, x=model_data['chunking_strategy'], y=model_data['memory_usage']),
+                row=2, col=1
+            )
+        
+        # Time by Embedding Model
+        for model in df['embedding_model'].unique():
+            model_data = df[df['embedding_model'] == model]
+            fig.add_trace(
+                go.Bar(name=model, x=model_data['chunking_strategy'], y=model_data['execution_time']),
+                row=2, col=2
+            )
+        
+        fig.update_layout(
+            height=800,
+            title_text="RAG System Performance Summary",
+            showlegend=True,
+            template='plotly_white'
+        )
+        
+        fig.update_yaxes(title_text="Memory Usage (MB)", row=1, col=1)
+        fig.update_yaxes(title_text="Execution Time (s)", row=1, col=2)
+        fig.update_yaxes(title_text="Memory Usage (MB)", row=2, col=1)
+        fig.update_yaxes(title_text="Execution Time (s)", row=2, col=2)
+        
+        fig.write_html(self.export_dir / 'performance_summary.html')
+    
     def evaluate_responses(self) -> None:
         """Interactive tool to evaluate responses with performance monitoring."""
         logger.info("\n===== RAG Response Evaluator =====")
         
-        # Calculate total questions efficiently
-        max_questions = max(
-            (len(result['responses']) for result in self.results if 'responses' in result),
-            default=0
-        )
-        
-        if max_questions == 0:
-            logger.warning("No responses found in the results.")
-            return
-        
-        ratings = {}
-        
         while True:
             print("\nOptions:")
             print("1. Compare responses for a question")
-            print("2. Rate responses")
-            print("3. Show current ratings")
-            print("4. Export ratings")
-            print("5. Exit")
+            print("2. Analyze performance metrics")
+            print("3. Exit")
             
-            choice = input("\nEnter choice (1-5): ")
+            choice = input("\nEnter choice (1-3): ")
             
             if choice == '1':
-                question_idx = int(input(f"Enter question number (1-{max_questions}): ")) - 1
+                question_idx = int(input(f"Enter question number (1-4): ")) - 1
                 self.compare_responses(question_idx)
             
             elif choice == '2':
-                question_idx = int(input(f"Enter question number (1-{max_questions}): ")) - 1
-                self.compare_responses(question_idx)
-                
-                # Display configurations with performance metrics
-                for i, result in enumerate(self.results):
-                    config = (
-                        result['chunking_strategy'],
-                        result['embedding_model'],
-                        result['vector_db'],
-                        result['llm_model']
-                    )
-                    config_str = ' + '.join(config)
-                    avg_time = np.mean([
-                        resp['execution_time'] 
-                        for resp in result['responses'].values()
-                    ])
-                    print(f"{i+1}. {config_str} (Avg Time: {avg_time:.2f}s)")
-                
-                config_idx = int(input("\nEnter configuration number to rate: ")) - 1
-                if 0 <= config_idx < len(self.results):
-                    config = (
-                        self.results[config_idx]['chunking_strategy'],
-                        self.results[config_idx]['embedding_model'],
-                        self.results[config_idx]['vector_db'],
-                        self.results[config_idx]['llm_model']
-                    )
-                    config_str = ' + '.join(config)
-                    
-                    # Get ratings with validation
-                    while True:
-                        try:
-                            relevance = int(input("Rate relevance (1-10): "))
-                            completeness = int(input("Rate completeness (1-10): "))
-                            coherence = int(input("Rate coherence/fluency (1-10): "))
-                            accuracy = int(input("Rate accuracy (1-10): "))
-                            
-                            if all(1 <= x <= 10 for x in [relevance, completeness, coherence, accuracy]):
-                                break
-                            print("All ratings must be between 1 and 10")
-                        except ValueError:
-                            print("Please enter valid numbers")
-                    
-                    if config_str not in ratings:
-                        ratings[config_str] = {'questions': {}}
-                    
-                    question_key = f"question_{question_idx+1}"
-                    ratings[config_str]['questions'][question_key] = {
-                        'relevance': relevance,
-                        'completeness': completeness,
-                        'coherence': coherence,
-                        'accuracy': accuracy,
-                        'overall': (relevance + completeness + coherence + accuracy) / 4
-                    }
-                    
-                    # Calculate average across all questions efficiently
-                    overall_scores = [v['overall'] for v in ratings[config_str]['questions'].values()]
-                    ratings[config_str]['overall_score'] = sum(overall_scores) / len(overall_scores)
-                    
-                    logger.info(f"\nRating saved for {config_str}")
+                self.analyze_performance_metrics()
             
             elif choice == '3':
-                if not ratings:
-                    logger.warning("No ratings yet.")
-                    continue
-                
-                logger.info("\n===== Current Ratings =====")
-                ratings_df = pd.DataFrame([
-                    {'Configuration': config, 'Overall Score': data['overall_score']}
-                    for config, data in ratings.items()
-                ])
-                print(tabulate(
-                    ratings_df.sort_values('Overall Score', ascending=False),
-                    headers='keys',
-                    tablefmt='pipe',
-                    showindex=False
-                ))
-            
-            elif choice == '4':
-                if not ratings:
-                    logger.warning("No ratings to export.")
-                    continue
-                
-                filename = input("Enter filename to save ratings (default: ratings.json): ") or "ratings.json"
-                base_filename = os.path.splitext(filename)[0]
-                
-                # Save ratings
-                with open(filename, 'w') as f:
-                    json.dump(ratings, f, indent=2)
-                logger.info(f"Ratings saved to {filename}")
-                
-                # Generate visualizations
-                self._generate_rating_visualizations(ratings, base_filename)
-            
-            elif choice == '5':
                 break
             
             else:
                 logger.warning("Invalid choice. Please try again.")
-    
-    def _generate_rating_visualizations(self, ratings: Dict, base_filename: str) -> None:
-        """Generate optimized visualizations for the ratings."""
-        # Overall scores
-        configs = list(ratings.keys())
-        scores = [ratings[config]['overall_score'] for config in configs]
-        
-        plt.figure(figsize=(12, 6))
-        plt.barh(configs, scores, color='skyblue')
-        plt.xlabel('Average Score')
-        plt.ylabel('Configuration')
-        plt.title('Overall RAG Configuration Scores')
-        plt.xlim(0, 10)
-        plt.grid(axis='x', linestyle='--', alpha=0.7)
-        plt.tight_layout()
-        plt.savefig(f"{base_filename}_overall_scores.png")
-        plt.close()
-        
-        # Radar chart for top configurations
-        top_configs = sorted(ratings.items(), key=lambda x: x[1]['overall_score'], reverse=True)[:3]
-        
-        if top_configs:
-            # Sample question for radar chart
-            sample_question = list(top_configs[0][1]['questions'].keys())[0]
-            
-            categories = ['Relevance', 'Completeness', 'Coherence', 'Accuracy']
-            N = len(categories)
-            
-            angles = [n / float(N) * 2 * np.pi for n in range(N)]
-            angles += angles[:1]  # Close the loop
-            
-            plt.figure(figsize=(8, 8))
-            ax = plt.subplot(111, polar=True)
-            
-            for config, data in top_configs:
-                values = [
-                    data['questions'][sample_question]['relevance'],
-                    data['questions'][sample_question]['completeness'],
-                    data['questions'][sample_question]['coherence'],
-                    data['questions'][sample_question]['accuracy']
-                ]
-                values += values[:1]  # Close the loop
-                
-                ax.plot(angles, values, linewidth=2, label=config)
-                ax.fill(angles, values, alpha=0.25)
-            
-            ax.set_xticks(angles[:-1])
-            ax.set_xticklabels(categories)
-            plt.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1))
-            plt.title('Top 3 Configurations - Performance Metrics')
-            plt.tight_layout()
-            plt.savefig(f"{base_filename}_radar_chart.png")
-            plt.close()
 
 def main():
     parser = argparse.ArgumentParser(description='Evaluate RAG system performance')

@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "minilm_qwen_qdrant_small",
+    "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+    "llm_model": "qwen:7b",
+    "vector_db": "qdrant",
+    "chunking_strategy": "256_25",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 256,
+    "chunk_overlap": 25,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "[KB] Knowledge Base - Information from the course materials and documents\n\nThe main difference between B-trees and B+ trees lies in their structure and how they are used for indexing in databases.\n\n1. **B-Trees**:\n   - A B-tree is a self-balancing search tree.\n   - Each node can have 2 to b-1 children, where b is the maximum number of children per node (usually set to 4 or 5).\n   - The tree is balanced such that the height of the tree is minimized. This helps in faster search and insertion operations.\n\n2. **B+ Trees**:\n   - A B+ tree is a variation of B-trees, designed specifically for database indexing.\n   - In a B+ tree, all keys are stored on the leaf nodes (also called the end nodes), while non-leaf nodes contain pointers to their child leaf nodes.\n   - This arrangement allows for efficient range queries and random access to specific records.\n\nIn summary, B-trees maintain a balance between nodes by allowing a flexible number of children per node. On the other hand, B+ trees optimize storage by storing all keys on leaf nodes and using non-leaf nodes only as pointers. Both types are commonly used in database management systems.",
+      "execution_time": 8.99596881866455,
+      "memory_usage": -47.265625,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "AVL trees are self-balancing binary search trees. When an AVL tree becomes unbalanced due to a change in height or the presence of a node with an incorrect balance factor, rotations are performed to restore balance.\n\nThere are two main types of rotations in AVL trees:\n\n1. Left Rotation (LLR):\n   - This rotation is needed when a node's right child becomes too large and violates the AVL tree property.\n   - The process involves moving the rightmost node (the new root) one level left, and adjusting the balance factors of the nodes involved.\n\n2. Right Rotation (RRR):\n   - Similar to Left Rotation, this rotation is required when a node's left child becomes too small or unbalanced.\n   - The steps involve moving the leftmost node (new rightmost child) one level right, and adjusting the balance factors accordingly.\n\nBy performing these rotations, an AVL tree can maintain its height property and remain a highly efficient search structure.",
+      "execution_time": 6.612238883972168,
+      "memory_usage": 36.6875,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "The main advantages of MongoDB are:\n\n1. **Document-oriented structure**: MongoDB stores data in flexible JSON-like documents, which makes it easier to model complex relationships.\n\n2. **Scaling and sharding**: MongoDB supports horizontal scaling through sharding, where data is distributed across multiple servers. This allows for high availability and handling large amounts of data.\n\n3. **High performance**: MongoDB's storage engine, called WiredTiger, is designed to be efficient in terms of reads and writes. It also provides features like caching and compression to further enhance performance.\n\n4. **Ease of use with a rich ecosystem**: MongoDB has a user-friendly command-line interface (CLI) and supports various programming languages for integration. The ecosystem around MongoDB includes tools for backup, monitoring, and administration.",
+      "execution_time": 5.034609794616699,
+      "memory_usage": -4.4375,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "AWS S3 uses a multi-tiered replication strategy to ensure high availability and durability of data.\n\n1. **Base Storage Tier (SSE-S3)****: This is the default storage class for new objects in S3. Data is stored in Amazon Simple Storage Service (S3) without encryption. If data needs to be encrypted at rest, a higher-tiered storage class is required.\n\n2. **Standard Storage Tier (SSE-KMS)****: This storage class offers server-side encryption using AWS Key Management Service (KMS). When an object is uploaded to this tier, KMS generates and manages the encryption keys.\n\n3. **Glacier Storage Tier (SSE-G)****: This is a low-cost, long-term storage option provided by S3. Data stored in Glacier is encrypted at rest using SSE-S3. To access data from Glacier, users need to pay retrieval fees.\n\nIn summary, AWS S3 handles data replication through a multi-tiered approach that includes base storage classes without encryption and higher-tiered options with server-side encryption.",
+      "execution_time": 6.85011100769043,
+      "memory_usage": -24.390625,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:02:33"
+}

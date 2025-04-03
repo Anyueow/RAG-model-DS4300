@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "mpnet_qwen_redis_large",
+    "embedding_model": "all-mpnet-base-v2",
+    "llm_model": "qwen:7b",
+    "vector_db": "redis",
+    "chunking_strategy": "1024_100",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 1024,
+    "chunk_overlap": 100,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "[KB] Knowledge Base - Information from the course materials and documents\n\nThe main difference between B-trees and B+ trees lies in their node structure and how they organize data.\n\n1. **B-Tree (General Case)****: A B-tree is a balanced tree that can have up to m children per node, where m is a parameter of the tree. This allows for efficient insertion and deletion while maintaining a logarithmic number of nodes.\n\n2. **B+ Tree (Sorted Data)****: A B+ tree is specifically designed for sorted data, as each node in a B+ tree contains only pointers to its child nodes. The root node points to the first record, and leaf nodes contain actual data records.\n\nThe main advantage of B+ trees over B-trees is that they have a more compact structure, which leads to better cache locality and faster access times for large datasets. However, B-trees may be more suitable for cases where frequent range queries are required, as their balanced nature allows for efficient search in the tree.",
+      "execution_time": 7.454102993011475,
+      "memory_usage": -16.375,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.\n\nThere are two types of rotations in AVL trees:\n\n1. Left-Left Rotation (LLR):\n   - Situation: A node with two left children (L2).\n     ![LLR Situation](https://user-images.githubusercontent.com/5340879/16350088-aae7c4a.png)\n   - Operation: Remove the L2 and make its parent point to the second child. Then, insert the removed L2 as the new root.\n     ```markdown\n     [LLR Operation]\n     \n     Original Tree:\n     A -> B1 -> C\n     After LLR:\n     A' -> B2 -> C\n     ```\n   - Result: The tree becomes balanced again.\n\n2. Right-Right Rotation (RRR):\n   - Situation: A node with two right children (R2).\n     ![RRR Situation](https://user-images.githubusercontent.com/5344879/16350134-dcbea6d.png)\n   - Operation: Remove the R2 and make its parent point to the second child. Then, insert the removed R2 as the new root.\n     ```markdown\n     [RRR Operation]\n     \n     Original Tree:\n     A -> B1 -> C\n     After RR:\n     A' -> B2 -> C\n     ```\n   - Result: The tree becomes balanced again.\n\nIn summary, AVL rotations are used to maintain balance in an AVL tree by performing either a left-left rotation (LLR) or a right-right rotation (RRR).",
+      "execution_time": 12.352775812149048,
+      "memory_usage": 0.4375,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "The main advantages of MongoDB include:\n\n1. **Flexible Data Model**: MongoDB uses a document-oriented model, allowing for flexible and nested data structures.\n\n2. **Scaling and High Availability**: MongoDB supports horizontal scaling by sharding documents across multiple servers. This makes it easier to handle large amounts of data.\n\n3. **Automatic Indexing**: MongoDB automatically creates indexes on fields that are frequently queried or sorted. This speeds up query performance.\n\n4. **Text Search and Full-Text Indexing (FTI)**: MongoDB supports text search and full-text indexing, allowing for powerful searching capabilities within unstructured documents.\n\n5. **Cross-Database Queries with MongoDB Connector for SQL Databases**: MongoDB offers a connector that allows querying data across MongoDB and relational databases like MySQL or PostgreSQL.\n\nThese advantages make MongoDB a popular choice for applications that require flexible data modeling, scalability, and high availability.",
+      "execution_time": 6.276333808898926,
+      "memory_usage": 43.03125,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "AWS S3 uses a multi-factor replication strategy to ensure data availability and durability.\n\n1. **Multi-AZ Replication (RA-2)****: By default, when you create a bucket in an AWS region with two Availability Zones (AZs), S3 replicates your objects across both AZs. This provides redundancy and faster recovery in case of an AZ outage.\n\n2. **Cross-Region Replication (CRR)****: For increased data protection, you can configure CRR between two or more AWS regions. When enabled, S3 automatically replicates your objects to the designated region(s), providing a secondary location for your data.\n\nIn summary, AWS S3 handles data replication through multi-AZ replication by default and cross-region replication as an optional additional layer of security.",
+      "execution_time": 5.613655090332031,
+      "memory_usage": -26.71875,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:12:25"
+}

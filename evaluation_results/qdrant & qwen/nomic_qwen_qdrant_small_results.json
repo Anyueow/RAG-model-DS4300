@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "nomic_qwen_qdrant_small",
+    "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+    "llm_model": "qwen:7b",
+    "vector_db": "qdrant",
+    "chunking_strategy": "256_25",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 256,
+    "chunk_overlap": 25,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "[KB] Knowledge Base - Information from the course materials and documents\n\nThe main difference between B-trees and B+ trees lies in their data organization and leaf node structure.\n\n1. **B-Trees**:\n   - B-trees are designed for disk storage, where random access is slower than sequential.\n   - They maintain a balanced tree structure with a minimum of n/2 nodes (where n is the number of keys).\n   - Each non-leaf node has at least m children (m is typically 2 or 4 to optimize disk space usage).\n   - Leaf nodes store key-value pairs, and they are always sorted in ascending order.\n\n2. **B+ Trees**:\n   - B+ trees are a variation of B-trees that optimize for sequential access.\n   - In contrast to B-trees, leaf nodes in B+ trees are not necessarily sorted.\n   - Each non-leaf node has exactly m children (m is typically 2 or 4), which allows for easier traversal in a forward direction.\n   - This structure makes B+ trees suitable for use in databases where queries tend to be sequential.\n\nIn summary, the main difference between B- and B+ trees lies in their leaf node organization. While B-trees maintain sorted leaf nodes for faster random access, B+ trees allow unsorted leaf nodes for easier sequential access in database applications.",
+      "execution_time": 10.354045152664185,
+      "memory_usage": -661.484375,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.\n\nThere are two main types of AVL rotations: Left Rotation (LR) and Right Rotation (RR).\n\n1. **Left Rotation (LR)**:\n   - Imagine a node with two children, say A and B.\n   - If the right child of A (B in this case)) has more than one child, we need to perform an LR first.\n   - Perform a right rotation on B: swap B's left child with B itself, then rotate B to its original position.\n   - Now that B is rotated back to its original position, the balance condition for A and B will be restored.\n\n2. **Right Rotation (RR)**:\n   - The process for an RR is similar to an LR, but with the roles of left and right children reversed.\n\nIn summary, AVL rotations are used to maintain balance in self-balancing binary search trees like AVL trees. These rotations involve swapping nodes and rotating subtrees to correct any imbalance that may have arisen.",
+      "execution_time": 7.777025938034058,
+      "memory_usage": -62.640625,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "The main advantages of MongoDB include:\n\n1. **Document-oriented design**: MongoDB stores data in flexible document-like structures, which makes it easier to work with unstructured or semi-structured data.\n\n2. **Scaling and sharding**: MongoDB supports horizontal scaling through sharding, allowing you to distribute your data across multiple servers. This enables high availability and performance.\n\n3. **High write throughput**: MongoDB is designed for high write volumes, making it suitable for applications that generate a lot of new content.\n\n4. **Query flexibility and indexing**: MongoDB allows for flexible querying using its query language (e.g., JSON or BSON). It also supports various types of indexes, which can greatly improve query performance.\n\n5. **Integration with other languages and tools**: MongoDB has strong integration capabilities with various programming languages, such as Python, Java, and C#. This makes it easier to build applications that leverage both relational databases and NoSQL systems.",
+      "execution_time": 6.165621042251587,
+      "memory_usage": 5.90625,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "AWS S3 uses a multi-tiered replication strategy to ensure data availability and durability.\n\n1. **Base Storage**: The original data is stored in the primary storage location, typically an edge or regional S3 bucket.\n\n2. **Replication**: AWS automatically replicates this base storage to multiple geographically dispersed locations. This process can be configured for different replication speeds (e.g., 99.99% durability with 1-hour latency).\n\n3. **Read Replicas**: In addition to the primary storage, AWS also offers read replicas that are identical copies of an S3 bucket. These read replicas can be used to offload read traffic and improve overall system performance.\n\nIn summary, AWS S3 handles data replication by automatically replicating base storage to multiple geographically dispersed locations, including read replicas for load balancing and improved performance.",
+      "execution_time": 5.558361053466797,
+      "memory_usage": 25.71875,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:02:03"
+}

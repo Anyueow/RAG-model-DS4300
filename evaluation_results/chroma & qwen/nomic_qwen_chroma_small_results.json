@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "nomic_qwen_chroma_small",
+    "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+    "llm_model": "qwen:7b",
+    "vector_db": "chroma",
+    "chunking_strategy": "256_25",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 256,
+    "chunk_overlap": 25,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "[KB] Knowledge Base - Information from the course materials and documents\n\nThe main difference between B-trees and B+ trees lies in their node structure and how they organize data.\n\n1. **B-Tree (General)**: In a traditional B-tree, each node can have multiple child nodes. The number of children per node is fixed but can vary across different levels of the tree. This allows for efficient search, insertion, and deletion operations.\n\n2. **B+ Tree (File Systems)**: In a B+ tree, which is commonly used in file systems, all leaf nodes are stored at the end of each branch, and there are no empty spaces within the nodes. The advantage of this structure is that it allows for easy random access to files, as leaf nodes are typically sorted by their file names.\n\nIn summary, while both B- and B+ trees are balanced search structures, B+ trees are specifically designed for use in file systems, allowing for efficient random access to files.",
+      "execution_time": 8.049692869186401,
+      "memory_usage": -699.5,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one.\n\nRotation operations are performed to restore balance after a node's subtree height has changed. There are four common rotations:\n\n1. Left Rotation (LR):\n   - Situation: A right child with a non-empty left subtree.\n   - Operation: Move the right child (R) to its parent's left position (L). Create a new right child for the original right child's left subtree (L').\n   - Result: The tree is rebalanced, and the search performance remains optimal.\n\n2. Right Rotation (RR):\n   - Situation: A left child with a non-empty right subtree.\n   - Operation: Move the left child (L) to its parent's right position (R). Create a new left child for the original left child's right subtree (R').\n   - Result: The tree is rebalanced, and the search performance remains optimal.\n\n3. Left-Right Rotation (LR/RR):\n   - Situation: A node with both left and right children.\n   - Operation:\n    - Choose the side that needs more balancing (usually the right side in a LR case).\n    - Perform an internal rotation on that side to balance it out.\n    - If needed, perform another rotation to maintain AVL tree properties.\n   - Result: The tree is rebalanced, and the search performance remains optimal.\n\n4. Right-Left Rotation (RR/LR):\n   - Situation: A node with both left and right children, but in a different configuration from LR/RR.\n   - Operation:\n    - Choose the side that needs more balancing (usually the left side in an RR case).\n    - Perform an internal rotation on that side to balance it out.\n    - If needed, perform another rotation to maintain AVL tree properties.\n   - Result: The tree is rebalanced, and the search performance remains optimal.",
+      "execution_time": 13.198632955551147,
+      "memory_usage": 13.203125,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "The main advantages of MongoDB include:\n\n1. **Document-oriented design**: MongoDB stores data in flexible document format, allowing for more complex and nested data structures compared to relational databases like MySQL.\n\n2. **High scalability and horizontal scaling**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This allows for easy handling of large amounts of data without sacrificing performance.\n\n3. **Automatic sharding and load balancing**: As the database grows, MongoDB automatically shards documents across multiple servers based on predefined rules. This ensures that data remains evenly distributed and load is balanced among nodes.\n\n4. **Fast query and aggregation capabilities**: While not as fast as some specialized columnar databases, MongoDB offers efficient querying through its query language (e.g., MongoDB Query Language or MQL)). Additionally, MongoDB's aggregation framework allows for powerful data analysis and transformation.\n\n5. **Integration with other technologies**: MongoDB can easily integrate with other technologies such as Node.js, Python, Ruby, and web frameworks like Express.js or Django.\n\nThese advantages make MongoDB a popular choice for applications that require flexible document storage, scalability, and integration with other technologies.",
+      "execution_time": 7.38033390045166,
+      "memory_usage": 33.75,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "AWS S3 uses a distributed architecture with multiple copies of data across different regions. This is achieved through a process called \"replication.\"\n\nHere's a step-by-step explanation of how S3 handles data replication:\n\n1. **Data Write**: When you upload a file to an S3 bucket, the request is first processed by the closest AWS region.\n\n2. **Replication Request**: In this region, the S3 service creates a replication request. This request specifies the source object and the destination region(s) where the data should be replicated.\n\n3. **Data Transfer**: The S3 service then initiates the transfer of data from the source to the destination regions. This process can happen in parallel across multiple destinations.\n\n4. **Consistency Checks**: To ensure data consistency, S3 performs periodic checks on the replicas. If any discrepancies are found, they are resolved before the data is considered fully replicated.\n\nIn summary, AWS S3 uses a distributed replication strategy that creates multiple copies of data across different regions. This ensures high availability and data durability for your S3-based applications.",
+      "execution_time": 7.096597909927368,
+      "memory_usage": -5.96875,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:13:41"
+}

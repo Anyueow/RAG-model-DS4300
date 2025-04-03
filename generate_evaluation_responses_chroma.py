@@ -47,40 +47,115 @@ class ResponseGenerator:
         
         # Define configurations to test
         self.configurations = [
+            # Small chunks (256/25)
             {
-                "name": "nomic_qwen",
+                "name": "small_nomic_chroma_mistral",
                 "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
-                "llm_model": "qwen:7b",
+                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
                 "vector_db": "chroma",
-                "chunking_strategy": "512_50",
-                "semantic_weight": 0.8,
-                "keyword_weight": 0.2,
-                "chunk_size": 512,
-                "chunk_overlap": 50,
+                "chunking_strategy": "small",
+                "semantic_weight": 0.7,
+                "keyword_weight": 0.3,
+                "chunk_size": 256,
+                "chunk_overlap": 25,
                 "top_k": 3
             },
             {
-                "name": "minilm_qwen",
+                "name": "small_minilm_chroma_mistral",
                 "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
-                "llm_model": "qwen:7b",
+                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
                 "vector_db": "chroma",
-                "chunking_strategy": "512_50",
-                "semantic_weight": 0.8,
-                "keyword_weight": 0.2,
+                "chunking_strategy": "small",
+                "semantic_weight": 0.7,
+                "keyword_weight": 0.3,
+                "chunk_size": 256,
+                "chunk_overlap": 25,
+                "top_k": 3
+            },
+            {
+                "name": "small_mpnet_chroma_mistral",
+                "embedding_model": "all-mpnet-base-v2",
+                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+                "vector_db": "chroma",
+                "chunking_strategy": "small",
+                "semantic_weight": 0.7,
+                "keyword_weight": 0.3,
+                "chunk_size": 256,
+                "chunk_overlap": 25,
+                "top_k": 3
+            },
+            # Medium chunks (512/50)
+            {
+                "name": "medium_nomic_chroma_mistral",
+                "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+                "vector_db": "chroma",
+                "chunking_strategy": "medium",
+                "semantic_weight": 0.7,
+                "keyword_weight": 0.3,
                 "chunk_size": 512,
                 "chunk_overlap": 50,
                 "top_k": 3
             },
             {
-                "name": "mpnet_qwen",
-                "embedding_model": "all-mpnet-base-v2",
-                "llm_model": "qwen:7b",
+                "name": "medium_minilm_chroma_mistral",
+                "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
                 "vector_db": "chroma",
-                "chunking_strategy": "512_50",
-                "semantic_weight": 0.8,
-                "keyword_weight": 0.2,
+                "chunking_strategy": "medium",
+                "semantic_weight": 0.7,
+                "keyword_weight": 0.3,
                 "chunk_size": 512,
                 "chunk_overlap": 50,
+                "top_k": 3
+            },
+            {
+                "name": "medium_mpnet_chroma_mistral",
+                "embedding_model": "all-mpnet-base-v2",
+                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+                "vector_db": "chroma",
+                "chunking_strategy": "medium",
+                "semantic_weight": 0.7,
+                "keyword_weight": 0.3,
+                "chunk_size": 512,
+                "chunk_overlap": 50,
+                "top_k": 3
+            },
+            # Large chunks (1024/100)
+            {
+                "name": "large_nomic_chroma_mistral",
+                "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+                "vector_db": "chroma",
+                "chunking_strategy": "large",
+                "semantic_weight": 0.7,
+                "keyword_weight": 0.3,
+                "chunk_size": 1024,
+                "chunk_overlap": 100,
+                "top_k": 3
+            },
+            {
+                "name": "large_minilm_chroma_mistral",
+                "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+                "vector_db": "chroma",
+                "chunking_strategy": "large",
+                "semantic_weight": 0.7,
+                "keyword_weight": 0.3,
+                "chunk_size": 1024,
+                "chunk_overlap": 100,
+                "top_k": 3
+            },
+            {
+                "name": "large_mpnet_chroma_mistral",
+                "embedding_model": "all-mpnet-base-v2",
+                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+                "vector_db": "chroma",
+                "chunking_strategy": "large",
+                "semantic_weight": 0.7,
+                "keyword_weight": 0.3,
+                "chunk_size": 1024,
+                "chunk_overlap": 100,
                 "top_k": 3
             }
         ]

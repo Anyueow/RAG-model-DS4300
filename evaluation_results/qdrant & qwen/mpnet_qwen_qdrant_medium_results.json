@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "mpnet_qwen_qdrant_medium",
+    "embedding_model": "all-mpnet-base-v2",
+    "llm_model": "qwen:7b",
+    "vector_db": "qdrant",
+    "chunking_strategy": "512_50",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 512,
+    "chunk_overlap": 50,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "[KB] Knowledge Base - Information from the course materials and documents\n\nThe main difference between B-trees and B+ trees lies in their leaf node organization and how they handle data.\n\n1. **B-Trees** (usually with a fixed branching factor, like 2 or 3) are designed to maintain balance by having at least one child per non-leaf node. When inserting or deleting elements, the tree may become unbalanced. B+ trees address this issue by storing all keys in leaf nodes and pointers to key-value pairs in internal nodes.\n\n2. **B+ Trees** (also called \"sorted arrays on disk\") have a more straightforward structure. Leaf nodes are linear arrays of key-value pairs, sorted by key. Each non-leaf node points to the next leaf node in its level.\n\nIn summary, B-trees maintain balance with fixed branching factors, while B+ trees achieve this balance by storing keys in leaf nodes and pointers in internal nodes. This design allows for faster search and insertion operations in disk-based databases.",
+      "execution_time": 7.432909965515137,
+      "memory_usage": -329.515625,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "AVL trees are self-balancing binary search trees. When an AVL tree violates the balance condition (difference in height between left and right subtrees exceeds a threshold), rotations are performed to restore balance.\n\nThere are two main types of rotations in AVL trees:\n\n1. Left Rotation (LR):\n   - Consider a node `N` with a right child `R`.\n   - The key in `R` is greater than the key in `N`.\n   - To perform an LR, we move `R` up to become the new root.\n   - Then, we make `N` the left child of the new root.\n\n2. Right Rotation (RR):\n   - Similar to LR, consider a node `N` with a left child `L`.\n   - The key in `L` is smaller than the key in `N`.\n   - To perform an RR, we move `L` down to become the new right child.\n   - Then, we make `N` the right child of the new right child.\n\nAfter performing the appropriate rotation (LR or RR), the AVL tree will be restored to its balance condition.",
+      "execution_time": 8.372184038162231,
+      "memory_usage": -3.015625,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "The main advantages of MongoDB include:\n\n1. **Flexible Data Model**: MongoDB uses a document-oriented model, allowing for flexible and nested data structures.\n\n2. **High Scalability**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This makes it suitable for handling large volumes of data or high-traffic websites.\n\n3. **Automatic Sharding**: MongoDB automatically shards data across multiple servers based on predefined rules. This simplifies the process of scaling and distributing data.\n\n4. **Real-time Querying with Aggregation Framework**: MongoDB's aggregation framework allows for real-time querying, grouping, and filtering of data without having to move the entire dataset.\n\n5. **Integration with Other Technologies**: MongoDB can easily integrate with other technologies like Node.js, Python, Ruby, or even traditional relational databases through tools like ActiveRecord or SQLAlchemy.",
+      "execution_time": 5.9909303188323975,
+      "memory_usage": 16.21875,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "AWS S3 uses a multi-tiered replication strategy to ensure data durability and availability.\n\n1. **Base Storage**: Each S3 object is stored in at least one \"base storage\" location, which are typically located in different geographic regions (US East, US West, Europe, Asia-Pacific).\n\n2. **Enhanced Replication**: For higher durability and faster recovery, S3 offers Enhanced Replication. This feature replicates data to multiple base storage locations, with the option to replicate at a specific frequency (e.g., once an hour or daily).\n\nBy using this multi-tiered replication strategy, AWS S3 ensures that your data is highly available, durable, and can be quickly recovered in case of any failures.",
+      "execution_time": 5.005052089691162,
+      "memory_usage": -19.328125,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:04:40"
+}

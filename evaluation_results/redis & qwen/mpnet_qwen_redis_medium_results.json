@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "mpnet_qwen_redis_medium",
+    "embedding_model": "all-mpnet-base-v2",
+    "llm_model": "qwen:7b",
+    "vector_db": "redis",
+    "chunking_strategy": "512_50",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 512,
+    "chunk_overlap": 50,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "[KB] Knowledge Base - Information from the course materials and documents\n\nThe main difference between B-trees and B+ trees lies in their leaf node organization and purpose.\n\n1. **B-Trees (General)***:\n   - A general class of self-balancing search trees.\n   - Each non-leaf node can have 2 to m children, where m is a parameter specific to the implementation.\n   - Leaf nodes store key-value pairs, with keys sorted in ascending order.\n   - B-trees maintain a balance property: the height of the tree plus one (the number of levels) should be less than or equal to the maximum number of children per node.\n\n2. **B+ Trees** (Specific to Databases):\n   - A specialized form of B-tree designed specifically for managing large datasets in databases.\n   - In a B+ tree, all leaf nodes are next to each other and form a continuous block. This arrangement allows for efficient range queries.\n   - Non-leaf nodes contain pointers or indices to the next node in the same row. This structure ensures that data is stored sequentially within each row.\n   - The balance property in B+ trees is maintained by ensuring that the number of children per non-leaf node does not exceed a certain limit.\n\nIn summary, B-trees are a general class of self-balancing search trees, while B+ trees are a specialized form designed for databases. B+ trees have leaf nodes organized as a continuous block and maintain sequentiality within each row.",
+      "execution_time": 10.596274852752686,
+      "memory_usage": -86.46875,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.\n\nThere are two main types of AVL rotations: Left-rotation (LL) and Right-rotation (RR).\n\n1. **Left-rotation (LL)**:\n   - Imagine a node with two children, say A and B.\n   - If the right child of A (B in this case)) becomes taller than A, an LL rotation is needed.\n   - The process involves moving the root (A) to be the right child of its left sibling (B).\n   - The old right child of A (B) becomes the new root.\n\n2. **Right-rotation (RR)**:\n   - Similarly, if the left child of B (A in this case)) becomes taller than B, an RR rotation is needed.\n   - This process involves moving the root (B) to be the left child of its right sibling (A).\n   - The old left child of B (A) becomes the new root.\n\nBoth types of rotations aim to balance the tree by adjusting the heights and positions of nodes. By performing these rotations as necessary, AVL trees maintain their optimal balance for efficient searching.",
+      "execution_time": 8.94410514831543,
+      "memory_usage": 48.625,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "The main advantages of MongoDB include:\n\n1. **Flexible Data Model**: MongoDB uses a document-oriented model, allowing for flexible and nested data structures.\n\n2. **Scaling and High Availability**: MongoDB supports horizontal scaling through sharding, where data can be distributed across multiple servers. This makes it easier to handle large volumes of data.\n\n3. **Automatic Indexing**: MongoDB automatically creates indexes on fields that are frequently queried or sorted. This speeds up query performance without requiring manual index management.\n\n4. **Rich Query Language (SQL) and aggregation Framework**: Although not traditional SQL, MongoDB provides a query language called the MongoDB Query Language (MQL). Additionally, MongoDB has an aggregation framework for performing complex data analysis tasks.\n\n5. **Easy Integration with Other Languages and Tools**: MongoDB supports various programming languages like JavaScript, Python, C#, and more. This makes it easier to integrate MongoDB into existing applications or workflows.",
+      "execution_time": 6.053138971328735,
+      "memory_usage": -10.390625,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "AWS S3 uses a multi-factor replication strategy to ensure data durability and availability.\n\n1. **Multi-AZ Replication (RA-2)****: By default, when you create a bucket in an AWS region with multiple Availability Zones (AZs), S3 replicates your objects across these AZs. This provides both redundancy and faster access times within the same region.\n\n2. **Cross-Region Replication (CRR)****: For data that needs to be highly durable across regions, you can set up CRR between two or more AWS regions. This involves creating a bucket in one region and configuring it to replicate objects to another region. The replicated data is stored in the destination region's S3 service.\n\nIn summary, AWS S3 uses multi-AZ replication for data durability within a region, and cross-region replication for ensuring highly durable data across multiple regions.",
+      "execution_time": 6.220001935958862,
+      "memory_usage": -2.5625,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:10:34"
+}

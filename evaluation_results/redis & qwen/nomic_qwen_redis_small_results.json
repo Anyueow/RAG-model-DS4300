@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "nomic_qwen_redis_small",
+    "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+    "llm_model": "qwen:7b",
+    "vector_db": "redis",
+    "chunking_strategy": "256_25",
+    "semantic_weight": 0.8,
+    "keyword_weight": 0.2,
+    "chunk_size": 256,
+    "chunk_overlap": 25,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "[KB] Knowledge Base - Information from the course materials and documents\n\nThe main difference between B-trees and B+ trees lies in their internal organization and how they handle data.\n\n1. **B-Trees (Variable Splitting)****\n   B-trees are designed to maintain a balance between keys and leaf nodes. When a key exceeds the capacity of a node, the tree splits the node into two or more child nodes.\n\n   This process can lead to variable branching in the tree, where some branches have only one child while others have multiple children.\n\n2. **B+ Trees (Static Splitting)****\n   B+ trees are a variation of B-trees that strive for better cache performance by ensuring all leaf nodes are stored on a single disk page.\n\n   In this case, when a key exceeds the capacity of a node, the tree statically splits the node into two or more child nodes. This ensures that all leaf nodes are consecutive in memory, which is beneficial for caching and random access.\n\nIn summary, B-trees use variable splitting to maintain balance, while B+ trees employ static splitting to optimize cache performance.",
+      "execution_time": 8.380714893341064,
+      "memory_usage": -390.3125,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.\n\nThere are two types of AVL rotations:\n\n1. Left-rotation (LL):\n   - Suppose we have a node `A` with a right child `B`, and `B` has a left child `C`.\n   - The imbalance occurs when `B` is taller than its parent `A`. To rotate to the left, we perform an LL rotation on `A`:\n     - Create a new temporary root `T` by moving `B`'s rightmost child (if any) to `B`.\n     - Make `A` point to `B`, effectively making `B` the new parent of `A` and `C`.\n     - Set `T` as the new root, with `A` now being a left child of `T`.\n\n2. Right-rotation (RR):\n   - The scenario is similar to an LL rotation, but instead of moving to the left, we move to the right.\n   - Let's say we have a node `D` with a left child `E`, and `E` has a right child `F`.\n   - If `F` is taller than its sibling `E`, we perform an RR rotation on `D`:\n     - Create a new temporary root `T` by moving `F`'s leftmost child (if any) to `F`.\n     - Make `D` point to `E`, effectively making `E` the new parent of `D` and `F`.\n     - Set `T` as the new root, with `D` now being a right child of `T`.\n\nBoth types of rotations aim to restore balance by adjusting the heights of subtrees. They are performed recursively until the tree is once again balanced.",
+      "execution_time": 12.923496961593628,
+      "memory_usage": -173.71875,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "The main advantages of MongoDB include:\n\n1. **Document-oriented design**: MongoDB stores data in flexible document format, allowing for easy querying and handling of nested data.\n\n2. **High scalability and performance**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This allows for linear scalability with increasing data volume.\n\n3. **Automatic sharding and replication**: MongoDB automatically shards data across multiple servers based on predefined rules. Replication ensures that data is backed up and accessible from other locations in the event of server failure.\n\n4. **Easy querying with JSON-like syntax**: MongoDB's query language, MongoDB Query Language (MQL), supports JSON-like syntax for filtering, sorting, and aggregating data.\n\n5. **Integration with other technologies**: MongoDB has a rich ecosystem of drivers, tools, and frameworks that facilitate integration with other programming languages, platforms, and systems.",
+      "execution_time": 5.771235227584839,
+      "memory_usage": -9.015625,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "AWS S3 uses a multi-tiered replication strategy to ensure data durability and availability.\n\n1. **Primary Replication**: When you upload a file to S3, the default is for Amazon S3 to create a primary copy of the object in one of the AWS regions where S3 is available.\n\n2. **Cross-Region Replication (CRR)**: To increase redundancy and protect against regional failures, S3 offers CRR. With this feature, you can specify that a secondary copy of your objects should be created in another region. This ensures that if one region experiences issues, the data can still be accessed from the secondary region.\n\nIn summary, AWS S3 handles data replication through primary replication in each region and cross-region replication to increase redundancy and protect against regional failures.",
+      "execution_time": 5.113912105560303,
+      "memory_usage": 8.40625,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:07:39"
+}

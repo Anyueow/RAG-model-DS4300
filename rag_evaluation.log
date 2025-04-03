@@ -1,0 +1,1633 @@
+2025-04-02 20:20:28,993 - INFO - Loading evaluation results...
+2025-04-02 20:20:28,997 - INFO - Loaded 30 valid results
+2025-04-02 20:20:28,997 - INFO - 
+===== RAG Response Evaluator =====
+2025-04-02 20:20:45,580 - INFO - 
+===== Responses for Question: What are the main advantages of MongoDB? =====
+
+2025-04-02 20:20:45,580 - INFO - Configuration 1: medium + mpnet + chroma + qwen
+2025-04-02 20:20:45,580 - INFO - Time: 5.50s | Memory: -46.58MB
+2025-04-02 20:20:45,580 - INFO - Response:
+2025-04-02 20:20:45,581 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,581 - INFO - The main advantages of MongoDB are:
+
+1. **Document-oriented design**: MongoDB stores data in flexible document structures, allowing for easy querying and updating.
+
+2. **High scalability and performance**: MongoDB is designed to handle large amounts of data and can scale horizontally by adding more servers.
+
+3. **Automatic sharding and replication**: MongoDB allows for automatic sharding (splitting the database across multiple servers) and replication (creating copies of databases for redundancy or load balancing).
+
+4. **Query flexibility and indexing options**: MongoDB supports a wide range of query operators, allowing for complex data retrieval. Additionally, it offers various indexing strategies to optimize data access.
+
+These advantages make MongoDB a popular choice for applications that require flexible document storage, scalability, and high performance.
+2025-04-02 20:20:45,581 - INFO - ================================================================================
+2025-04-02 20:20:45,581 - INFO - 
+2025-04-02 20:20:45,581 - INFO - Configuration 2: large + nomic + chroma + qwen
+2025-04-02 20:20:45,581 - INFO - Time: 7.54s | Memory: -0.20MB
+2025-04-02 20:20:45,581 - INFO - Response:
+2025-04-02 20:20:45,581 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,581 - INFO - The main advantages of MongoDB include:
+
+1. **Flexible Data Model**: MongoDB uses a document-oriented model, allowing for flexible and nested data structures.
+
+2. **High Scalability**: MongoDB is designed to scale horizontally by adding more servers to a cluster. Sharding capabilities allow the database to be split across multiple machines.
+
+3. **Automatic Indexing**: MongoDB automatically indexes fields that are frequently queried, improving query performance.
+
+4. **Real-time Querying with Aggregation Framework**: MongoDB's aggregation framework allows for complex data analysis and real-time reporting.
+
+5. **Integration with Other Languages and Tools**: MongoDB supports integration with various programming languages like Python, Java, and C#. This enables developers to leverage their preferred language while working with MongoDB.
+
+These advantages make MongoDB a popular choice for applications that require high scalability, flexible data modeling, and real-time querying capabilities.
+2025-04-02 20:20:45,581 - INFO - ================================================================================
+2025-04-02 20:20:45,581 - INFO - 
+2025-04-02 20:20:45,581 - INFO - Configuration 3: medium + nomic + chroma + qwen
+2025-04-02 20:20:45,581 - INFO - Time: 6.62s | Memory: -17.22MB
+2025-04-02 20:20:45,581 - INFO - Response:
+2025-04-02 20:20:45,581 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,581 - INFO - The main advantages of MongoDB include:
+
+1. **Flexible Data Model**: MongoDB uses a document-oriented model, allowing for nested data structures that can be easily queried.
+
+2. **High Scalability**: MongoDB is designed to scale horizontally by adding more servers to the cluster. This makes it suitable for handling large amounts of data and high traffic loads.
+
+3. **Automatic Sharding**: MongoDB automatically shards data across multiple servers based on predefined rules. This simplifies data management and ensures even distribution of load.
+
+4. **Real-time Querying with Aggregation Framework**: MongoDB's aggregation framework allows developers to perform complex queries, aggregations, and transformations in real-time.
+
+5. **Integration with Other Tools and Languages**: MongoDB has a rich ecosystem of tools, frameworks, and programming languages that facilitate integration and development.
+
+These advantages make MongoDB an attractive choice for applications that require flexible data modeling, scalability, and real-time querying capabilities.
+2025-04-02 20:20:45,582 - INFO - ================================================================================
+2025-04-02 20:20:45,582 - INFO - 
+2025-04-02 20:20:45,582 - INFO - Configuration 4: large + mpnet + chroma + qwen
+2025-04-02 20:20:45,582 - INFO - Time: 6.03s | Memory: 24.67MB
+2025-04-02 20:20:45,582 - INFO - Response:
+2025-04-02 20:20:45,582 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,582 - INFO - The main advantages of MongoDB are:
+
+1. **Flexible Data Model**: MongoDB uses a document-oriented model, allowing for flexible and nested data structures.
+
+2. **High Scalability**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This makes it suitable for handling large volumes of data.
+
+3. **Automatic Sharding**: MongoDB automatically shards data across multiple servers based on predefined rules. This simplifies the process of scaling and distributing data.
+
+4. **Real-time Querying with Aggregation Framework**: MongoDB's aggregation framework allows for efficient querying, filtering, and grouping of data in real-time.
+
+5. **Cross-Platform Support**: MongoDB supports a wide range of platforms, including Windows, Linux, macOS, and even mobile devices.
+
+These advantages make MongoDB a popular choice for developers building scalable, distributed applications.
+2025-04-02 20:20:45,582 - INFO - ================================================================================
+2025-04-02 20:20:45,582 - INFO - 
+2025-04-02 20:20:45,582 - INFO - Configuration 5: large + minilm + chroma + qwen
+2025-04-02 20:20:45,582 - INFO - Time: 5.43s | Memory: -30.09MB
+2025-04-02 20:20:45,582 - INFO - Response:
+2025-04-02 20:20:45,582 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,582 - INFO - The main advantages of MongoDB are:
+
+1. **Document-oriented design**: MongoDB stores data in flexible document-based structures, allowing for more complex and nested data.
+
+2. **High scalability and performance**: MongoDB is designed to handle large amounts of data and can scale horizontally by adding more servers to a cluster.
+
+3. **Automatic sharding and replication**: MongoDB automatically shards data across multiple servers based on predefined rules. Replication allows you to create copies of your database for disaster recovery or load balancing.
+
+4. **Easy querying with JSON syntax**: MongoDB supports querying using JSON-like syntax, making it easier to work with complex data structures.
+
+5. **Rich ecosystem and third-party tools**: MongoDB has a large developer community and a wide range of third-party tools, libraries, and services that enhance its functionality and integration capabilities.
+2025-04-02 20:20:45,582 - INFO - ================================================================================
+2025-04-02 20:20:45,582 - INFO - 
+2025-04-02 20:20:45,582 - INFO - Configuration 6: small + nomic + chroma + qwen
+2025-04-02 20:20:45,582 - INFO - Time: 7.38s | Memory: 33.75MB
+2025-04-02 20:20:45,583 - INFO - Response:
+2025-04-02 20:20:45,583 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,583 - INFO - The main advantages of MongoDB include:
+
+1. **Document-oriented design**: MongoDB stores data in flexible document format, allowing for more complex and nested data structures compared to relational databases like MySQL.
+
+2. **High scalability and horizontal scaling**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This allows for easy handling of large amounts of data without sacrificing performance.
+
+3. **Automatic sharding and load balancing**: As the database grows, MongoDB automatically shards documents across multiple servers based on predefined rules. This ensures that data remains evenly distributed and load is balanced among nodes.
+
+4. **Fast query and aggregation capabilities**: While not as fast as some specialized columnar databases, MongoDB offers efficient querying through its query language (e.g., MongoDB Query Language or MQL)). Additionally, MongoDB's aggregation framework allows for powerful data analysis and transformation.
+
+5. **Integration with other technologies**: MongoDB can easily integrate with other technologies such as Node.js, Python, Ruby, and web frameworks like Express.js or Django.
+
+These advantages make MongoDB a popular choice for applications that require flexible document storage, scalability, and integration with other technologies.
+2025-04-02 20:20:45,583 - INFO - ================================================================================
+2025-04-02 20:20:45,583 - INFO - 
+2025-04-02 20:20:45,583 - INFO - Configuration 7: small + minilm + chroma + qwen
+2025-04-02 20:20:45,583 - INFO - Time: 5.68s | Memory: -1.16MB
+2025-04-02 20:20:45,583 - INFO - Response:
+2025-04-02 20:20:45,583 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,583 - INFO - The main advantages of MongoDB include:
+
+1. **Flexible Data Model**: MongoDB uses a document-oriented model, allowing for flexible and nested data structures.
+
+2. **High Scalability**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This makes it suitable for handling large amounts of data or high traffic websites.
+
+3. **Automatic sharding and replication**: MongoDB automatically shards data across multiple servers based on predefined rules. Replication allows you to create copies of your database, providing redundancy and improving read performance.
+
+4. **Native Support for JSON**: MongoDB is built on top of the Java language, which means it natively supports and operates with JSON (JavaScript Object Notation) format.
+
+5. **Efficient Querying**: MongoDB uses a query language called the Query Language (QL), which allows for efficient querying of large data sets.
+2025-04-02 20:20:45,583 - INFO - ================================================================================
+2025-04-02 20:20:45,583 - INFO - 
+2025-04-02 20:20:45,583 - INFO - Configuration 8: small + mpnet + chroma + qwen
+2025-04-02 20:20:45,583 - INFO - Time: 6.61s | Memory: 56.86MB
+2025-04-02 20:20:45,583 - INFO - Response:
+2025-04-02 20:20:45,583 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,583 - INFO - The main advantages of MongoDB include:
+
+1. **Document-oriented design**: MongoDB stores data in flexible document-based structures, which makes it easier to model complex real-world relationships.
+
+2. **High scalability and performance**: MongoDB is designed for horizontal scaling, allowing you to add more servers to handle increased traffic. Its query optimizer and indexing capabilities help improve read and write speeds.
+
+3. **Flexible schema and versioning**: MongoDB allows documents to have dynamic schemas, which means you can easily modify or add fields without affecting existing data.
+
+4. **Integration with other languages and tools**: MongoDB has a rich ecosystem of drivers, libraries, and tools for various programming languages like Python, Java, C#, and more.
+
+5. **No-SQL alternative to traditional RDBMSs**: MongoDB provides a non-relational database (NoSQL) solution that can handle unstructured data and scale horizontally without the need for complex normalization.
+2025-04-02 20:20:45,583 - INFO - ================================================================================
+2025-04-02 20:20:45,583 - INFO - 
+2025-04-02 20:20:45,583 - INFO - Configuration 9: medium + minilm + chroma + qwen
+2025-04-02 20:20:45,583 - INFO - Time: 5.49s | Memory: -3.11MB
+2025-04-02 20:20:45,583 - INFO - Response:
+2025-04-02 20:20:45,584 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,584 - INFO - The main advantages of MongoDB include:
+
+1. **Flexible Data Model**: MongoDB uses a document-oriented model, allowing for flexible and nested data structures.
+
+2. **High Scalability**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This makes it suitable for handling large volumes of data.
+
+3. **Automatic Sharding**: MongoDB automatically shards data across multiple servers based on predefined rules. This simplifies the process of scaling your database.
+
+4. **Real-time Querying**: MongoDB's query language, called MongoDB Query Language (MQL), allows for real-time querying and aggregation of data.
+
+5. **Integration with Other Tools**: MongoDB can easily integrate with other programming languages, frameworks, and tools, making it a versatile choice for modern applications.
+2025-04-02 20:20:45,584 - INFO - ================================================================================
+2025-04-02 20:20:45,584 - INFO - 
+2025-04-02 20:20:45,584 - INFO - Configuration 10: large + mpnet + redis + qwen
+2025-04-02 20:20:45,584 - INFO - Time: 6.28s | Memory: 43.03MB
+2025-04-02 20:20:45,584 - INFO - Response:
+2025-04-02 20:20:45,584 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,584 - INFO - The main advantages of MongoDB include:
+
+1. **Flexible Data Model**: MongoDB uses a document-oriented model, allowing for flexible and nested data structures.
+
+2. **Scaling and High Availability**: MongoDB supports horizontal scaling by sharding documents across multiple servers. This makes it easier to handle large amounts of data.
+
+3. **Automatic Indexing**: MongoDB automatically creates indexes on fields that are frequently queried or sorted. This speeds up query performance.
+
+4. **Text Search and Full-Text Indexing (FTI)**: MongoDB supports text search and full-text indexing, allowing for powerful searching capabilities within unstructured documents.
+
+5. **Cross-Database Queries with MongoDB Connector for SQL Databases**: MongoDB offers a connector that allows querying data across MongoDB and relational databases like MySQL or PostgreSQL.
+
+These advantages make MongoDB a popular choice for applications that require flexible data modeling, scalability, and high availability.
+2025-04-02 20:20:45,584 - INFO - ================================================================================
+2025-04-02 20:20:45,584 - INFO - 
+2025-04-02 20:20:45,584 - INFO - Configuration 11: large + minilm + redis + qwen
+2025-04-02 20:20:45,584 - INFO - Time: 6.17s | Memory: 4.08MB
+2025-04-02 20:20:45,584 - INFO - Response:
+2025-04-02 20:20:45,584 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,584 - INFO - The main advantages of MongoDB include:
+
+1. **Document-oriented design**: MongoDB stores data as documents, which allows for flexible and nested structures. This is in contrast to relational databases like MySQL that use tables with predefined columns.
+
+2. **High scalability and performance**: MongoDB's sharding capability allows it to scale horizontally across multiple servers. This results in better read and write performance compared to monolithic systems.
+
+3. **Automatic indexing and query optimization**: MongoDB automatically creates indexes on fields that are frequently queried or sorted. This helps optimize queries, resulting in faster response times.
+
+4. **Easy integration with other technologies**: MongoDB can be easily integrated with other programming languages like Python, Java, or C++. This allows developers to leverage the strengths of both MongoDB and their chosen language.
+
+These advantages make MongoDB a popular choice for modern applications that require flexible data modeling and high scalability.
+2025-04-02 20:20:45,584 - INFO - ================================================================================
+2025-04-02 20:20:45,584 - INFO - 
+2025-04-02 20:20:45,584 - INFO - Configuration 12: medium + mpnet + redis + qwen
+2025-04-02 20:20:45,584 - INFO - Time: 6.05s | Memory: -10.39MB
+2025-04-02 20:20:45,584 - INFO - Response:
+2025-04-02 20:20:45,584 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,584 - INFO - The main advantages of MongoDB include:
+
+1. **Flexible Data Model**: MongoDB uses a document-oriented model, allowing for flexible and nested data structures.
+
+2. **Scaling and High Availability**: MongoDB supports horizontal scaling through sharding, where data can be distributed across multiple servers. This makes it easier to handle large volumes of data.
+
+3. **Automatic Indexing**: MongoDB automatically creates indexes on fields that are frequently queried or sorted. This speeds up query performance without requiring manual index management.
+
+4. **Rich Query Language (SQL) and aggregation Framework**: Although not traditional SQL, MongoDB provides a query language called the MongoDB Query Language (MQL). Additionally, MongoDB has an aggregation framework for performing complex data analysis tasks.
+
+5. **Easy Integration with Other Languages and Tools**: MongoDB supports various programming languages like JavaScript, Python, C#, and more. This makes it easier to integrate MongoDB into existing applications or workflows.
+2025-04-02 20:20:45,585 - INFO - ================================================================================
+2025-04-02 20:20:45,585 - INFO - 
+2025-04-02 20:20:45,585 - INFO - Configuration 13: medium + minilm + redis + qwen
+2025-04-02 20:20:45,586 - INFO - Time: 7.40s | Memory: -1.09MB
+2025-04-02 20:20:45,586 - INFO - Response:
+2025-04-02 20:20:45,586 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,586 - INFO - The main advantages of MongoDB include:
+
+1. **Document-oriented data model**: MongoDB stores data in flexible document-like structures, which makes it easier to work with unstructured or semi-structured data.
+
+2. **High scalability and sharding capabilities**: MongoDB supports horizontal scaling through sharding, where data can be distributed across multiple servers. This allows for easy expansion of the database without sacrificing performance.
+
+3. **Flexible query language (SQL-like) and aggregation framework**: MongoDB's query language, called the MongoDB Query Language (MQL), is similar to SQL but with some distinct features. The aggregation framework in MongoDB enables users to perform complex data analysis and transformations.
+
+4. **Good performance for handling large volumes of data**: Despite its document-oriented nature, MongoDB has been optimized for high-performance read and write operations, making it suitable for handling large datasets.
+
+5. **Integration with other technologies and tools**: MongoDB can be easily integrated with other programming languages, frameworks, and tools. This allows developers to leverage the strengths of both MongoDB and their chosen technology stack.
+2025-04-02 20:20:45,588 - INFO - ================================================================================
+2025-04-02 20:20:45,589 - INFO - 
+2025-04-02 20:20:45,589 - INFO - Configuration 14: small + minilm + redis + qwen
+2025-04-02 20:20:45,589 - INFO - Time: 5.56s | Memory: 1.28MB
+2025-04-02 20:20:45,589 - INFO - Response:
+2025-04-02 20:20:45,589 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,589 - INFO - The main advantages of MongoDB include:
+
+1. **Flexible Data Model**: MongoDB uses a document-oriented model, allowing for flexible and nested data structures.
+
+2. **High Scalability**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This makes it suitable for handling large volumes of data.
+
+3. **Automatic Sharding**: MongoDB automatically shards data across multiple nodes based on predefined rules. This simplifies the process of scaling your database.
+
+4. **Fast Querying with Indexes**: MongoDB supports indexing, which significantly speeds up data retrieval. You can create indexes on specific fields to optimize query performance.
+
+5. **Rich Integration with Other Tools**: MongoDB has a rich ecosystem of drivers and tools that allow seamless integration with other programming languages and systems.
+
+These advantages make MongoDB a popular choice for developers building scalable, high-performance applications.
+2025-04-02 20:20:45,589 - INFO - ================================================================================
+2025-04-02 20:20:45,589 - INFO - 
+2025-04-02 20:20:45,589 - INFO - Configuration 15: medium + nomic + redis + qwen
+2025-04-02 20:20:45,589 - INFO - Time: 6.37s | Memory: -1.23MB
+2025-04-02 20:20:45,589 - INFO - Response:
+2025-04-02 20:20:45,589 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,589 - INFO - The main advantages of MongoDB include:
+
+1. **Document-oriented design**: MongoDB stores data in flexible document format, allowing for easy querying and updating.
+
+2. **High scalability and horizontal scaling**: MongoDB's architecture supports sharding, which allows you to distribute data across multiple servers. This enables high availability and linear scalability.
+
+3. **Fast read and write operations**: MongoDB is designed to provide fast access to data, even with a large number of documents.
+
+4. **易用的查询语言 (SQL-like) -** MongoDB's query language, called the C# driver for MongoDB, allows developers to perform complex queries similar to SQL.
+
+5. **Integration with other languages and tools**: MongoDB supports integration with various programming languages, such as Python, Java, and C#. This enables seamless data manipulation across different systems.
+2025-04-02 20:20:45,589 - INFO - ================================================================================
+2025-04-02 20:20:45,589 - INFO - 
+2025-04-02 20:20:45,589 - INFO - Configuration 16: small + mpnet + redis + qwen
+2025-04-02 20:20:45,589 - INFO - Time: 5.39s | Memory: 10.59MB
+2025-04-02 20:20:45,589 - INFO - Response:
+2025-04-02 20:20:45,589 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,589 - INFO - The main advantages of MongoDB include:
+
+1. **Flexible Data Model**: MongoDB uses a document-oriented model, allowing for flexible and nested data structures.
+
+2. **High Scalability**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This makes it suitable for handling large volumes of data.
+
+3. **Automatic sharding**: As the database grows, MongoDB automatically shards the data across multiple servers. This eliminates the need for manual partitioning.
+
+4. **Real-time Querying with Aggregation Framework**: MongoDB's aggregation framework allows for complex queries and real-time analysis of data.
+
+5. **Integration with Other Tools**: MongoDB can easily integrate with other programming languages, frameworks, and tools, making it a versatile choice for developers.
+2025-04-02 20:20:45,589 - INFO - ================================================================================
+2025-04-02 20:20:45,589 - INFO - 
+2025-04-02 20:20:45,589 - INFO - Configuration 17: small + nomic + redis + qwen
+2025-04-02 20:20:45,589 - INFO - Time: 5.77s | Memory: -9.02MB
+2025-04-02 20:20:45,589 - INFO - Response:
+2025-04-02 20:20:45,589 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,589 - INFO - The main advantages of MongoDB include:
+
+1. **Document-oriented design**: MongoDB stores data in flexible document format, allowing for easy querying and handling of nested data.
+
+2. **High scalability and performance**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This allows for linear scalability with increasing data volume.
+
+3. **Automatic sharding and replication**: MongoDB automatically shards data across multiple servers based on predefined rules. Replication ensures that data is backed up and accessible from other locations in the event of server failure.
+
+4. **Easy querying with JSON-like syntax**: MongoDB's query language, MongoDB Query Language (MQL), supports JSON-like syntax for filtering, sorting, and aggregating data.
+
+5. **Integration with other technologies**: MongoDB has a rich ecosystem of drivers, tools, and frameworks that facilitate integration with other programming languages, platforms, and systems.
+2025-04-02 20:20:45,589 - INFO - ================================================================================
+2025-04-02 20:20:45,589 - INFO - 
+2025-04-02 20:20:45,589 - INFO - Configuration 18: large + nomic + redis + qwen
+2025-04-02 20:20:45,589 - INFO - Time: 7.93s | Memory: 28.23MB
+2025-04-02 20:20:45,589 - INFO - Response:
+2025-04-02 20:20:45,589 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,589 - INFO - The main advantages of MongoDB are:
+
+1. **Document-oriented design**: MongoDB stores data in flexible, document-like structures called documents or records. This allows for easy querying and updates based on specific fields.
+
+2. **High scalability and horizontal scaling**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This makes it suitable for handling large amounts of data and high traffic loads.
+
+3. **Automatic sharding and partitioning**: As the database grows, MongoDB automatically shards documents across multiple servers based on predefined rules (e.g., hash of a field). This ensures that read and write operations are balanced and efficient.
+
+4. **Rich query language (Q) and aggregation framework**: MongoDB supports powerful querying capabilities through its Query Language (QL or Q). Additionally, it has a robust aggregation framework that allows for complex data analysis and reporting.
+
+5. **Integration with other technologies**: MongoDB integrates seamlessly with other technologies such as Node.js, Python, Ruby, and web frameworks like Express.js or Django. This enables developers to build scalable, distributed applications easily.
+2025-04-02 20:20:45,589 - INFO - ================================================================================
+2025-04-02 20:20:45,589 - INFO - 
+2025-04-02 20:20:45,589 - INFO - Configuration 19: medium + nomic + qdrant + qwen
+2025-04-02 20:20:45,589 - INFO - Time: 5.92s | Memory: 9.78MB
+2025-04-02 20:20:45,589 - INFO - Response:
+2025-04-02 20:20:45,589 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,589 - INFO - The main advantages of MongoDB include:
+
+1. **Document-oriented design**: MongoDB stores data in flexible document format, allowing for easy querying and updating compared to relational databases.
+
+2. **High scalability and performance**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This allows for efficient handling of large amounts of data.
+
+3. **Automatic sharding and replication**: MongoDB automatically shards data across multiple servers based on predefined rules. Replication also occurs, allowing for failover and data backup.
+
+4. **Easy querying with JSON-like syntax**: MongoDB's query language is similar to JSON, making it easy for developers familiar with these formats to work with MongoDB.
+
+5. **Flexible schema design**: MongoDB allows for dynamic schemas, where documents can have different fields or structures without requiring a complete redesign of the database.
+2025-04-02 20:20:45,589 - INFO - ================================================================================
+2025-04-02 20:20:45,590 - INFO - 
+2025-04-02 20:20:45,590 - INFO - Configuration 20: medium + mpnet + qdrant + qwen
+2025-04-02 20:20:45,590 - INFO - Time: 5.99s | Memory: 16.22MB
+2025-04-02 20:20:45,590 - INFO - Response:
+2025-04-02 20:20:45,590 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,590 - INFO - The main advantages of MongoDB include:
+
+1. **Flexible Data Model**: MongoDB uses a document-oriented model, allowing for flexible and nested data structures.
+
+2. **High Scalability**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This makes it suitable for handling large volumes of data or high-traffic websites.
+
+3. **Automatic Sharding**: MongoDB automatically shards data across multiple servers based on predefined rules. This simplifies the process of scaling and distributing data.
+
+4. **Real-time Querying with Aggregation Framework**: MongoDB's aggregation framework allows for real-time querying, grouping, and filtering of data without having to move the entire dataset.
+
+5. **Integration with Other Technologies**: MongoDB can easily integrate with other technologies like Node.js, Python, Ruby, or even traditional relational databases through tools like ActiveRecord or SQLAlchemy.
+2025-04-02 20:20:45,590 - INFO - ================================================================================
+2025-04-02 20:20:45,590 - INFO - 
+2025-04-02 20:20:45,590 - INFO - Configuration 21: large + nomic + qdrant + qwen
+2025-04-02 20:20:45,590 - INFO - Time: 7.37s | Memory: -7.41MB
+2025-04-02 20:20:45,590 - INFO - Response:
+2025-04-02 20:20:45,590 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,590 - INFO - The main advantages of MongoDB include:
+
+1. **Document-oriented model**: MongoDB stores data as flexible documents instead of fixed tables. This allows for easy querying and updating of nested structures.
+
+2. **High scalability and horizontal scaling**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This makes it well-suited for applications with unpredictable traffic loads.
+
+3. **Automatic sharding and partitioning**: MongoDB automatically shards data across multiple servers based on predefined rules (sharding keys). This not only improves performance but also simplifies data management.
+
+4. **Rich query language (SQL-like) and aggregation framework**: MongoDB supports a query language similar to SQL, allowing for complex queries. Additionally, it has a powerful aggregation framework that enables grouping, filtering, and transforming data in real-time.
+
+5. **Integration with other technologies**: MongoDB can easily integrate with other technologies such as Node.js, Python, Java, and web frameworks like Express.js or Django. This allows developers to leverage the strengths of different languages and tools for their projects.
+2025-04-02 20:20:45,590 - INFO - ================================================================================
+2025-04-02 20:20:45,590 - INFO - 
+2025-04-02 20:20:45,590 - INFO - Configuration 22: medium + minilm + qdrant + qwen
+2025-04-02 20:20:45,590 - INFO - Time: 6.22s | Memory: 0.66MB
+2025-04-02 20:20:45,590 - INFO - Response:
+2025-04-02 20:20:45,590 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,590 - INFO - The main advantages of MongoDB include:
+
+1. **Flexible Data Model**: MongoDB uses a document-oriented model, allowing for flexible and unstructured data storage.
+
+2. **High Scalability**: MongoDB is designed to scale horizontally by adding more servers to a cluster. This makes it well-suited for handling large volumes of data.
+
+3. **Automatic sharding**: MongoDB automatically shards data across multiple servers based on predefined rules. This eliminates the need for manual partitioning and ensures data consistency.
+
+4. **Real-time Querying with Aggregation Framework**: MongoDB's aggregation framework allows developers to perform complex queries, aggregations, and transformations in real-time.
+
+5. **Integration with Other Tools**: MongoDB can be easily integrated with other technologies like Node.js, Python, and Apache Kafka for full-stack development.
+
+These advantages make MongoDB a popular choice for applications that require high scalability, flexible data modeling, and seamless integration with other tools.
+2025-04-02 20:20:45,590 - INFO - ================================================================================
+2025-04-02 20:20:45,590 - INFO - 
+2025-04-02 20:20:45,590 - INFO - Configuration 23: large + mpnet + qdrant + qwen
+2025-04-02 20:20:45,590 - INFO - Time: 6.13s | Memory: 0.17MB
+2025-04-02 20:20:45,590 - INFO - Response:
+2025-04-02 20:20:45,590 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,590 - INFO - The main advantages of MongoDB include:
+
+1. **Document-oriented structure**: MongoDB stores data in flexible document format, allowing for nested structures and easy querying.
+
+2. **High scalability and performance**: MongoDB is designed to handle large amounts of data and can scale horizontally by adding more servers.
+
+3. **Automatic sharding and replication**: MongoDB automatically shards data across multiple servers based on predefined rules. Replication allows for creating copies of the database, providing redundancy and failover capabilities.
+
+4. **Easy querying with JSON-like syntax**: MongoDB queries are written in a JSON-like syntax called CQL (MongoDB Query Language). This makes querying complex structures intuitive.
+
+5. **Integration with other languages and tools**: MongoDB has strong integration with various programming languages like Python, Java, and Ruby. It also works seamlessly with popular tools and frameworks.
+2025-04-02 20:20:45,590 - INFO - ================================================================================
+2025-04-02 20:20:45,590 - INFO - 
+2025-04-02 20:20:45,590 - INFO - Configuration 24: large + minilm + qdrant + qwen
+2025-04-02 20:20:45,590 - INFO - Time: 6.95s | Memory: -43.06MB
+2025-04-02 20:20:45,590 - INFO - Response:
+2025-04-02 20:20:45,590 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,590 - INFO - The main advantages of MongoDB include:
+
+1. **Document-oriented structure**: MongoDB stores data in flexible document-like structures, which makes it easier to model complex real-world relationships.
+
+2. **Scaling and sharding**: MongoDB supports horizontal scaling through sharding, allowing you to distribute your data across multiple servers for better performance and fault tolerance.
+
+3. **High-performance read/write operations**: MongoDB is optimized for high-speed read and write operations, making it suitable for applications that require quick access to data.
+
+4. **易学和易用的API**: MongoDB提供了易于学习和使用的API，如Python's PyMongo or Java's MongoClient, which simplifies integration with other languages and frameworks.
+
+5. **Rich set of tools and utilities**: MongoDB comes with a suite of command-line tools and utilities for managing databases, backups, replication, and more.
+
+These advantages make MongoDB a popular choice for applications that require flexible data modeling, scalability, and ease of use.
+2025-04-02 20:20:45,590 - INFO - ================================================================================
+2025-04-02 20:20:45,590 - INFO - 
+2025-04-02 20:20:45,590 - INFO - Configuration 25: small + nomic + qdrant + qwen
+2025-04-02 20:20:45,590 - INFO - Time: 6.17s | Memory: 5.91MB
+2025-04-02 20:20:45,590 - INFO - Response:
+2025-04-02 20:20:45,590 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,590 - INFO - The main advantages of MongoDB include:
+
+1. **Document-oriented design**: MongoDB stores data in flexible document-like structures, which makes it easier to work with unstructured or semi-structured data.
+
+2. **Scaling and sharding**: MongoDB supports horizontal scaling through sharding, allowing you to distribute your data across multiple servers. This enables high availability and performance.
+
+3. **High write throughput**: MongoDB is designed for high write volumes, making it suitable for applications that generate a lot of new content.
+
+4. **Query flexibility and indexing**: MongoDB allows for flexible querying using its query language (e.g., JSON or BSON). It also supports various types of indexes, which can greatly improve query performance.
+
+5. **Integration with other languages and tools**: MongoDB has strong integration capabilities with various programming languages, such as Python, Java, and C#. This makes it easier to build applications that leverage both relational databases and NoSQL systems.
+2025-04-02 20:20:45,590 - INFO - ================================================================================
+2025-04-02 20:20:45,590 - INFO - 
+2025-04-02 20:20:45,590 - INFO - Configuration 26: small + minilm + qdrant + qwen
+2025-04-02 20:20:45,590 - INFO - Time: 5.03s | Memory: -4.44MB
+2025-04-02 20:20:45,590 - INFO - Response:
+2025-04-02 20:20:45,590 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,590 - INFO - The main advantages of MongoDB are:
+
+1. **Document-oriented structure**: MongoDB stores data in flexible JSON-like documents, which makes it easier to model complex relationships.
+
+2. **Scaling and sharding**: MongoDB supports horizontal scaling through sharding, where data is distributed across multiple servers. This allows for high availability and handling large amounts of data.
+
+3. **High performance**: MongoDB's storage engine, called WiredTiger, is designed to be efficient in terms of reads and writes. It also provides features like caching and compression to further enhance performance.
+
+4. **Ease of use with a rich ecosystem**: MongoDB has a user-friendly command-line interface (CLI) and supports various programming languages for integration. The ecosystem around MongoDB includes tools for backup, monitoring, and administration.
+2025-04-02 20:20:45,591 - INFO - ================================================================================
+2025-04-02 20:20:45,591 - INFO - 
+2025-04-02 20:20:45,591 - INFO - Configuration 27: small + mpnet + qdrant + qwen
+2025-04-02 20:20:45,591 - INFO - Time: 7.85s | Memory: -0.73MB
+2025-04-02 20:20:45,591 - INFO - Response:
+2025-04-02 20:20:45,591 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:20:45,591 - INFO - The main advantages of MongoDB include:
+
+1. **Document-oriented design**: MongoDB stores data as documents, allowing for flexible and nested structures. This makes it easier to model complex real-world relationships.
+
+2. **High scalability and performance**: MongoDB is designed to handle large amounts of data with ease. Its distributed architecture allows for sharding, enabling the database to scale horizontally across multiple servers.
+
+3. **Rich query language (SQL-like) and aggregation framework**: MongoDB provides a query language called the MongoDB Query Language (MQL), which resembles SQL but has its own syntax. Additionally, MongoDB's aggregation framework allows for complex data analysis and reporting.
+
+4. **Easy integration with other languages and tools**: MongoDB supports various programming languages like Python, Java, C#, and more. This makes it easy to integrate MongoDB into existing applications or build new ones.
+
+5. **Open-source and community-driven**: MongoDB is an open-source database system, which means its source code is freely available for anyone to use, modify, or distribute. This has led to a strong developer community that actively contributes to the improvement of the database.
+2025-04-02 20:20:45,591 - INFO - ================================================================================
+2025-04-02 20:20:45,591 - INFO - 
+2025-04-02 20:21:51,762 - INFO - Loading evaluation results...
+2025-04-02 20:21:51,767 - INFO - Loaded 30 valid results
+2025-04-02 20:21:51,767 - INFO - 
+===== RAG Response Evaluator =====
+2025-04-02 20:22:02,679 - INFO - 
+===== Responses for Question: What is the difference between B-trees and B+ trees? =====
+
+2025-04-02 20:22:02,679 - INFO - Configuration 1: medium + mpnet + chroma + qwen
+2025-04-02 20:22:02,679 - INFO - Time: 9.61s | Memory: -62.05MB
+2025-04-02 20:22:02,679 - INFO - Response:
+2025-04-02 20:22:02,679 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,679 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing data in databases.
+
+1. **B-Trees**:
+   - B-trees are a type of self-balancing tree.
+   - They have a specific number of children per node, typically 2 or 4.
+   - This allows the tree to maintain a roughly equal balance of elements across its nodes.
+   - B-trees are commonly used in disk-based databases because they minimize disk I/O.
+
+2. **B+ Trees**:
+   - B+ trees are similar to B-trees but with some key differences.
+   - In a B+ tree, all leaf nodes are stored at the end of the tree, and non-leaf nodes have pointers (usually just a single byte) to their child nodes.
+   - This arrangement allows for more direct access to data, as you can traverse directly from root to leaf without having to pass through intermediate nodes.
+   - B+ trees are often used in databases that need to support fast random access to data.
+
+In summary, the main difference between B- and B+ trees is how they store and organize data. B-trees maintain a balance across nodes, while B+ trees provide direct access to leaf nodes.
+2025-04-02 20:22:02,680 - INFO - ================================================================================
+2025-04-02 20:22:02,680 - INFO - 
+2025-04-02 20:22:02,680 - INFO - Configuration 2: large + nomic + chroma + qwen
+2025-04-02 20:22:02,680 - INFO - Time: 8.71s | Memory: -333.88MB
+2025-04-02 20:22:02,680 - INFO - Response:
+2025-04-02 20:22:02,680 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,680 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing data.
+
+1. **B-Trees**:
+   - B-trees are designed to maintain a balance between keys and nodes.
+   - Each node in a B-tree can have multiple children, allowing for more efficient storage of large datasets.
+   - The key property is that the number of children per node is a constant (usually 2 or 4).
+
+2. **B+ Trees**:
+   - B+ trees are similar to B-trees but with an additional leaf layer at the bottom of each node.
+   - This modification allows for more direct access to data, as there's no need to traverse multiple levels before reaching a specific key.
+   - The key property in B+ trees is that all keys in a given node appear in ascending order.
+
+In summary, both B- and B+ trees are used for indexing large datasets. However, B+ trees offer more direct access to data by having an additional leaf layer, while B-trees maintain balance between nodes and keys.
+2025-04-02 20:22:02,680 - INFO - ================================================================================
+2025-04-02 20:22:02,680 - INFO - 
+2025-04-02 20:22:02,680 - INFO - Configuration 3: medium + nomic + chroma + qwen
+2025-04-02 20:22:02,680 - INFO - Time: 8.58s | Memory: -337.66MB
+2025-04-02 20:22:02,680 - INFO - Response:
+2025-04-02 20:22:02,680 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,680 - INFO - [KB] Knowledge Base - Information from the course materials and documents.
+
+The main difference between B-trees and B+ trees lies in their data organization and leaf node structure.
+
+1. **B-Trees**:
+   - B-trees are designed for disk-based storage systems.
+   - Each node in a B-tree has at least `m + 1` children, where `m` is the number of keys in the tree.
+   - Leaf nodes contain key-value pairs, while inner nodes hold keys and point to child subtrees.
+
+2. **B+ Trees**:
+   - B+ trees are also used for disk-based storage but have some advantages over B-trees.
+   - In a B+ tree, leaf nodes are always at the end of each internal node, which makes it easier to traverse the tree in order.
+   - This arrangement allows for better cache locality and faster access to data, especially when dealing with large datasets.
+
+In summary, while both B-trees and B+ trees are balanced tree data structures designed for disk-based storage, B+ trees have leaf nodes at the end of each internal node, which offers better cache performance and easier traversal.
+2025-04-02 20:22:02,680 - INFO - ================================================================================
+2025-04-02 20:22:02,680 - INFO - 
+2025-04-02 20:22:02,680 - INFO - Configuration 4: large + mpnet + chroma + qwen
+2025-04-02 20:22:02,680 - INFO - Time: 7.21s | Memory: -39.59MB
+2025-04-02 20:22:02,680 - INFO - Response:
+2025-04-02 20:22:02,680 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,680 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing data in databases.
+
+1. **B-Trees (Variable)**: In a B-tree, each node can have multiple child nodes, allowing for more efficient storage of data. The number of children per node varies, but it's designed to minimize the depth of the tree while still maintaining good balance.
+
+2. **B+ Trees (Fixed)**: In contrast, B+ trees are fixed-depth trees with a single linked list as their leaf nodes. Each non-leaf node has exactly one child, and all keys in the leaf nodes are sorted.
+
+The main advantage of B+ trees over B-trees is that they have a more balanced structure, which leads to smaller average path lengths between data items. This makes B+ trees faster for random access operations like searching for a specific key or retrieving a range of values.
+2025-04-02 20:22:02,680 - INFO - ================================================================================
+2025-04-02 20:22:02,680 - INFO - 
+2025-04-02 20:22:02,680 - INFO - Configuration 5: large + minilm + chroma + qwen
+2025-04-02 20:22:02,680 - INFO - Time: 8.76s | Memory: -103.53MB
+2025-04-02 20:22:02,680 - INFO - Response:
+2025-04-02 20:22:02,680 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,680 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their node structure and how they organize data.
+
+1. **B-Tree (General Case)****
+   - A B-tree is a self-balancing search tree with at least 2 children per node.
+   - Each node can have multiple keys, allowing for efficient range queries.
+   - The tree is balanced to minimize the maximum depth of any node, which in turn reduces the number of disk accesses.
+
+2. **B+ Tree (Common Case)****
+   - A B+ tree is similar to a B-tree but with an additional property: all non-leaf nodes contain only one key.
+   - This design allows for more direct access to data, as each node's key points directly to the next node in the sequence.
+   - The balance of a B+ tree is maintained by ensuring that no leaf node is further than a fixed number of levels from any root.
+
+In summary, while both B- and B+ trees are self-balancing search structures for disk-based databases, B+ trees have an extra key per non-leaf node, allowing for more direct access to data.
+2025-04-02 20:22:02,680 - INFO - ================================================================================
+2025-04-02 20:22:02,680 - INFO - 
+2025-04-02 20:22:02,680 - INFO - Configuration 6: small + nomic + chroma + qwen
+2025-04-02 20:22:02,680 - INFO - Time: 8.05s | Memory: -699.50MB
+2025-04-02 20:22:02,680 - INFO - Response:
+2025-04-02 20:22:02,680 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,680 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their node structure and how they organize data.
+
+1. **B-Tree (General)**: In a traditional B-tree, each node can have multiple child nodes. The number of children per node is fixed but can vary across different levels of the tree. This allows for efficient search, insertion, and deletion operations.
+
+2. **B+ Tree (File Systems)**: In a B+ tree, which is commonly used in file systems, all leaf nodes are stored at the end of each branch, and there are no empty spaces within the nodes. The advantage of this structure is that it allows for easy random access to files, as leaf nodes are typically sorted by their file names.
+
+In summary, while both B- and B+ trees are balanced search structures, B+ trees are specifically designed for use in file systems, allowing for efficient random access to files.
+2025-04-02 20:22:02,680 - INFO - ================================================================================
+2025-04-02 20:22:02,680 - INFO - 
+2025-04-02 20:22:02,680 - INFO - Configuration 7: small + minilm + chroma + qwen
+2025-04-02 20:22:02,680 - INFO - Time: 9.59s | Memory: -84.77MB
+2025-04-02 20:22:02,680 - INFO - Response:
+2025-04-02 20:22:02,680 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,680 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their leaf node structure and how they organize data.
+
+1. **B-Tree (General Case)****
+   - In a B-tree, each non-leaf node can have up to `m` children, where `m` is a constant called the maximum degree.
+   - Leaf nodes store actual data, with pointers or indices to the next leaf node.
+   - The height of a B-tree is kept low by ensuring that each node is as full as possible before adding more children.
+
+2. **B+ Tree (Common Case)****
+   - In a B+ tree, all leaf nodes are located at the end of the tree, and non-leaf nodes have only one child.
+   - This structure allows for efficient range queries by starting from the root node and following pointers to leaf nodes that contain the desired range.
+   - The height of a B+ tree is generally higher than that of a B-tree due to the leaf nodes being farther away from the root.
+
+In summary, while both B- and B+ trees are balanced data structures for storing large amounts of data in a disk-based environment, B+ trees have leaf nodes at the end of the tree, allowing for efficient range queries, and generally higher height than B-trees.
+2025-04-02 20:22:02,680 - INFO - ================================================================================
+2025-04-02 20:22:02,680 - INFO - 
+2025-04-02 20:22:02,680 - INFO - Configuration 8: small + mpnet + chroma + qwen
+2025-04-02 20:22:02,680 - INFO - Time: 11.27s | Memory: -79.14MB
+2025-04-02 20:22:02,680 - INFO - Response:
+2025-04-02 20:22:02,680 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,681 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The key differences between B-trees and B+ trees lie in their node structure, leaf organization, and overall purpose:
+
+1. **Node Structure**:
+   - **B-Trees**: Each node can have multiple keys (up to a maximum specified). The tree is balanced by having roughly the same number of children per non-leaf node.
+   - **B+ Trees**: Each node has exactly one key, and all the pointers point to the next record in the sorted order. Leaf nodes contain actual data, while inner nodes serve as indexes.
+
+2. **Leaf Organization**:
+   - **B-Trees**: The leaf nodes can be unbalanced due to the balance condition. This can lead to longer search paths.
+   - **B+ Trees**: All leaf nodes are at the same level and contain sorted records. This results in a more balanced structure, which typically leads to faster search times.
+
+3. **Overall Purpose**:
+   - **B-Trees**: Originally designed for disk-based storage systems where random access is slower than sequential access. They provide good performance for read operations.
+   - **B+ Trees**: Commonly used in modern database management systems due to their efficient handling of large datasets, especially when combined with indexing. They are particularly well-suited for write-intensive workloads.
+
+In summary, B-trees and B+ trees differ mainly in their node structure, leaf organization, and intended use. While both are designed for efficient storage and retrieval of data, B+ trees generally offer better performance in modern database systems.
+2025-04-02 20:22:02,681 - INFO - ================================================================================
+2025-04-02 20:22:02,681 - INFO - 
+2025-04-02 20:22:02,681 - INFO - Configuration 9: medium + minilm + chroma + qwen
+2025-04-02 20:22:02,681 - INFO - Time: 10.36s | Memory: -58.05MB
+2025-04-02 20:22:02,681 - INFO - Response:
+2025-04-02 20:22:02,681 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,681 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing in databases.
+
+1. **B-Tree (General Knowledge)****
+   A B-tree is a self-balancing search tree where each node can have multiple children. The number of children per node follows a specific pattern, usually 2 or 4.
+   
+   - **Insertion and Deletion**: In B-trees, insertions and deletions are performed recursively by splitting or merging nodes as needed to maintain the balance.
+   
+   - **Space Efficiency**: B-trees are more space-efficient than other balanced search trees like AVL trees because they can have fewer nodes per level.
+
+2. **B+ Tree (Knowledge Base)****
+   A B+ tree is a variation of B-trees that adds an ordered leaf node set, usually containing pointers to actual data records in the database.
+   
+   - **Leaf Nodes**: In B+ trees, all non-leaf nodes are used for indexing and have at most two children. Leaf nodes contain the actual data records.
+   
+   - **Efficient Range Queries**: B+ trees are particularly well-suited for range queries because leaf nodes are ordered, allowing for efficient traversal.
+
+In summary, while both B- and B+ trees are self-balancing search structures, B+ trees have leaf nodes containing actual data records, making them more suitable for range queries in databases.
+2025-04-02 20:22:02,681 - INFO - ================================================================================
+2025-04-02 20:22:02,681 - INFO - 
+2025-04-02 20:22:02,681 - INFO - Configuration 10: large + mpnet + redis + qwen
+2025-04-02 20:22:02,681 - INFO - Time: 7.45s | Memory: -16.38MB
+2025-04-02 20:22:02,681 - INFO - Response:
+2025-04-02 20:22:02,681 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,681 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their node structure and how they organize data.
+
+1. **B-Tree (General Case)****: A B-tree is a balanced tree that can have up to m children per node, where m is a parameter of the tree. This allows for efficient insertion and deletion while maintaining a logarithmic number of nodes.
+
+2. **B+ Tree (Sorted Data)****: A B+ tree is specifically designed for sorted data, as each node in a B+ tree contains only pointers to its child nodes. The root node points to the first record, and leaf nodes contain actual data records.
+
+The main advantage of B+ trees over B-trees is that they have a more compact structure, which leads to better cache locality and faster access times for large datasets. However, B-trees may be more suitable for cases where frequent range queries are required, as their balanced nature allows for efficient search in the tree.
+2025-04-02 20:22:02,681 - INFO - ================================================================================
+2025-04-02 20:22:02,681 - INFO - 
+2025-04-02 20:22:02,681 - INFO - Configuration 11: large + minilm + redis + qwen
+2025-04-02 20:22:02,681 - INFO - Time: 10.55s | Memory: -56.84MB
+2025-04-02 20:22:02,681 - INFO - Response:
+2025-04-02 20:22:02,681 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,681 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing in databases.
+
+1. **B-Trees**:
+   - Structure: B-trees are balanced, which means that the height of the tree is minimized. Each node has a fixed number of children (usually 2 or 4).
+   - Indexing: B-trees are commonly used in databases to store and index data. They allow for efficient search, insertion, and deletion operations.
+   - Trade-off: The main trade-off with B-trees is their balance requirement, which can lead to more nodes per level compared to other tree structures.
+
+2. **B+ Trees**:
+   - Structure: B+ trees are similar to B-trees but with an additional leaf node at the bottom of each internal node. This leaf node holds the actual data.
+   - Indexing: B+ trees are often used in databases for large datasets, as they allow for more direct access to data without traversing through multiple nodes.
+   - Trade-off: The main trade-off with B+ trees is that they may have a slightly higher overhead per node due to the leaf node.
+
+In summary, while both B- and B+ trees are balanced tree structures used for indexing in databases, B+ trees typically have an additional leaf node, allowing for more direct access to data. This makes B+ trees more suitable for managing large datasets.
+2025-04-02 20:22:02,681 - INFO - ================================================================================
+2025-04-02 20:22:02,681 - INFO - 
+2025-04-02 20:22:02,681 - INFO - Configuration 12: medium + mpnet + redis + qwen
+2025-04-02 20:22:02,681 - INFO - Time: 10.60s | Memory: -86.47MB
+2025-04-02 20:22:02,681 - INFO - Response:
+2025-04-02 20:22:02,681 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,681 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their leaf node organization and purpose.
+
+1. **B-Trees (General)***:
+   - A general class of self-balancing search trees.
+   - Each non-leaf node can have 2 to m children, where m is a parameter specific to the implementation.
+   - Leaf nodes store key-value pairs, with keys sorted in ascending order.
+   - B-trees maintain a balance property: the height of the tree plus one (the number of levels) should be less than or equal to the maximum number of children per node.
+
+2. **B+ Trees** (Specific to Databases):
+   - A specialized form of B-tree designed specifically for managing large datasets in databases.
+   - In a B+ tree, all leaf nodes are next to each other and form a continuous block. This arrangement allows for efficient range queries.
+   - Non-leaf nodes contain pointers or indices to the next node in the same row. This structure ensures that data is stored sequentially within each row.
+   - The balance property in B+ trees is maintained by ensuring that the number of children per non-leaf node does not exceed a certain limit.
+
+In summary, B-trees are a general class of self-balancing search trees, while B+ trees are a specialized form designed for databases. B+ trees have leaf nodes organized as a continuous block and maintain sequentiality within each row.
+2025-04-02 20:22:02,681 - INFO - ================================================================================
+2025-04-02 20:22:02,681 - INFO - 
+2025-04-02 20:22:02,681 - INFO - Configuration 13: medium + minilm + redis + qwen
+2025-04-02 20:22:02,681 - INFO - Time: 8.65s | Memory: -57.70MB
+2025-04-02 20:22:02,681 - INFO - Response:
+2025-04-02 20:22:02,681 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,681 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The difference between B-trees and B+ trees lies in their data organization and leaf node structure.
+
+1. **B-Trees**:
+   - B-trees are designed to maintain a balance between keys and nodes.
+   - Each non-leaf node has at least as many children as its maximum degree (e.g., 2 for a 2-3 tree).
+   - Leaf nodes store the actual data, with pointers or indices to other nodes.
+
+2. **B+ Trees**:
+   - B+ trees are similar to B-trees but have a different leaf node structure.
+   - In B+ trees, all leaf nodes are located at the end of the tree, forming a continuous block.
+   - Each leaf node contains only data and no pointers or indices, making it easier for sequential access.
+   
+In summary, the main difference between B- and B+ trees is that B+ trees have their leaf nodes contiguous at the end of the tree, while B-trees allow non-contiguous leaf nodes. This difference affects the efficiency of random access and disk I/O operations in these data structures.
+2025-04-02 20:22:02,681 - INFO - ================================================================================
+2025-04-02 20:22:02,681 - INFO - 
+2025-04-02 20:22:02,681 - INFO - Configuration 14: small + minilm + redis + qwen
+2025-04-02 20:22:02,681 - INFO - Time: 8.67s | Memory: -38.92MB
+2025-04-02 20:22:02,681 - INFO - Response:
+2025-04-02 20:22:02,681 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,681 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their leaf node structures and how they organize data.
+
+1. **B-Trees (General Case)****
+   - A general B-tree can have variable branching, meaning each non-leaf node can have a different number of children.
+   - Leaf nodes contain key-value pairs. The keys are stored in sorted order to enable efficient search.
+   - B-trees are designed for disk-based storage systems, where random access is slower than sequential access.
+
+2. **B+ Trees (Common Case)****
+   - A typical B+ tree has a fixed branching factor, meaning all non-leaf nodes have the same number of children.
+   - Leaf nodes in a B+ tree do not contain key-value pairs; instead, they store pointers to those pairs in internal nodes.
+   - B+ trees are often used for databases because they provide better worst-case time complexity for range queries.
+
+In summary, while both B- and B+ trees are balanced data structures designed for disk-based storage, B+ trees have leaf nodes that store pointers rather than key-value pairs, making them more suitable for database management systems.
+2025-04-02 20:22:02,681 - INFO - ================================================================================
+2025-04-02 20:22:02,681 - INFO - 
+2025-04-02 20:22:02,681 - INFO - Configuration 15: medium + nomic + redis + qwen
+2025-04-02 20:22:02,681 - INFO - Time: 9.07s | Memory: -325.19MB
+2025-04-02 20:22:02,681 - INFO - Response:
+2025-04-02 20:22:02,681 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,681 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their organization and how they handle data.
+
+1. **B-Trees (with duplicates)****
+   - B-trees are designed for use with datasets that may contain duplicate keys.
+   - Each node in a B-tree can have up to `m` children, where `m` is the maximum number of keys per node (usually 2 or 4).
+   - The tree structure allows for efficient search, insertion, and deletion operations.
+
+2. **B+ Trees (without duplicates)****
+   - B+ trees are a variant of B-trees that are optimized for handling large datasets without duplicates.
+   - In contrast to B-trees, all nodes in a B+ tree have only one child, which is used to store the next key or pointer.
+   - The leaf nodes of a B+ tree contain the actual data, while non-leaf nodes act as indexes.
+
+In summary, B-trees are suitable for datasets with duplicates and can handle more complex structures. B+ trees, on the other hand, are optimized for handling large datasets without duplicates, making them more efficient in terms of memory usage.
+2025-04-02 20:22:02,682 - INFO - ================================================================================
+2025-04-02 20:22:02,682 - INFO - 
+2025-04-02 20:22:02,682 - INFO - Configuration 16: small + mpnet + redis + qwen
+2025-04-02 20:22:02,682 - INFO - Time: 8.40s | Memory: -75.69MB
+2025-04-02 20:22:02,682 - INFO - Response:
+2025-04-02 20:22:02,682 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,682 - INFO - [KB] Knowledge Base - Information from course materials and documents
+
+The main difference between B-trees and B+ trees lies in their data organization and leaf node usage.
+
+1. **B-Trees (Generalized Binary Trees)**:
+   - Each non-leaf node has at least two children.
+   - The keys are stored in the nodes, with the root typically containing the smallest key.
+   - Leaf nodes contain the actual data items.
+   - B-trees are designed to minimize disk accesses by balancing the tree.
+
+2. **B+ Trees (Circularly Linked Lists)**:
+   - Each node is a leaf and contains only one data item.
+   - The keys are stored on the edges of the tree, with the root containing the smallest key.
+   - All non-leaf nodes have exactly one child, creating a circular structure.
+   - B+ trees are optimized for disk access because they minimize the number of disk seeks required to find a specific key.
+
+In summary, B-trees and B+ trees differ in their node structure (B-tree with interior nodes, B+ tree as linked lists), leaf node usage, and optimization for disk access.
+2025-04-02 20:22:02,682 - INFO - ================================================================================
+2025-04-02 20:22:02,682 - INFO - 
+2025-04-02 20:22:02,682 - INFO - Configuration 17: small + nomic + redis + qwen
+2025-04-02 20:22:02,682 - INFO - Time: 8.38s | Memory: -390.31MB
+2025-04-02 20:22:02,682 - INFO - Response:
+2025-04-02 20:22:02,682 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,682 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their internal organization and how they handle data.
+
+1. **B-Trees (Variable Splitting)****
+   B-trees are designed to maintain a balance between keys and leaf nodes. When a key exceeds the capacity of a node, the tree splits the node into two or more child nodes.
+
+   This process can lead to variable branching in the tree, where some branches have only one child while others have multiple children.
+
+2. **B+ Trees (Static Splitting)****
+   B+ trees are a variation of B-trees that strive for better cache performance by ensuring all leaf nodes are stored on a single disk page.
+
+   In this case, when a key exceeds the capacity of a node, the tree statically splits the node into two or more child nodes. This ensures that all leaf nodes are consecutive in memory, which is beneficial for caching and random access.
+
+In summary, B-trees use variable splitting to maintain balance, while B+ trees employ static splitting to optimize cache performance.
+2025-04-02 20:22:02,682 - INFO - ================================================================================
+2025-04-02 20:22:02,682 - INFO - 
+2025-04-02 20:22:02,682 - INFO - Configuration 18: large + nomic + redis + qwen
+2025-04-02 20:22:02,682 - INFO - Time: 9.17s | Memory: -317.84MB
+2025-04-02 20:22:02,682 - INFO - Response:
+2025-04-02 20:22:02,682 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,682 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their node structures and how they organize data.
+
+1. **B-Tree (General Case)****
+   - A B-tree is a balanced tree where each node can have multiple children.
+   - The number of children per node, called the branching factor, is usually greater than 2 to maintain balance.
+   - Each node in a B-tree contains a set of keys and pointers to subtrees. The keys are sorted.
+
+2. **B+ Tree (Common Case)****
+   - A B+ tree is similar to a B-tree but with an additional property: all non-leaf nodes have only one child.
+   - This modification allows for more direct access to data, as each node stores pointers directly to its children's keys.
+   - Since all leaf nodes are at the same level and are not adjacent in memory, this structure is often used in databases to efficiently store and retrieve large amounts of data.
+
+In summary, B-trees maintain balance by allowing multiple children per node, while B+ trees provide direct access to data by having only one child per non-leaf node. Both types of trees are commonly used in database management systems.
+2025-04-02 20:22:02,682 - INFO - ================================================================================
+2025-04-02 20:22:02,682 - INFO - 
+2025-04-02 20:22:02,682 - INFO - Configuration 19: medium + nomic + qdrant + qwen
+2025-04-02 20:22:02,682 - INFO - Time: 8.92s | Memory: -317.17MB
+2025-04-02 20:22:02,682 - INFO - Response:
+2025-04-02 20:22:02,682 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,682 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their node structures and how they organize data.
+
+1. **B-Tree (Non-leaf Nodes)****
+   In a B-tree, non-leaf nodes have at least two child nodes. Each node can store multiple keys and corresponding values.
+   
+   - Example: A 4-level B-tree with a minimum number of children per node would allow for approximately 16 keys in each leaf node.
+
+2. **B+ Tree (Leaf Nodes)****
+   In contrast, B+ trees have all their data stored in leaf nodes, which are the outermost nodes. Non-leaf nodes only contain pointers to the leaf nodes.
+   
+   - Example: A 4-level B+ tree would have no more than 16 keys per leaf node, and each non-leaf node would point directly to one or two leaf nodes.
+
+In summary, B-trees are designed with non-leaf nodes having multiple children, while B+ trees have all their data in leaf nodes and non-leaf nodes pointing directly to them. Both types of trees offer efficient search, insertion, and deletion operations in disk-based databases.
+2025-04-02 20:22:02,682 - INFO - ================================================================================
+2025-04-02 20:22:02,682 - INFO - 
+2025-04-02 20:22:02,683 - INFO - Configuration 20: medium + mpnet + qdrant + qwen
+2025-04-02 20:22:02,683 - INFO - Time: 7.43s | Memory: -329.52MB
+2025-04-02 20:22:02,683 - INFO - Response:
+2025-04-02 20:22:02,683 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,683 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their leaf node organization and how they handle data.
+
+1. **B-Trees** (usually with a fixed branching factor, like 2 or 3) are designed to maintain balance by having at least one child per non-leaf node. When inserting or deleting elements, the tree may become unbalanced. B+ trees address this issue by storing all keys in leaf nodes and pointers to key-value pairs in internal nodes.
+
+2. **B+ Trees** (also called "sorted arrays on disk") have a more straightforward structure. Leaf nodes are linear arrays of key-value pairs, sorted by key. Each non-leaf node points to the next leaf node in its level.
+
+In summary, B-trees maintain balance with fixed branching factors, while B+ trees achieve this balance by storing keys in leaf nodes and pointers in internal nodes. This design allows for faster search and insertion operations in disk-based databases.
+2025-04-02 20:22:02,683 - INFO - ================================================================================
+2025-04-02 20:22:02,683 - INFO - 
+2025-04-02 20:22:02,683 - INFO - Configuration 21: large + nomic + qdrant + qwen
+2025-04-02 20:22:02,683 - INFO - Time: 9.39s | Memory: -319.73MB
+2025-04-02 20:22:02,683 - INFO - Response:
+2025-04-02 20:22:02,683 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,683 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their storage and organization of data.
+
+1. **B-Trees**:
+   - B-trees are designed for disk-based storage, where random access is slower than sequential.
+   - They have a balanced structure with a minimum of n/2 nodes (where n is the number of keys).
+   - Each node can have multiple keys and pointers to child nodes.
+   - The main advantage of B-trees is their ability to maintain good balance even when inserting or deleting data.
+
+2. **B+ Trees**:
+   - B+ trees are a variation of B-trees, designed specifically for disk-based storage.
+   - They have a slightly different structure where all leaf nodes are located at the end of the tree, and internal nodes point only to their right child.
+   - This arrangement allows for more direct access to data (since you can traverse from root to leaf in a single direction).
+   - The main advantage of B+ trees is their improved efficiency when accessing data by reducing the number of pointer traversals.
+
+In summary, while both B- and B+ trees are used for disk-based storage, B+ trees have a more direct access structure, which makes them slightly more efficient.
+2025-04-02 20:22:02,683 - INFO - ================================================================================
+2025-04-02 20:22:02,683 - INFO - 
+2025-04-02 20:22:02,683 - INFO - Configuration 22: medium + minilm + qdrant + qwen
+2025-04-02 20:22:02,683 - INFO - Time: 8.96s | Memory: -76.08MB
+2025-04-02 20:22:02,683 - INFO - Response:
+2025-04-02 20:22:02,683 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,683 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The difference between B-trees and B+ trees lies in their specific designs for managing data in disk-based storage systems.
+
+1. **B-Trees**:
+   - B-trees are balanced tree data structures, where each node has a fixed number of child nodes (usually 2 or 4).
+   - They were designed to minimize disk access by ensuring that the keys in each node are spread out and not concentrated at the bottom.
+   - However, B-trees have a higher overhead for maintaining balance, which can lead to more disk accesses compared to B+ trees.
+
+2. **B+ Trees**:
+   - B+ trees are similar to B-trees but with an additional leaf node at the end of each internal node.
+   - This design eliminates the need for balancing (like in B-trees), as the leaf nodes always follow a sorted order.
+   - As a result, B+ trees have fewer disk accesses compared to B-trees. They are commonly used in databases and file systems.
+
+In summary, the main difference between B-trees and B+ trees is that B+ trees have an additional leaf node at the end of each internal node, which eliminates the need for balancing and reduces disk access.
+2025-04-02 20:22:02,683 - INFO - ================================================================================
+2025-04-02 20:22:02,683 - INFO - 
+2025-04-02 20:22:02,683 - INFO - Configuration 23: large + mpnet + qdrant + qwen
+2025-04-02 20:22:02,683 - INFO - Time: 8.73s | Memory: -81.28MB
+2025-04-02 20:22:02,683 - INFO - Response:
+2025-04-02 20:22:02,683 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,683 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing in databases.
+
+1. **B-Trees (Balanced Trees):** These trees maintain a balance by having a maximum number of children per node. This ensures that the tree can be traversed efficiently, both for insertion and deletion operations.
+
+- Example: A typical 4-level B-tree would have nodes with up to 4 child nodes.
+  
+2. **B+ Trees (Append-only Trees):** In contrast to B-trees, B+ trees are "flat" and each node contains only a pointer to the next node in the sequence. The leaves of a B+ tree represent actual data records.
+
+- Example: A typical 4-level B+ tree would have nodes with up to 4 child pointers, and all leaf nodes containing actual data records.
+  
+In summary, while both B- and B+ trees are used for indexing in databases, B-trees maintain balance by limiting the number of children per node, whereas B+ trees are "flat" and each node points to the next record.
+2025-04-02 20:22:02,683 - INFO - ================================================================================
+2025-04-02 20:22:02,683 - INFO - 
+2025-04-02 20:22:02,683 - INFO - Configuration 24: large + minilm + qdrant + qwen
+2025-04-02 20:22:02,683 - INFO - Time: 8.25s | Memory: -94.94MB
+2025-04-02 20:22:02,683 - INFO - Response:
+2025-04-02 20:22:02,683 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,683 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their node structure and how they organize data.
+
+1. **B-Tree (General) or B+-Tree (Database)**:
+   - A B-tree is a balanced tree where each node can have multiple children, up to a maximum number (the branching factor).
+   - In a B+ tree, the leaf nodes represent actual data records, while inner nodes store pointers to those leaf nodes.
+   - The main advantage of B+ trees over B-trees is that they provide faster access to individual records since there are no gaps in the leaf node pointers.
+
+2. **Example Applications:**
+   - In databases, B+ trees are commonly used for index structures because they allow for efficient range queries.
+   - In file systems, B+ trees can be used to store directory information and efficiently locate files based on their names.
+
+In summary, the main difference between B-trees and B+ trees is that B+ trees have leaf nodes containing actual data records, while B-trees can have more flexible node structures. This difference leads to faster access times in database applications.
+2025-04-02 20:22:02,684 - INFO - ================================================================================
+2025-04-02 20:22:02,684 - INFO - 
+2025-04-02 20:22:02,684 - INFO - Configuration 25: small + nomic + qdrant + qwen
+2025-04-02 20:22:02,684 - INFO - Time: 10.35s | Memory: -661.48MB
+2025-04-02 20:22:02,684 - INFO - Response:
+2025-04-02 20:22:02,684 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,684 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their data organization and leaf node structure.
+
+1. **B-Trees**:
+   - B-trees are designed for disk storage, where random access is slower than sequential.
+   - They maintain a balanced tree structure with a minimum of n/2 nodes (where n is the number of keys).
+   - Each non-leaf node has at least m children (m is typically 2 or 4 to optimize disk space usage).
+   - Leaf nodes store key-value pairs, and they are always sorted in ascending order.
+
+2. **B+ Trees**:
+   - B+ trees are a variation of B-trees that optimize for sequential access.
+   - In contrast to B-trees, leaf nodes in B+ trees are not necessarily sorted.
+   - Each non-leaf node has exactly m children (m is typically 2 or 4), which allows for easier traversal in a forward direction.
+   - This structure makes B+ trees suitable for use in databases where queries tend to be sequential.
+
+In summary, the main difference between B- and B+ trees lies in their leaf node organization. While B-trees maintain sorted leaf nodes for faster random access, B+ trees allow unsorted leaf nodes for easier sequential access in database applications.
+2025-04-02 20:22:02,684 - INFO - ================================================================================
+2025-04-02 20:22:02,684 - INFO - 
+2025-04-02 20:22:02,684 - INFO - Configuration 26: small + minilm + qdrant + qwen
+2025-04-02 20:22:02,684 - INFO - Time: 9.00s | Memory: -47.27MB
+2025-04-02 20:22:02,684 - INFO - Response:
+2025-04-02 20:22:02,684 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,684 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing in databases.
+
+1. **B-Trees**:
+   - A B-tree is a self-balancing search tree.
+   - Each node can have 2 to b-1 children, where b is the maximum number of children per node (usually set to 4 or 5).
+   - The tree is balanced such that the height of the tree is minimized. This helps in faster search and insertion operations.
+
+2. **B+ Trees**:
+   - A B+ tree is a variation of B-trees, designed specifically for database indexing.
+   - In a B+ tree, all keys are stored on the leaf nodes (also called the end nodes), while non-leaf nodes contain pointers to their child leaf nodes.
+   - This arrangement allows for efficient range queries and random access to specific records.
+
+In summary, B-trees maintain a balance between nodes by allowing a flexible number of children per node. On the other hand, B+ trees optimize storage by storing all keys on leaf nodes and using non-leaf nodes only as pointers. Both types are commonly used in database management systems.
+2025-04-02 20:22:02,684 - INFO - ================================================================================
+2025-04-02 20:22:02,684 - INFO - 
+2025-04-02 20:22:02,684 - INFO - Configuration 27: small + mpnet + qdrant + qwen
+2025-04-02 20:22:02,684 - INFO - Time: 8.81s | Memory: -62.97MB
+2025-04-02 20:22:02,684 - INFO - Response:
+2025-04-02 20:22:02,684 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:22:02,684 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing in databases.
+
+1. **B-Trees**:
+   - B-trees are balanced search trees, where each node has a fixed number of children (usually 2 or 4).
+   - This balance helps reduce the average distance an element must travel to be inserted or searched.
+   - B-trees are commonly used in databases for indexing tables, as they provide good performance with relatively few nodes.
+
+2. **B+ Trees**:
+   - B+ trees are a variation of B-trees that optimize disk access by placing all keys and pointers on the same side (usually the right side) of the tree.
+   - This arrangement allows for faster random access to data, as you don't have to traverse through half the nodes just to find a key.
+   - B+ trees are often used in databases as they provide better performance with larger datasets.
+
+In summary, the main difference between B- and B+ trees is that B+ trees optimize disk access by placing keys and pointers on one side of the tree. This results in faster random access for large datasets.
+2025-04-02 20:22:02,685 - INFO - ================================================================================
+2025-04-02 20:22:02,685 - INFO - 
+2025-04-02 20:22:16,495 - INFO - Loading evaluation results...
+2025-04-02 20:22:16,499 - INFO - Loaded 30 valid results
+2025-04-02 20:22:16,499 - INFO - 
+===== RAG Response Evaluator =====
+2025-04-02 20:23:09,822 - INFO - Loading evaluation results...
+2025-04-02 20:23:09,826 - INFO - Loaded 30 valid results
+2025-04-02 20:23:09,826 - INFO - 
+===== RAG Response Evaluator =====
+2025-04-02 20:23:54,963 - INFO - Loading evaluation results...
+2025-04-02 20:23:54,967 - INFO - Loaded 30 valid results
+2025-04-02 20:23:54,967 - INFO - 
+===== RAG Response Evaluator =====
+2025-04-02 20:24:03,337 - INFO - 
+===== Performance Analysis =====
+2025-04-02 20:24:03,337 - INFO - 
+Vector Database Performance:
+2025-04-02 20:24:03,340 - INFO - 
+Embedding Model Performance:
+2025-04-02 20:24:03,340 - INFO - 
+Chunking Strategy Performance:
+2025-04-02 20:24:03,341 - INFO - 
+Overall Performance:
+2025-04-02 20:29:33,876 - INFO - Loading evaluation results...
+2025-04-02 20:29:33,880 - INFO - Loaded 30 valid results
+2025-04-02 20:30:35,060 - INFO - Loading evaluation results...
+2025-04-02 20:30:35,064 - INFO - Loaded 30 valid results
+2025-04-02 20:30:35,068 - INFO - Exported raw responses to evaluation_analysis/raw_responses.csv
+2025-04-02 20:30:35,068 - INFO - 
+===== RAG Response Evaluator =====
+2025-04-02 20:30:41,024 - INFO - Exported performance metrics to evaluation_analysis/performance_metrics.csv
+2025-04-02 20:31:38,806 - INFO - 
+===== Responses for Question: What is the difference between B-trees and B+ trees? =====
+
+2025-04-02 20:31:38,806 - INFO - Configuration 1: medium + mpnet + chroma + qwen
+2025-04-02 20:31:38,806 - INFO - Time: 9.61s | Memory: -62.05MB
+2025-04-02 20:31:38,806 - INFO - Response:
+2025-04-02 20:31:38,806 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,806 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing data in databases.
+
+1. **B-Trees**:
+   - B-trees are a type of self-balancing tree.
+   - They have a specific number of children per node, typically 2 or 4.
+   - This allows the tree to maintain a roughly equal balance of elements across its nodes.
+   - B-trees are commonly used in disk-based databases because they minimize disk I/O.
+
+2. **B+ Trees**:
+   - B+ trees are similar to B-trees but with some key differences.
+   - In a B+ tree, all leaf nodes are stored at the end of the tree, and non-leaf nodes have pointers (usually just a single byte) to their child nodes.
+   - This arrangement allows for more direct access to data, as you can traverse directly from root to leaf without having to pass through intermediate nodes.
+   - B+ trees are often used in databases that need to support fast random access to data.
+
+In summary, the main difference between B- and B+ trees is how they store and organize data. B-trees maintain a balance across nodes, while B+ trees provide direct access to leaf nodes.
+2025-04-02 20:31:38,806 - INFO - ================================================================================
+2025-04-02 20:31:38,806 - INFO - 
+2025-04-02 20:31:38,806 - INFO - Configuration 2: large + nomic + chroma + qwen
+2025-04-02 20:31:38,806 - INFO - Time: 8.71s | Memory: -333.88MB
+2025-04-02 20:31:38,806 - INFO - Response:
+2025-04-02 20:31:38,806 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,806 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing data.
+
+1. **B-Trees**:
+   - B-trees are designed to maintain a balance between keys and nodes.
+   - Each node in a B-tree can have multiple children, allowing for more efficient storage of large datasets.
+   - The key property is that the number of children per node is a constant (usually 2 or 4).
+
+2. **B+ Trees**:
+   - B+ trees are similar to B-trees but with an additional leaf layer at the bottom of each node.
+   - This modification allows for more direct access to data, as there's no need to traverse multiple levels before reaching a specific key.
+   - The key property in B+ trees is that all keys in a given node appear in ascending order.
+
+In summary, both B- and B+ trees are used for indexing large datasets. However, B+ trees offer more direct access to data by having an additional leaf layer, while B-trees maintain balance between nodes and keys.
+2025-04-02 20:31:38,806 - INFO - ================================================================================
+2025-04-02 20:31:38,806 - INFO - 
+2025-04-02 20:31:38,806 - INFO - Configuration 3: medium + nomic + chroma + qwen
+2025-04-02 20:31:38,806 - INFO - Time: 8.58s | Memory: -337.66MB
+2025-04-02 20:31:38,806 - INFO - Response:
+2025-04-02 20:31:38,806 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,806 - INFO - [KB] Knowledge Base - Information from the course materials and documents.
+
+The main difference between B-trees and B+ trees lies in their data organization and leaf node structure.
+
+1. **B-Trees**:
+   - B-trees are designed for disk-based storage systems.
+   - Each node in a B-tree has at least `m + 1` children, where `m` is the number of keys in the tree.
+   - Leaf nodes contain key-value pairs, while inner nodes hold keys and point to child subtrees.
+
+2. **B+ Trees**:
+   - B+ trees are also used for disk-based storage but have some advantages over B-trees.
+   - In a B+ tree, leaf nodes are always at the end of each internal node, which makes it easier to traverse the tree in order.
+   - This arrangement allows for better cache locality and faster access to data, especially when dealing with large datasets.
+
+In summary, while both B-trees and B+ trees are balanced tree data structures designed for disk-based storage, B+ trees have leaf nodes at the end of each internal node, which offers better cache performance and easier traversal.
+2025-04-02 20:31:38,806 - INFO - ================================================================================
+2025-04-02 20:31:38,806 - INFO - 
+2025-04-02 20:31:38,807 - INFO - Configuration 4: large + mpnet + chroma + qwen
+2025-04-02 20:31:38,807 - INFO - Time: 7.21s | Memory: -39.59MB
+2025-04-02 20:31:38,807 - INFO - Response:
+2025-04-02 20:31:38,807 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,807 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing data in databases.
+
+1. **B-Trees (Variable)**: In a B-tree, each node can have multiple child nodes, allowing for more efficient storage of data. The number of children per node varies, but it's designed to minimize the depth of the tree while still maintaining good balance.
+
+2. **B+ Trees (Fixed)**: In contrast, B+ trees are fixed-depth trees with a single linked list as their leaf nodes. Each non-leaf node has exactly one child, and all keys in the leaf nodes are sorted.
+
+The main advantage of B+ trees over B-trees is that they have a more balanced structure, which leads to smaller average path lengths between data items. This makes B+ trees faster for random access operations like searching for a specific key or retrieving a range of values.
+2025-04-02 20:31:38,807 - INFO - ================================================================================
+2025-04-02 20:31:38,807 - INFO - 
+2025-04-02 20:31:38,807 - INFO - Configuration 5: large + minilm + chroma + qwen
+2025-04-02 20:31:38,807 - INFO - Time: 8.76s | Memory: -103.53MB
+2025-04-02 20:31:38,807 - INFO - Response:
+2025-04-02 20:31:38,807 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,807 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their node structure and how they organize data.
+
+1. **B-Tree (General Case)****
+   - A B-tree is a self-balancing search tree with at least 2 children per node.
+   - Each node can have multiple keys, allowing for efficient range queries.
+   - The tree is balanced to minimize the maximum depth of any node, which in turn reduces the number of disk accesses.
+
+2. **B+ Tree (Common Case)****
+   - A B+ tree is similar to a B-tree but with an additional property: all non-leaf nodes contain only one key.
+   - This design allows for more direct access to data, as each node's key points directly to the next node in the sequence.
+   - The balance of a B+ tree is maintained by ensuring that no leaf node is further than a fixed number of levels from any root.
+
+In summary, while both B- and B+ trees are self-balancing search structures for disk-based databases, B+ trees have an extra key per non-leaf node, allowing for more direct access to data.
+2025-04-02 20:31:38,807 - INFO - ================================================================================
+2025-04-02 20:31:38,807 - INFO - 
+2025-04-02 20:31:38,807 - INFO - Configuration 6: small + nomic + chroma + qwen
+2025-04-02 20:31:38,807 - INFO - Time: 8.05s | Memory: -699.50MB
+2025-04-02 20:31:38,807 - INFO - Response:
+2025-04-02 20:31:38,807 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,807 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their node structure and how they organize data.
+
+1. **B-Tree (General)**: In a traditional B-tree, each node can have multiple child nodes. The number of children per node is fixed but can vary across different levels of the tree. This allows for efficient search, insertion, and deletion operations.
+
+2. **B+ Tree (File Systems)**: In a B+ tree, which is commonly used in file systems, all leaf nodes are stored at the end of each branch, and there are no empty spaces within the nodes. The advantage of this structure is that it allows for easy random access to files, as leaf nodes are typically sorted by their file names.
+
+In summary, while both B- and B+ trees are balanced search structures, B+ trees are specifically designed for use in file systems, allowing for efficient random access to files.
+2025-04-02 20:31:38,807 - INFO - ================================================================================
+2025-04-02 20:31:38,807 - INFO - 
+2025-04-02 20:31:38,807 - INFO - Configuration 7: small + minilm + chroma + qwen
+2025-04-02 20:31:38,807 - INFO - Time: 9.59s | Memory: -84.77MB
+2025-04-02 20:31:38,807 - INFO - Response:
+2025-04-02 20:31:38,807 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,807 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their leaf node structure and how they organize data.
+
+1. **B-Tree (General Case)****
+   - In a B-tree, each non-leaf node can have up to `m` children, where `m` is a constant called the maximum degree.
+   - Leaf nodes store actual data, with pointers or indices to the next leaf node.
+   - The height of a B-tree is kept low by ensuring that each node is as full as possible before adding more children.
+
+2. **B+ Tree (Common Case)****
+   - In a B+ tree, all leaf nodes are located at the end of the tree, and non-leaf nodes have only one child.
+   - This structure allows for efficient range queries by starting from the root node and following pointers to leaf nodes that contain the desired range.
+   - The height of a B+ tree is generally higher than that of a B-tree due to the leaf nodes being farther away from the root.
+
+In summary, while both B- and B+ trees are balanced data structures for storing large amounts of data in a disk-based environment, B+ trees have leaf nodes at the end of the tree, allowing for efficient range queries, and generally higher height than B-trees.
+2025-04-02 20:31:38,807 - INFO - ================================================================================
+2025-04-02 20:31:38,807 - INFO - 
+2025-04-02 20:31:38,807 - INFO - Configuration 8: small + mpnet + chroma + qwen
+2025-04-02 20:31:38,807 - INFO - Time: 11.27s | Memory: -79.14MB
+2025-04-02 20:31:38,807 - INFO - Response:
+2025-04-02 20:31:38,807 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,807 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The key differences between B-trees and B+ trees lie in their node structure, leaf organization, and overall purpose:
+
+1. **Node Structure**:
+   - **B-Trees**: Each node can have multiple keys (up to a maximum specified). The tree is balanced by having roughly the same number of children per non-leaf node.
+   - **B+ Trees**: Each node has exactly one key, and all the pointers point to the next record in the sorted order. Leaf nodes contain actual data, while inner nodes serve as indexes.
+
+2. **Leaf Organization**:
+   - **B-Trees**: The leaf nodes can be unbalanced due to the balance condition. This can lead to longer search paths.
+   - **B+ Trees**: All leaf nodes are at the same level and contain sorted records. This results in a more balanced structure, which typically leads to faster search times.
+
+3. **Overall Purpose**:
+   - **B-Trees**: Originally designed for disk-based storage systems where random access is slower than sequential access. They provide good performance for read operations.
+   - **B+ Trees**: Commonly used in modern database management systems due to their efficient handling of large datasets, especially when combined with indexing. They are particularly well-suited for write-intensive workloads.
+
+In summary, B-trees and B+ trees differ mainly in their node structure, leaf organization, and intended use. While both are designed for efficient storage and retrieval of data, B+ trees generally offer better performance in modern database systems.
+2025-04-02 20:31:38,807 - INFO - ================================================================================
+2025-04-02 20:31:38,807 - INFO - 
+2025-04-02 20:31:38,807 - INFO - Configuration 9: medium + minilm + chroma + qwen
+2025-04-02 20:31:38,807 - INFO - Time: 10.36s | Memory: -58.05MB
+2025-04-02 20:31:38,807 - INFO - Response:
+2025-04-02 20:31:38,807 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,807 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing in databases.
+
+1. **B-Tree (General Knowledge)****
+   A B-tree is a self-balancing search tree where each node can have multiple children. The number of children per node follows a specific pattern, usually 2 or 4.
+   
+   - **Insertion and Deletion**: In B-trees, insertions and deletions are performed recursively by splitting or merging nodes as needed to maintain the balance.
+   
+   - **Space Efficiency**: B-trees are more space-efficient than other balanced search trees like AVL trees because they can have fewer nodes per level.
+
+2. **B+ Tree (Knowledge Base)****
+   A B+ tree is a variation of B-trees that adds an ordered leaf node set, usually containing pointers to actual data records in the database.
+   
+   - **Leaf Nodes**: In B+ trees, all non-leaf nodes are used for indexing and have at most two children. Leaf nodes contain the actual data records.
+   
+   - **Efficient Range Queries**: B+ trees are particularly well-suited for range queries because leaf nodes are ordered, allowing for efficient traversal.
+
+In summary, while both B- and B+ trees are self-balancing search structures, B+ trees have leaf nodes containing actual data records, making them more suitable for range queries in databases.
+2025-04-02 20:31:38,807 - INFO - ================================================================================
+2025-04-02 20:31:38,807 - INFO - 
+2025-04-02 20:31:38,807 - INFO - Configuration 10: large + mpnet + redis + qwen
+2025-04-02 20:31:38,807 - INFO - Time: 7.45s | Memory: -16.38MB
+2025-04-02 20:31:38,807 - INFO - Response:
+2025-04-02 20:31:38,807 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,807 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their node structure and how they organize data.
+
+1. **B-Tree (General Case)****: A B-tree is a balanced tree that can have up to m children per node, where m is a parameter of the tree. This allows for efficient insertion and deletion while maintaining a logarithmic number of nodes.
+
+2. **B+ Tree (Sorted Data)****: A B+ tree is specifically designed for sorted data, as each node in a B+ tree contains only pointers to its child nodes. The root node points to the first record, and leaf nodes contain actual data records.
+
+The main advantage of B+ trees over B-trees is that they have a more compact structure, which leads to better cache locality and faster access times for large datasets. However, B-trees may be more suitable for cases where frequent range queries are required, as their balanced nature allows for efficient search in the tree.
+2025-04-02 20:31:38,807 - INFO - ================================================================================
+2025-04-02 20:31:38,808 - INFO - 
+2025-04-02 20:31:38,808 - INFO - Configuration 11: large + minilm + redis + qwen
+2025-04-02 20:31:38,808 - INFO - Time: 10.55s | Memory: -56.84MB
+2025-04-02 20:31:38,808 - INFO - Response:
+2025-04-02 20:31:38,808 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,808 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing in databases.
+
+1. **B-Trees**:
+   - Structure: B-trees are balanced, which means that the height of the tree is minimized. Each node has a fixed number of children (usually 2 or 4).
+   - Indexing: B-trees are commonly used in databases to store and index data. They allow for efficient search, insertion, and deletion operations.
+   - Trade-off: The main trade-off with B-trees is their balance requirement, which can lead to more nodes per level compared to other tree structures.
+
+2. **B+ Trees**:
+   - Structure: B+ trees are similar to B-trees but with an additional leaf node at the bottom of each internal node. This leaf node holds the actual data.
+   - Indexing: B+ trees are often used in databases for large datasets, as they allow for more direct access to data without traversing through multiple nodes.
+   - Trade-off: The main trade-off with B+ trees is that they may have a slightly higher overhead per node due to the leaf node.
+
+In summary, while both B- and B+ trees are balanced tree structures used for indexing in databases, B+ trees typically have an additional leaf node, allowing for more direct access to data. This makes B+ trees more suitable for managing large datasets.
+2025-04-02 20:31:38,808 - INFO - ================================================================================
+2025-04-02 20:31:38,808 - INFO - 
+2025-04-02 20:31:38,808 - INFO - Configuration 12: medium + mpnet + redis + qwen
+2025-04-02 20:31:38,808 - INFO - Time: 10.60s | Memory: -86.47MB
+2025-04-02 20:31:38,808 - INFO - Response:
+2025-04-02 20:31:38,808 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,808 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their leaf node organization and purpose.
+
+1. **B-Trees (General)***:
+   - A general class of self-balancing search trees.
+   - Each non-leaf node can have 2 to m children, where m is a parameter specific to the implementation.
+   - Leaf nodes store key-value pairs, with keys sorted in ascending order.
+   - B-trees maintain a balance property: the height of the tree plus one (the number of levels) should be less than or equal to the maximum number of children per node.
+
+2. **B+ Trees** (Specific to Databases):
+   - A specialized form of B-tree designed specifically for managing large datasets in databases.
+   - In a B+ tree, all leaf nodes are next to each other and form a continuous block. This arrangement allows for efficient range queries.
+   - Non-leaf nodes contain pointers or indices to the next node in the same row. This structure ensures that data is stored sequentially within each row.
+   - The balance property in B+ trees is maintained by ensuring that the number of children per non-leaf node does not exceed a certain limit.
+
+In summary, B-trees are a general class of self-balancing search trees, while B+ trees are a specialized form designed for databases. B+ trees have leaf nodes organized as a continuous block and maintain sequentiality within each row.
+2025-04-02 20:31:38,808 - INFO - ================================================================================
+2025-04-02 20:31:38,808 - INFO - 
+2025-04-02 20:31:38,808 - INFO - Configuration 13: medium + minilm + redis + qwen
+2025-04-02 20:31:38,808 - INFO - Time: 8.65s | Memory: -57.70MB
+2025-04-02 20:31:38,808 - INFO - Response:
+2025-04-02 20:31:38,808 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,808 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The difference between B-trees and B+ trees lies in their data organization and leaf node structure.
+
+1. **B-Trees**:
+   - B-trees are designed to maintain a balance between keys and nodes.
+   - Each non-leaf node has at least as many children as its maximum degree (e.g., 2 for a 2-3 tree).
+   - Leaf nodes store the actual data, with pointers or indices to other nodes.
+
+2. **B+ Trees**:
+   - B+ trees are similar to B-trees but have a different leaf node structure.
+   - In B+ trees, all leaf nodes are located at the end of the tree, forming a continuous block.
+   - Each leaf node contains only data and no pointers or indices, making it easier for sequential access.
+   
+In summary, the main difference between B- and B+ trees is that B+ trees have their leaf nodes contiguous at the end of the tree, while B-trees allow non-contiguous leaf nodes. This difference affects the efficiency of random access and disk I/O operations in these data structures.
+2025-04-02 20:31:38,808 - INFO - ================================================================================
+2025-04-02 20:31:38,808 - INFO - 
+2025-04-02 20:31:38,808 - INFO - Configuration 14: small + minilm + redis + qwen
+2025-04-02 20:31:38,808 - INFO - Time: 8.67s | Memory: -38.92MB
+2025-04-02 20:31:38,808 - INFO - Response:
+2025-04-02 20:31:38,808 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,808 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their leaf node structures and how they organize data.
+
+1. **B-Trees (General Case)****
+   - A general B-tree can have variable branching, meaning each non-leaf node can have a different number of children.
+   - Leaf nodes contain key-value pairs. The keys are stored in sorted order to enable efficient search.
+   - B-trees are designed for disk-based storage systems, where random access is slower than sequential access.
+
+2. **B+ Trees (Common Case)****
+   - A typical B+ tree has a fixed branching factor, meaning all non-leaf nodes have the same number of children.
+   - Leaf nodes in a B+ tree do not contain key-value pairs; instead, they store pointers to those pairs in internal nodes.
+   - B+ trees are often used for databases because they provide better worst-case time complexity for range queries.
+
+In summary, while both B- and B+ trees are balanced data structures designed for disk-based storage, B+ trees have leaf nodes that store pointers rather than key-value pairs, making them more suitable for database management systems.
+2025-04-02 20:31:38,808 - INFO - ================================================================================
+2025-04-02 20:31:38,808 - INFO - 
+2025-04-02 20:31:38,808 - INFO - Configuration 15: medium + nomic + redis + qwen
+2025-04-02 20:31:38,808 - INFO - Time: 9.07s | Memory: -325.19MB
+2025-04-02 20:31:38,808 - INFO - Response:
+2025-04-02 20:31:38,808 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,808 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their organization and how they handle data.
+
+1. **B-Trees (with duplicates)****
+   - B-trees are designed for use with datasets that may contain duplicate keys.
+   - Each node in a B-tree can have up to `m` children, where `m` is the maximum number of keys per node (usually 2 or 4).
+   - The tree structure allows for efficient search, insertion, and deletion operations.
+
+2. **B+ Trees (without duplicates)****
+   - B+ trees are a variant of B-trees that are optimized for handling large datasets without duplicates.
+   - In contrast to B-trees, all nodes in a B+ tree have only one child, which is used to store the next key or pointer.
+   - The leaf nodes of a B+ tree contain the actual data, while non-leaf nodes act as indexes.
+
+In summary, B-trees are suitable for datasets with duplicates and can handle more complex structures. B+ trees, on the other hand, are optimized for handling large datasets without duplicates, making them more efficient in terms of memory usage.
+2025-04-02 20:31:38,808 - INFO - ================================================================================
+2025-04-02 20:31:38,808 - INFO - 
+2025-04-02 20:31:38,809 - INFO - Configuration 16: small + mpnet + redis + qwen
+2025-04-02 20:31:38,809 - INFO - Time: 8.40s | Memory: -75.69MB
+2025-04-02 20:31:38,809 - INFO - Response:
+2025-04-02 20:31:38,809 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,809 - INFO - [KB] Knowledge Base - Information from course materials and documents
+
+The main difference between B-trees and B+ trees lies in their data organization and leaf node usage.
+
+1. **B-Trees (Generalized Binary Trees)**:
+   - Each non-leaf node has at least two children.
+   - The keys are stored in the nodes, with the root typically containing the smallest key.
+   - Leaf nodes contain the actual data items.
+   - B-trees are designed to minimize disk accesses by balancing the tree.
+
+2. **B+ Trees (Circularly Linked Lists)**:
+   - Each node is a leaf and contains only one data item.
+   - The keys are stored on the edges of the tree, with the root containing the smallest key.
+   - All non-leaf nodes have exactly one child, creating a circular structure.
+   - B+ trees are optimized for disk access because they minimize the number of disk seeks required to find a specific key.
+
+In summary, B-trees and B+ trees differ in their node structure (B-tree with interior nodes, B+ tree as linked lists), leaf node usage, and optimization for disk access.
+2025-04-02 20:31:38,809 - INFO - ================================================================================
+2025-04-02 20:31:38,809 - INFO - 
+2025-04-02 20:31:38,809 - INFO - Configuration 17: small + nomic + redis + qwen
+2025-04-02 20:31:38,809 - INFO - Time: 8.38s | Memory: -390.31MB
+2025-04-02 20:31:38,809 - INFO - Response:
+2025-04-02 20:31:38,809 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,809 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their internal organization and how they handle data.
+
+1. **B-Trees (Variable Splitting)****
+   B-trees are designed to maintain a balance between keys and leaf nodes. When a key exceeds the capacity of a node, the tree splits the node into two or more child nodes.
+
+   This process can lead to variable branching in the tree, where some branches have only one child while others have multiple children.
+
+2. **B+ Trees (Static Splitting)****
+   B+ trees are a variation of B-trees that strive for better cache performance by ensuring all leaf nodes are stored on a single disk page.
+
+   In this case, when a key exceeds the capacity of a node, the tree statically splits the node into two or more child nodes. This ensures that all leaf nodes are consecutive in memory, which is beneficial for caching and random access.
+
+In summary, B-trees use variable splitting to maintain balance, while B+ trees employ static splitting to optimize cache performance.
+2025-04-02 20:31:38,809 - INFO - ================================================================================
+2025-04-02 20:31:38,809 - INFO - 
+2025-04-02 20:31:38,809 - INFO - Configuration 18: large + nomic + redis + qwen
+2025-04-02 20:31:38,809 - INFO - Time: 9.17s | Memory: -317.84MB
+2025-04-02 20:31:38,809 - INFO - Response:
+2025-04-02 20:31:38,809 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,809 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their node structures and how they organize data.
+
+1. **B-Tree (General Case)****
+   - A B-tree is a balanced tree where each node can have multiple children.
+   - The number of children per node, called the branching factor, is usually greater than 2 to maintain balance.
+   - Each node in a B-tree contains a set of keys and pointers to subtrees. The keys are sorted.
+
+2. **B+ Tree (Common Case)****
+   - A B+ tree is similar to a B-tree but with an additional property: all non-leaf nodes have only one child.
+   - This modification allows for more direct access to data, as each node stores pointers directly to its children's keys.
+   - Since all leaf nodes are at the same level and are not adjacent in memory, this structure is often used in databases to efficiently store and retrieve large amounts of data.
+
+In summary, B-trees maintain balance by allowing multiple children per node, while B+ trees provide direct access to data by having only one child per non-leaf node. Both types of trees are commonly used in database management systems.
+2025-04-02 20:31:38,809 - INFO - ================================================================================
+2025-04-02 20:31:38,809 - INFO - 
+2025-04-02 20:31:38,809 - INFO - Configuration 19: medium + nomic + qdrant + qwen
+2025-04-02 20:31:38,809 - INFO - Time: 8.92s | Memory: -317.17MB
+2025-04-02 20:31:38,809 - INFO - Response:
+2025-04-02 20:31:38,809 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,809 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their node structures and how they organize data.
+
+1. **B-Tree (Non-leaf Nodes)****
+   In a B-tree, non-leaf nodes have at least two child nodes. Each node can store multiple keys and corresponding values.
+   
+   - Example: A 4-level B-tree with a minimum number of children per node would allow for approximately 16 keys in each leaf node.
+
+2. **B+ Tree (Leaf Nodes)****
+   In contrast, B+ trees have all their data stored in leaf nodes, which are the outermost nodes. Non-leaf nodes only contain pointers to the leaf nodes.
+   
+   - Example: A 4-level B+ tree would have no more than 16 keys per leaf node, and each non-leaf node would point directly to one or two leaf nodes.
+
+In summary, B-trees are designed with non-leaf nodes having multiple children, while B+ trees have all their data in leaf nodes and non-leaf nodes pointing directly to them. Both types of trees offer efficient search, insertion, and deletion operations in disk-based databases.
+2025-04-02 20:31:38,809 - INFO - ================================================================================
+2025-04-02 20:31:38,809 - INFO - 
+2025-04-02 20:31:38,809 - INFO - Configuration 20: medium + mpnet + qdrant + qwen
+2025-04-02 20:31:38,809 - INFO - Time: 7.43s | Memory: -329.52MB
+2025-04-02 20:31:38,809 - INFO - Response:
+2025-04-02 20:31:38,809 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,809 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their leaf node organization and how they handle data.
+
+1. **B-Trees** (usually with a fixed branching factor, like 2 or 3) are designed to maintain balance by having at least one child per non-leaf node. When inserting or deleting elements, the tree may become unbalanced. B+ trees address this issue by storing all keys in leaf nodes and pointers to key-value pairs in internal nodes.
+
+2. **B+ Trees** (also called "sorted arrays on disk") have a more straightforward structure. Leaf nodes are linear arrays of key-value pairs, sorted by key. Each non-leaf node points to the next leaf node in its level.
+
+In summary, B-trees maintain balance with fixed branching factors, while B+ trees achieve this balance by storing keys in leaf nodes and pointers in internal nodes. This design allows for faster search and insertion operations in disk-based databases.
+2025-04-02 20:31:38,809 - INFO - ================================================================================
+2025-04-02 20:31:38,809 - INFO - 
+2025-04-02 20:31:38,809 - INFO - Configuration 21: large + nomic + qdrant + qwen
+2025-04-02 20:31:38,810 - INFO - Time: 9.39s | Memory: -319.73MB
+2025-04-02 20:31:38,810 - INFO - Response:
+2025-04-02 20:31:38,810 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,810 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their storage and organization of data.
+
+1. **B-Trees**:
+   - B-trees are designed for disk-based storage, where random access is slower than sequential.
+   - They have a balanced structure with a minimum of n/2 nodes (where n is the number of keys).
+   - Each node can have multiple keys and pointers to child nodes.
+   - The main advantage of B-trees is their ability to maintain good balance even when inserting or deleting data.
+
+2. **B+ Trees**:
+   - B+ trees are a variation of B-trees, designed specifically for disk-based storage.
+   - They have a slightly different structure where all leaf nodes are located at the end of the tree, and internal nodes point only to their right child.
+   - This arrangement allows for more direct access to data (since you can traverse from root to leaf in a single direction).
+   - The main advantage of B+ trees is their improved efficiency when accessing data by reducing the number of pointer traversals.
+
+In summary, while both B- and B+ trees are used for disk-based storage, B+ trees have a more direct access structure, which makes them slightly more efficient.
+2025-04-02 20:31:38,810 - INFO - ================================================================================
+2025-04-02 20:31:38,810 - INFO - 
+2025-04-02 20:31:38,810 - INFO - Configuration 22: medium + minilm + qdrant + qwen
+2025-04-02 20:31:38,810 - INFO - Time: 8.96s | Memory: -76.08MB
+2025-04-02 20:31:38,810 - INFO - Response:
+2025-04-02 20:31:38,810 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,810 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The difference between B-trees and B+ trees lies in their specific designs for managing data in disk-based storage systems.
+
+1. **B-Trees**:
+   - B-trees are balanced tree data structures, where each node has a fixed number of child nodes (usually 2 or 4).
+   - They were designed to minimize disk access by ensuring that the keys in each node are spread out and not concentrated at the bottom.
+   - However, B-trees have a higher overhead for maintaining balance, which can lead to more disk accesses compared to B+ trees.
+
+2. **B+ Trees**:
+   - B+ trees are similar to B-trees but with an additional leaf node at the end of each internal node.
+   - This design eliminates the need for balancing (like in B-trees), as the leaf nodes always follow a sorted order.
+   - As a result, B+ trees have fewer disk accesses compared to B-trees. They are commonly used in databases and file systems.
+
+In summary, the main difference between B-trees and B+ trees is that B+ trees have an additional leaf node at the end of each internal node, which eliminates the need for balancing and reduces disk access.
+2025-04-02 20:31:38,810 - INFO - ================================================================================
+2025-04-02 20:31:38,810 - INFO - 
+2025-04-02 20:31:38,810 - INFO - Configuration 23: large + mpnet + qdrant + qwen
+2025-04-02 20:31:38,810 - INFO - Time: 8.73s | Memory: -81.28MB
+2025-04-02 20:31:38,810 - INFO - Response:
+2025-04-02 20:31:38,810 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,810 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing in databases.
+
+1. **B-Trees (Balanced Trees):** These trees maintain a balance by having a maximum number of children per node. This ensures that the tree can be traversed efficiently, both for insertion and deletion operations.
+
+- Example: A typical 4-level B-tree would have nodes with up to 4 child nodes.
+  
+2. **B+ Trees (Append-only Trees):** In contrast to B-trees, B+ trees are "flat" and each node contains only a pointer to the next node in the sequence. The leaves of a B+ tree represent actual data records.
+
+- Example: A typical 4-level B+ tree would have nodes with up to 4 child pointers, and all leaf nodes containing actual data records.
+  
+In summary, while both B- and B+ trees are used for indexing in databases, B-trees maintain balance by limiting the number of children per node, whereas B+ trees are "flat" and each node points to the next record.
+2025-04-02 20:31:38,810 - INFO - ================================================================================
+2025-04-02 20:31:38,810 - INFO - 
+2025-04-02 20:31:38,810 - INFO - Configuration 24: large + minilm + qdrant + qwen
+2025-04-02 20:31:38,810 - INFO - Time: 8.25s | Memory: -94.94MB
+2025-04-02 20:31:38,810 - INFO - Response:
+2025-04-02 20:31:38,810 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,810 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their node structure and how they organize data.
+
+1. **B-Tree (General) or B+-Tree (Database)**:
+   - A B-tree is a balanced tree where each node can have multiple children, up to a maximum number (the branching factor).
+   - In a B+ tree, the leaf nodes represent actual data records, while inner nodes store pointers to those leaf nodes.
+   - The main advantage of B+ trees over B-trees is that they provide faster access to individual records since there are no gaps in the leaf node pointers.
+
+2. **Example Applications:**
+   - In databases, B+ trees are commonly used for index structures because they allow for efficient range queries.
+   - In file systems, B+ trees can be used to store directory information and efficiently locate files based on their names.
+
+In summary, the main difference between B-trees and B+ trees is that B+ trees have leaf nodes containing actual data records, while B-trees can have more flexible node structures. This difference leads to faster access times in database applications.
+2025-04-02 20:31:38,811 - INFO - ================================================================================
+2025-04-02 20:31:38,811 - INFO - 
+2025-04-02 20:31:38,811 - INFO - Configuration 25: small + nomic + qdrant + qwen
+2025-04-02 20:31:38,811 - INFO - Time: 10.35s | Memory: -661.48MB
+2025-04-02 20:31:38,811 - INFO - Response:
+2025-04-02 20:31:38,811 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,811 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their data organization and leaf node structure.
+
+1. **B-Trees**:
+   - B-trees are designed for disk storage, where random access is slower than sequential.
+   - They maintain a balanced tree structure with a minimum of n/2 nodes (where n is the number of keys).
+   - Each non-leaf node has at least m children (m is typically 2 or 4 to optimize disk space usage).
+   - Leaf nodes store key-value pairs, and they are always sorted in ascending order.
+
+2. **B+ Trees**:
+   - B+ trees are a variation of B-trees that optimize for sequential access.
+   - In contrast to B-trees, leaf nodes in B+ trees are not necessarily sorted.
+   - Each non-leaf node has exactly m children (m is typically 2 or 4), which allows for easier traversal in a forward direction.
+   - This structure makes B+ trees suitable for use in databases where queries tend to be sequential.
+
+In summary, the main difference between B- and B+ trees lies in their leaf node organization. While B-trees maintain sorted leaf nodes for faster random access, B+ trees allow unsorted leaf nodes for easier sequential access in database applications.
+2025-04-02 20:31:38,811 - INFO - ================================================================================
+2025-04-02 20:31:38,811 - INFO - 
+2025-04-02 20:31:38,811 - INFO - Configuration 26: small + minilm + qdrant + qwen
+2025-04-02 20:31:38,811 - INFO - Time: 9.00s | Memory: -47.27MB
+2025-04-02 20:31:38,811 - INFO - Response:
+2025-04-02 20:31:38,811 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,811 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing in databases.
+
+1. **B-Trees**:
+   - A B-tree is a self-balancing search tree.
+   - Each node can have 2 to b-1 children, where b is the maximum number of children per node (usually set to 4 or 5).
+   - The tree is balanced such that the height of the tree is minimized. This helps in faster search and insertion operations.
+
+2. **B+ Trees**:
+   - A B+ tree is a variation of B-trees, designed specifically for database indexing.
+   - In a B+ tree, all keys are stored on the leaf nodes (also called the end nodes), while non-leaf nodes contain pointers to their child leaf nodes.
+   - This arrangement allows for efficient range queries and random access to specific records.
+
+In summary, B-trees maintain a balance between nodes by allowing a flexible number of children per node. On the other hand, B+ trees optimize storage by storing all keys on leaf nodes and using non-leaf nodes only as pointers. Both types are commonly used in database management systems.
+2025-04-02 20:31:38,811 - INFO - ================================================================================
+2025-04-02 20:31:38,811 - INFO - 
+2025-04-02 20:31:38,811 - INFO - Configuration 27: small + mpnet + qdrant + qwen
+2025-04-02 20:31:38,811 - INFO - Time: 8.81s | Memory: -62.97MB
+2025-04-02 20:31:38,811 - INFO - Response:
+2025-04-02 20:31:38,811 - INFO - --------------------------------------------------------------------------------
+2025-04-02 20:31:38,811 - INFO - [KB] Knowledge Base - Information from the course materials and documents
+
+The main difference between B-trees and B+ trees lies in their structure and how they are used for indexing in databases.
+
+1. **B-Trees**:
+   - B-trees are balanced search trees, where each node has a fixed number of children (usually 2 or 4).
+   - This balance helps reduce the average distance an element must travel to be inserted or searched.
+   - B-trees are commonly used in databases for indexing tables, as they provide good performance with relatively few nodes.
+
+2. **B+ Trees**:
+   - B+ trees are a variation of B-trees that optimize disk access by placing all keys and pointers on the same side (usually the right side) of the tree.
+   - This arrangement allows for faster random access to data, as you don't have to traverse through half the nodes just to find a key.
+   - B+ trees are often used in databases as they provide better performance with larger datasets.
+
+In summary, the main difference between B- and B+ trees is that B+ trees optimize disk access by placing keys and pointers on one side of the tree. This results in faster random access for large datasets.
+2025-04-02 20:31:38,812 - INFO - ================================================================================
+2025-04-02 20:31:38,812 - INFO - 
+2025-04-02 20:31:44,990 - INFO - Exported performance metrics to evaluation_analysis/performance_metrics.csv
