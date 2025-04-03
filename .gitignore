@@ -27,3 +27,5 @@ node_modules
 
 # Environment variables
 .env
+.env.local
+.venv_new
