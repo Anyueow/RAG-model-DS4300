@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "small_mpnet_redis_mistral",
+    "embedding_model": "all-mpnet-base-v2",
+    "llm_model": "mistral:latest",
+    "vector_db": "redis",
+    "chunking_strategy": "small",
+    "semantic_weight": 0.7,
+    "keyword_weight": 0.3,
+    "chunk_size": 256,
+    "chunk_overlap": 25,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": " The B-tree (Balanced-tree) and B+ tree are self-balancing search trees used for organizing data in databases and other software applications. Both structures are designed to efficiently handle large amounts of data, but they have some key differences.\n\n1. **Structure**: A B-tree has a fixed number of keys at each non-leaf node, while a B+ tree has only one key at each non-leaf node. All the remaining space in the non-leaf nodes is used to store pointers (or addresses) to child nodes. [KB-Text \"Introduction to Database Systems\" - C.J. Date and Hugh Darwen]\n\n2. **Data Distribution**: In a B-tree, both keys and data are stored at the internal nodes. This means that if you need to search for a specific value, you might have to access multiple nodes. On the other hand, in a B+ tree, only pointers (or addresses) to the data are stored at the internal nodes, while the actual data is stored at the leaf nodes. This results in faster data retrieval since you can go directly to the leaf node containing the desired data. [KB-Text \"Data Management Systems\" - Elmasri and Navathe]\n\n3. **Access Efficiency**: Due to the way they store keys and data, B+ trees are more efficient when it comes to accessing data, as you can go directly to the leaf node containing the desired data. In contrast, B-trees may require more steps to access the data because of the keys stored at internal nodes. [KB-Text \"Data Structures and Algorithms in Java\" - Robert Lafore]\n\n4. **Insertion Efficiency**: During insertion, both trees maintain their balance by reorganizing the tree structure. However, the way they handle this process is different. In a B-tree, the split of a node can occur at any level, while in a B+ tree, splits only happen at the leaf nodes. [KB-Text \"Introduction to Algorithms\" - Thomas H. Cormen et al.]\n\nIn summary, B+ trees are more suitable for read-intensive applications due to their efficient data retrieval, while B-trees can be used in both read and write-intensive applications because of their flexibility during insertion. [GK]",
+      "execution_time": 18.834048748016357,
+      "memory_usage": -61.796875,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": " The AVL (Adelson-Velsky and Landis) tree is a self-balancing binary search tree, which means it maintains the height of the tree close to logarithmic time complexity. This is achieved by performing rotations on nodes that violate certain balance conditions.\n\nThere are two types of rotations in AVL trees: left rotation (LL and LR) and right rotation (RR and RL). Let's consider a node N as the root, where N has a subtree T1 on its left side and a subtree T2 on its right side.\n\n1. Left-Left (LL) Rotation:\n   - If N is the root of the tree, then perform a right rotation on N with T1 as the new root. [GK] This operation is performed when T1's height increases by 2 while T2's height remains unchanged or increases by 1.\n   - If N is not the root and T1's parent (P) is on the left side of P, then perform a right rotation on P with N as the new left child, followed by a left rotation on N with T1 as the new right child. [GK] This operation is performed when both T1 and T2 increase in height by 1.\n\n   Example:\n   ```\n   Before Rotation:\n       A\n     /   \\\n    B     C\n   / \\     |\n  D   E    F\n\n   After LL Rotation:\n        B\n      /   \\\n     A     C\n   / \\     |\n  D   E    F\n   ```\n\n2. Left-Right (LR) Rotation:\n   - If N is the root of the tree, then perform a left rotation on N with T2 as the new root. [GK] This operation is performed when T1's height remains unchanged or increases by 1 while T2's height increases by 2.\n   - If N is not the root and T1's parent (P) is on the right side of P, then perform a left rotation on P with T2 as the new right child, followed by a right rotation on N with T1 as the new left child. [GK] This operation is performed when both T1 and T2 increase in height by 1.\n\n   Example:\n   ```\n   Before Rotation:\n        A\n       /\n      B\n     / | \\\n    C D   E\n          |\n          F\n\n   After LR Rotation:\n           B\n         /   \\\n        A     E\n       / |     |\n      C D    F   B\n   ```\n\n3. Right-Right (RR) and Right-Left (RL) rotations can be handled similarly by swapping left and right in the descriptions above. [KB-Text \"Introduction to Algorithms, 3rd edition, CLRS\"]",
+      "execution_time": 22.74814009666443,
+      "memory_usage": -2.75,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": " The main advantages of MongoDB [GK] include:\n\n1. Flexible Schema (Document-oriented): Unlike traditional relational databases, MongoDB uses a flexible schema that allows for dynamic and changing data structures. This is particularly useful when dealing with unstructured or semi-structured data.\n\n2. High Performance: MongoDB is designed to handle high volumes of data and offers good performance due to its use of non-blocking, scalable drivers and its ability to perform read and write operations concurrently.\n\n3. Horizontal Scalability: MongoDB can easily scale horizontally by adding more machines (shards) to a cluster as the data grows. This allows for better performance and availability without significant downtime or redesigning the database structure.\n\n4. Aggregation Framework: MongoDB provides an aggregation framework that allows for complex queries and data analysis, similar to SQL's GROUP BY clause. This can be used for sorting, filtering, and performing calculations on large datasets.\n\n5. Automatic Indexing: MongoDB automatically creates indexes on fields that are frequently queried, improving query performance. Users can also manually create indexes if needed.\n\n6. Built-in Replication: MongoDB includes built-in replication for data durability and high availability. This means that multiple copies of the data are stored across different servers, reducing the risk of data loss due to hardware failure or other issues.\n\nFor more information about MongoDB, you can refer to the official documentation at [KB-Text \"MongoDB Documentation\"].",
+      "execution_time": 12.691967248916626,
+      "memory_usage": -2.078125,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": " In the context of Amazon Web Services (AWS), Simple Storage Service (S3) uses a concept called \"Replication\" to ensure data durability and availability across multiple locations [KB-Text: AWS S3 User Guide].\n\nThere are two types of replication in S3:\n\n1. **Bucket Replication**: This is an asynchronous, change-based replication where you create a destination bucket in another Region (or even another account) and configure the source bucket to replicate new objects and/or updated objects to that destination bucket [KB-Text: AWS S3 User Guide].\n\n2. **Object Locking**: This feature provides a way to place objects into one of two modes, either Governance or Archive, which prevents them from being deleted or overwritten for a specified amount of time [KB-Text: AWS S3 Object Lock Documentation].\n\nIt's important to note that replication in S3 is not real-time and there may be a delay between the source bucket and the destination bucket. Also, you are charged for both the source and destination buckets during the replication process [GK].\n\nFor more information about AWS S3 replication, I recommend checking out the official AWS documentation:\n- Bucket Replication: https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-bucket-replication.html\n- Object Locking: https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lock-working-with-objects.html",
+      "execution_time": 12.123086929321289,
+      "memory_usage": -2.546875,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 21:11:36"
+}

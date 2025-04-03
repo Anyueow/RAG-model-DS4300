@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "medium_mpnet_chroma_mistral",
+    "embedding_model": "all-mpnet-base-v2",
+    "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+    "vector_db": "chroma",
+    "chunking_strategy": "medium",
+    "semantic_weight": 0.7,
+    "keyword_weight": 0.3,
+    "chunk_size": 512,
+    "chunk_overlap": 50,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": "I apologize, but I encountered an error while generating the response. Error details: model \"mistralai/Mistral-7B-Instruct-v0.2\" not found, try pulling it first",
+      "execution_time": 0.06693506240844727,
+      "memory_usage": 8.109375,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": "I apologize, but I encountered an error while generating the response. Error details: model \"mistralai/Mistral-7B-Instruct-v0.2\" not found, try pulling it first",
+      "execution_time": 0.04386615753173828,
+      "memory_usage": 4.109375,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": "I apologize, but I encountered an error while generating the response. Error details: model \"mistralai/Mistral-7B-Instruct-v0.2\" not found, try pulling it first",
+      "execution_time": 0.04179811477661133,
+      "memory_usage": 3.28125,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": "I apologize, but I encountered an error while generating the response. Error details: model \"mistralai/Mistral-7B-Instruct-v0.2\" not found, try pulling it first",
+      "execution_time": 0.047422170639038086,
+      "memory_usage": 0.015625,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:42:23"
+}

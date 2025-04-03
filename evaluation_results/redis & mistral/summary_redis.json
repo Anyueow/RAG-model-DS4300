@@ -1,0 +1,87 @@
+{
+  "total_configurations": 9,
+  "total_questions": 4,
+  "configurations": [
+    {
+      "name": "small_nomic_redis_mistral",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "mistral:latest",
+      "vector_db": "redis",
+      "avg_time": 16.714484691619873,
+      "avg_memory": -157.33203125,
+      "total_questions": 4
+    },
+    {
+      "name": "small_minilm_redis_mistral",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "mistral:latest",
+      "vector_db": "redis",
+      "avg_time": 16.019688665866852,
+      "avg_memory": -4.89453125,
+      "total_questions": 4
+    },
+    {
+      "name": "small_mpnet_redis_mistral",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "mistral:latest",
+      "vector_db": "redis",
+      "avg_time": 16.599310755729675,
+      "avg_memory": -17.29296875,
+      "total_questions": 4
+    },
+    {
+      "name": "medium_nomic_redis_mistral",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "mistral:latest",
+      "vector_db": "redis",
+      "avg_time": 17.879702746868134,
+      "avg_memory": -63.1328125,
+      "total_questions": 4
+    },
+    {
+      "name": "medium_minilm_redis_mistral",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "mistral:latest",
+      "vector_db": "redis",
+      "avg_time": 17.83408957719803,
+      "avg_memory": -11.65625,
+      "total_questions": 4
+    },
+    {
+      "name": "medium_mpnet_redis_mistral",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "mistral:latest",
+      "vector_db": "redis",
+      "avg_time": 16.533581137657166,
+      "avg_memory": -13.87109375,
+      "total_questions": 4
+    },
+    {
+      "name": "large_nomic_redis_mistral",
+      "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+      "llm_model": "mistral:latest",
+      "vector_db": "redis",
+      "avg_time": 15.300557792186737,
+      "avg_memory": -78.5546875,
+      "total_questions": 4
+    },
+    {
+      "name": "large_minilm_redis_mistral",
+      "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
+      "llm_model": "mistral:latest",
+      "vector_db": "redis",
+      "avg_time": 22.012848556041718,
+      "avg_memory": -15.04296875,
+      "total_questions": 4
+    },
+    {
+      "name": "large_mpnet_redis_mistral",
+      "embedding_model": "all-mpnet-base-v2",
+      "llm_model": "mistral:latest",
+      "vector_db": "redis",
+      "avg_time": 18.240036189556122,
+      "avg_memory": -13.67578125,
+      "total_questions": 4
+    }
+  ]
+}

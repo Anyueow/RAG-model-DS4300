@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "medium_nomic_chroma_mistral",
+    "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+    "llm_model": "mistral:latest",
+    "vector_db": "chroma",
+    "chunking_strategy": "medium",
+    "semantic_weight": 0.7,
+    "keyword_weight": 0.3,
+    "chunk_size": 512,
+    "chunk_overlap": 50,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": " The B-tree (Balanced-tree) and B+ tree (B-Plustree) are self-balancing search trees used for organizing data in a database. Both are designed to efficiently store large amounts of data, support fast search operations, and maintain the tree in a balanced state to minimize the height of the tree. However, they differ in their structure and usage of leaf nodes.\n\n1. **B-tree**: In a B-tree, both non-leaf nodes and leaf nodes contain data items. Each non-leaf node stores a range of keys, and each key has a corresponding child node pointer. The number of keys per node is defined by the order of the tree (m). For example, in a 3-order B-tree, each non-leaf node contains [m/2 - 1] keys and [2 * m - 1] data items.\n\n[KB-Text \"Introduction to Database Systems\" - C.J. Date, H.K. Ruzzo, and A.K. Shaw]\n\n2. **B+ tree**: In a B+ tree, only leaf nodes contain data items. Non-leaf nodes store keys that represent the lower and upper bounds of the range of data in their corresponding child node. The number of keys per non-leaf node is also defined by the order (m). For example, in a 3-order B+ tree, each non-leaf node contains [m] keys and [2 * m - 1] data items in its child nodes.\n\n[KB-Text \"Introduction to Database Systems\" - C.J. Date, H.K. Ruzzo, and A.K. Shaw]\n\nThe main advantage of B+ trees over B-trees is that the data items are stored only in leaf nodes, which leads to a higher density of data items at lower levels of the tree. This results in faster search operations as the number of comparisons required to find a key is reduced. Additionally, since all data items are stored in leaf nodes, it's easier to perform range queries using B+ trees.\n\n[GK] In practice, both B-trees and B+ trees are used in various database systems such as MySQL, Oracle, and MongoDB. The choice between the two depends on factors like the specific use case, performance requirements, and storage constraints.\n\n[KB-Text \"Database Systems: A Practical Approach to Design, Implementation, and Management\" - Ramez Elmasri and Shamkant Navathe]",
+      "execution_time": 17.35901188850403,
+      "memory_usage": -282.484375,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": " The AVL (Adelson-Velsky and Landis) tree is a self-balancing binary search tree that maintains the height of the tree at a minimum, ensuring efficient operations. It does this by keeping the difference between heights of the left and right subtrees for each node within a range of -1 and +1.\n\nThe AVL tree uses rotations (single and double) to rebalance the tree after insertions or deletions. There are four types of rotations: Left Rotation (LL, LR), Right Rotation (RR, RL).\n\nLet's take an example to understand how it works. Suppose we have an AVL tree with the following structure:\n\n```\n    A\n   / \\\n  B   D\n /     \\\nE       C\n```\n\nNow, let's perform a left insertion on node E (the left child of B). After the insertion, the height difference between the subtrees of B becomes 2, which violates the AVL property. To balance the tree, we perform a single rotation (LL) around B:\n\n```\n    A\n   / \\\n  B   D\n  /     \\\n E       C\n          \\\n           G\n```\n\nIn this new structure, the height difference between the subtrees of B is now 0, and we have a balanced AVL tree again.\n\nNow, let's consider a case where we perform a right insertion on node G (the right child of C). After the insertion, the height difference between the subtrees of D becomes 2, which violates the AVL property. To balance the tree, we perform a double rotation (RR followed by RL) around D:\n\n```\n    A\n   / \\\n  B     D\n  |       \\\n  E        C\n          \\   \\\n           G   F\n```\n\nIn this new structure, the height difference between the subtrees of D is now 0, and we have a balanced AVL tree again.\n\nFor more information on AVL trees, you can refer to [KB-Text \"Introduction to Algorithms\" by Cormen et al.]. The book provides an in-depth explanation of various data structures, including AVL trees.",
+      "execution_time": 16.30453610420227,
+      "memory_usage": -47.96875,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": " The main advantages of MongoDB [GK] include:\n\n1. Flexible and dynamic schema design: Unlike traditional relational databases, MongoDB uses a document-oriented data model that allows for flexible and dynamic schema design. This means you can store complex data structures without the need to predefine their structure, making it easier to adapt to changing data requirements. [KB-Text \"Introduction to MongoDB\"]\n\n2. High performance: MongoDB is designed to handle large volumes of data with high read and write throughput. It uses a technique called sharding for horizontal scaling, which allows it to distribute data across multiple machines for improved performance. [KB-Text \"MongoDB Performance Best Practices\"]\n\n3. Easy to use: MongoDB has a simple and intuitive API that makes it easy for developers to work with the database. It also provides a variety of drivers for different programming languages, making integration into applications straightforward. [KB-Text \"Getting Started with MongoDB\"]\n\n4. Built-in replication: MongoDB includes built-in replication and automatic failover capabilities, ensuring high availability and data durability. This means that if one server goes down, another can take its place without any interruption in service. [KB-Text \"MongoDB Replication\"]\n\n5. Scalable: As your data grows, MongoDB can scale horizontally by adding more machines to the cluster, allowing you to handle increasing amounts of data with ease. [KB-Text \"Scaling MongoDB\"]",
+      "execution_time": 10.834784030914307,
+      "memory_usage": 41.65625,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": " The Amazon Simple Storage Service (S3) from AWS handles data replication using a feature called \"Bucket Replication.\" This process is designed to automatically copy objects within an S3 bucket or across different buckets in the same or different regions.\n\nHere's a step-by-step explanation of how it works:\n\n1. First, you need to create a replication configuration that defines the source and destination buckets, as well as the rules for replicating objects. This can be done through the AWS Management Console, AWS CLI, or SDKs. [GK] (Source: https://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-replication.html)\n\n2. Once the replication configuration is set up, S3 starts to monitor the source bucket for new objects and any changes made to existing ones. [GK] (Source: https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-replication.html)\n\n3. When a new object is added or an existing one is modified, S3 triggers the replication process. The object is copied to the destination bucket in the specified region. [GK] (Source: https://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-replication.html)\n\n4. By default, S3 replicates objects synchronously within the same region but asynchronously across different regions to optimize performance and reduce costs. However, you can configure it to perform synchronous replication for all cases if needed. [GK] (Source: https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-replication.html)\n\n5. S3 also supports versioning and object lock features, which help in maintaining multiple versions of an object and preventing accidental overwrites or deletions. These versions are replicated as part of the bucket replication process. [GK] (Source: https://docs.aws.amazon.com/AmazonS3/latest/dev/object-versioning.html)\n\n6. It's important to note that S3 replication is a best practice for ensuring data durability and availability across multiple regions. However, it doesn't provide automatic disaster recovery capabilities. For that, you should use services like Amazon S3 Cross-Region Replication (S3 XRR) or AWS Data Lifecycle Manager (DLM). [GK] (Source: https://aws.amazon.com/solutions/data-management/)\n\n7. Additionally, S3 bucket replication is charged based on the number of objects copied and the amount of data transferred. For more details about pricing, refer to the AWS pricing page. [GK] (Source: https://aws.amazon.com/s3/pricing/)",
+      "execution_time": 19.738062143325806,
+      "memory_usage": -45.1875,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 20:50:36"
+}

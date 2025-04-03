@@ -49,7 +49,7 @@ class ResponseGenerator:
             {
                 "name": "small_nomic_qdrant_mistral",
                 "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
-                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+                "llm_model": "mistral:latest",
                 "vector_db": "qdrant",
                 "chunking_strategy": "small",
                 "semantic_weight": 0.7,
@@ -61,7 +61,7 @@ class ResponseGenerator:
             {
                 "name": "small_minilm_qdrant_mistral",
                 "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
-                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+                "llm_model": "mistral:latest",
                 "vector_db": "qdrant",
                 "chunking_strategy": "small",
                 "semantic_weight": 0.7,
@@ -73,7 +73,7 @@ class ResponseGenerator:
             {
                 "name": "small_mpnet_qdrant_mistral",
                 "embedding_model": "all-mpnet-base-v2",
-                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+                "llm_model": "mistral:latest",
                 "vector_db": "qdrant",
                 "chunking_strategy": "small",
                 "semantic_weight": 0.7,
@@ -86,7 +86,7 @@ class ResponseGenerator:
             {
                 "name": "medium_nomic_qdrant_mistral",
                 "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
-                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+                "llm_model": "mistral:latest",
                 "vector_db": "qdrant",
                 "chunking_strategy": "medium",
                 "semantic_weight": 0.7,
@@ -98,7 +98,7 @@ class ResponseGenerator:
             {
                 "name": "medium_minilm_qdrant_mistral",
                 "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
-                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+                "llm_model": "mistral:latest",
                 "vector_db": "qdrant",
                 "chunking_strategy": "medium",
                 "semantic_weight": 0.7,
@@ -110,7 +110,7 @@ class ResponseGenerator:
             {
                 "name": "medium_mpnet_qdrant_mistral",
                 "embedding_model": "all-mpnet-base-v2",
-                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+                "llm_model": "mistral:latest",
                 "vector_db": "qdrant",
                 "chunking_strategy": "medium",
                 "semantic_weight": 0.7,
@@ -123,7 +123,7 @@ class ResponseGenerator:
             {
                 "name": "large_nomic_qdrant_mistral",
                 "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
-                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+                "llm_model": "mistral:latest",
                 "vector_db": "qdrant",
                 "chunking_strategy": "large",
                 "semantic_weight": 0.7,
@@ -135,7 +135,7 @@ class ResponseGenerator:
             {
                 "name": "large_minilm_qdrant_mistral",
                 "embedding_model": "multi-qa-MiniLM-L6-cos-v1",
-                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+                "llm_model": "mistral:latest",
                 "vector_db": "qdrant",
                 "chunking_strategy": "large",
                 "semantic_weight": 0.7,
@@ -147,7 +147,7 @@ class ResponseGenerator:
             {
                 "name": "large_mpnet_qdrant_mistral",
                 "embedding_model": "all-mpnet-base-v2",
-                "llm_model": "mistralai/Mistral-7B-Instruct-v0.2",
+                "llm_model": "mistral:latest",
                 "vector_db": "qdrant",
                 "chunking_strategy": "large",
                 "semantic_weight": 0.7,

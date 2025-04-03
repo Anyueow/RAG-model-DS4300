@@ -1631,3 +1631,1883 @@ In summary, the main difference between B- and B+ trees is that B+ trees optimiz
 2025-04-02 20:31:38,812 - INFO - ================================================================================
 2025-04-02 20:31:38,812 - INFO - 
 2025-04-02 20:31:44,990 - INFO - Exported performance metrics to evaluation_analysis/performance_metrics.csv
+2025-04-02 21:26:52,286 - INFO - Loading evaluation results...
+2025-04-02 21:26:52,294 - INFO - Loaded 62 valid results
+2025-04-02 21:26:52,300 - INFO - Exported raw responses to evaluation_analysis/raw_responses.csv
+2025-04-02 21:26:52,300 - INFO - 
+===== RAG Response Evaluator =====
+2025-04-02 21:42:50,080 - INFO - Exported performance metrics to evaluation_analysis/performance_metrics.csv
+2025-04-02 21:43:15,215 - INFO - 
+===== Responses for Question: Explain how AVL tree rotation works =====
+
+2025-04-02 21:43:15,216 - INFO - Configuration 1: mistral + small + chroma + nomic
+2025-04-02 21:43:15,216 - INFO - Time: 17.97s | Memory: -20.12MB
+2025-04-02 21:43:15,216 - INFO - Response:
+2025-04-02 21:43:15,216 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,216 - INFO -  The AVL (Adelson-Velsky and Landis) tree is a self-balancing binary search tree that maintains the height of its subtrees, ensuring that the tree remains approximately balanced. This property ensures that the worst-case time complexity for search, insertion, and deletion operations is O(log n).
+
+The balancing in AVL trees is achieved using rotations (single and double) on nodes to maintain the height difference between subtrees within a specific range (at most 1). There are four types of rotations: left rotation on left children (LL), right rotation on left children (LR), left rotation on right children (RL), and right rotation on right children (RR).
+
+Let's consider an example to illustrate the AVL tree rotation process. Suppose we have the following AVL tree:
+
+```markdown
+          A
+       /     \
+      B       C
+     /  \     /  \
+    D   E   F   G
+                /  \
+              H   I
+```
+
+Now, let's perform a left rotation on node C (LR):
+
+1. Find the right child of the node to be rotated (C in this case). In our example, the right child is node G.
+2. Identify the left child of the right child (G in this case). Here, the left child is node H.
+3. Perform the rotation:
+   - Make H the new parent of C.
+   - Make G the parent of the old parent of C (which is A in our example).
+   - Update the pointers in the original tree to reflect the change.
+
+After performing the LR rotation, the AVL tree looks like this:
+
+```markdown
+          A
+       /     \
+      G       C
+     /  \     /  \
+    H   E   F   G
+                \
+                 I
+```
+
+This is just one example of an AVL tree rotation. There are other cases, such as LL, RR, and double rotations (LRL or RRL), which work in a similar way but involve different subtrees. For more detailed explanations and examples, you can refer to [KB-Text "Data Structures and Algorithms" by Goodrich and Tamassia].
+
+[GK] The AVL tree was developed as an improvement over the classic binary search tree to ensure better balance and faster search times in the worst case. It is named after its inventors, Georgy Adelson-Marsalik (Adelson-Velsky in Russian) and Aleksei Landis.
+2025-04-02 21:43:15,216 - INFO - ================================================================================
+2025-04-02 21:43:15,216 - INFO - 
+2025-04-02 21:43:15,216 - INFO - Configuration 2: mistral + medium + chroma + mpnet
+2025-04-02 21:43:15,216 - INFO - Time: 0.04s | Memory: 4.11MB
+2025-04-02 21:43:15,216 - INFO - Response:
+2025-04-02 21:43:15,216 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,216 - INFO - I apologize, but I encountered an error while generating the response. Error details: model "mistralai/Mistral-7B-Instruct-v0.2" not found, try pulling it first
+2025-04-02 21:43:15,216 - INFO - ================================================================================
+2025-04-02 21:43:15,216 - INFO - 
+2025-04-02 21:43:15,216 - INFO - Configuration 3: mistral + medium + chroma + minilm
+2025-04-02 21:43:15,216 - INFO - Time: 15.48s | Memory: -1.38MB
+2025-04-02 21:43:15,216 - INFO - Response:
+2025-04-02 21:43:15,216 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,216 - INFO -  In an AVL (Adelson-Velsky and Landis) tree, rotation is used to maintain the height balance after insertion or deletion of nodes. There are two types of rotations in AVL trees: left rotation (LL, LR, RL, andRR), where LL and RR are single rotations, and LR and RL are double rotations.
+
+Let's start with the simplest case, a single left rotation (LL). In this case, we have a node N with two children, G (the grandchild) and D (the child), where N is the root or the right child of its parent P. The goal is to move N up as the new parent of D and make G the child of N.
+
+[KB-Image "AVL_LL_rotation"]
+
+The steps for an LL rotation are:
+1. Make D the new parent of G.
+2. Make N the parent of D.
+3. Update P to be the parent of N, if it exists.
+4. If P is not null, check if P's balance factor has changed and rebalance as needed.
+
+Now let's consider a single right rotation (RR), which is the mirror image of LL. We have a node N with two children, G (the grandchild) and D (the child), where N is the left child of its parent P. The goal is to move N up as the new parent of D and make G the child of N.
+
+[KB-Image "AVL_RR_rotation"]
+
+The steps for an RR rotation are:
+1. Make D the new parent of G.
+2. Make N the parent of D.
+3. Update P to be the parent of N, if it exists.
+4. If P is not null, check if P's balance factor has changed and rebalance as needed.
+
+The LR and RL rotations are combinations of a left rotation followed by a right rotation (LR) or vice versa (RL). These double rotations help maintain the height balance in more complex scenarios.
+
+For more information about AVL trees, you can refer to [KB-Text "Introduction to Algorithms" by Cormen et al.] and [GK] various online resources on data structures and algorithms.
+2025-04-02 21:43:15,216 - INFO - ================================================================================
+2025-04-02 21:43:15,216 - INFO - 
+2025-04-02 21:43:15,217 - INFO - Configuration 4: mistral + small + chroma + minilm
+2025-04-02 21:43:15,217 - INFO - Time: 14.50s | Memory: -91.33MB
+2025-04-02 21:43:15,217 - INFO - Response:
+2025-04-02 21:43:15,217 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,217 - INFO -  AVL trees are self-balancing binary search trees that maintain the height difference between the two child nodes of any node within a logarithmic factor of 2, ensuring efficient insertion and deletion operations. The balancing is achieved through rotations, specifically left rotation (LL, LR, RL, andRR) as shown in the diagrams below.
+
+1. Left-Left Rotation (LL) [KB-Image AVL_LL]
+   - A double rotation occurs when a left heavy node (N) has two left child nodes that are also left heavy. The tree first performs a right rotation on N's parent (P), then a left rotation on N.
+
+2. Left-Right Rotation (LR) [KB-Image AVL_LR]
+   - A left heavy node (N) with a right heavy child (M) is balanced by first performing a left rotation on M, followed by a right rotation on N.
+
+3. Right-Left Rotation (RL) [KB-Image AVL_RL]
+   - A right heavy node (N) with a left heavy child (M) is balanced by first performing a right rotation on M, followed by a left rotation on N.
+
+4. Right-Right Rotation (RR) [KB-Image AVL_RR]
+   - A double rotation occurs when a right heavy node (N) has two right child nodes that are also right heavy. The tree first performs a left rotation on N's parent (P), then a right rotation on N.
+
+These rotations ensure the height difference between the child nodes of any node remains within logarithmic bounds, making AVL trees efficient data structures for applications requiring fast search, insertion, and deletion operations.
+
+[GK] The concept of AVL trees was introduced by Georgy Adelson-Velsky and Evgenii Landis in 1962 as an improvement over the earlier B-trees. For more information on AVL trees, you can refer to [KB-Text "Introduction to Algorithms" by Cormen et al.].
+2025-04-02 21:43:15,217 - INFO - ================================================================================
+2025-04-02 21:43:15,217 - INFO - 
+2025-04-02 21:43:15,217 - INFO - Configuration 5: mistral + medium + chroma + nomic
+2025-04-02 21:43:15,217 - INFO - Time: 16.30s | Memory: -47.97MB
+2025-04-02 21:43:15,217 - INFO - Response:
+2025-04-02 21:43:15,217 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,217 - INFO -  The AVL (Adelson-Velsky and Landis) tree is a self-balancing binary search tree that maintains the height of the tree at a minimum, ensuring efficient operations. It does this by keeping the difference between heights of the left and right subtrees for each node within a range of -1 and +1.
+
+The AVL tree uses rotations (single and double) to rebalance the tree after insertions or deletions. There are four types of rotations: Left Rotation (LL, LR), Right Rotation (RR, RL).
+
+Let's take an example to understand how it works. Suppose we have an AVL tree with the following structure:
+
+```
+    A
+   / \
+  B   D
+ /     \
+E       C
+```
+
+Now, let's perform a left insertion on node E (the left child of B). After the insertion, the height difference between the subtrees of B becomes 2, which violates the AVL property. To balance the tree, we perform a single rotation (LL) around B:
+
+```
+    A
+   / \
+  B   D
+  /     \
+ E       C
+          \
+           G
+```
+
+In this new structure, the height difference between the subtrees of B is now 0, and we have a balanced AVL tree again.
+
+Now, let's consider a case where we perform a right insertion on node G (the right child of C). After the insertion, the height difference between the subtrees of D becomes 2, which violates the AVL property. To balance the tree, we perform a double rotation (RR followed by RL) around D:
+
+```
+    A
+   / \
+  B     D
+  |       \
+  E        C
+          \   \
+           G   F
+```
+
+In this new structure, the height difference between the subtrees of D is now 0, and we have a balanced AVL tree again.
+
+For more information on AVL trees, you can refer to [KB-Text "Introduction to Algorithms" by Cormen et al.]. The book provides an in-depth explanation of various data structures, including AVL trees.
+2025-04-02 21:43:15,217 - INFO - ================================================================================
+2025-04-02 21:43:15,217 - INFO - 
+2025-04-02 21:43:15,217 - INFO - Configuration 6: mistral + small + chroma + mpnet
+2025-04-02 21:43:15,217 - INFO - Time: 21.44s | Memory: -14.19MB
+2025-04-02 21:43:15,217 - INFO - Response:
+2025-04-02 21:43:15,217 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,217 - INFO -  AVL trees are self-balancing binary search trees that maintain the height of the tree at a minimum by performing rotations when necessary to rebalance the tree after insertions or deletions. The name AVL comes from its creators Adelson-Velsky and Landis.
+
+The basic rotation operations in an AVL tree are single rotations (left and right) and double rotations (left-left, right-right, left-right, and right-left). Let's first understand the single rotations:
+
+1. **Left Rotation**: In a left rotation, we swap the positions of the root node and its left child. The right child of the old root becomes the left child of the new root. This operation is used to maintain the balance when the height difference between the two subtrees of the left child exceeds 1.
+
+   [KB-Image "AVL Tree Left Rotation"]
+
+2. **Right Rotation**: In a right rotation, we swap the positions of the root node and its right child. The left child of the old root becomes the right child of the new root. This operation is used to maintain the balance when the height difference between the two subtrees of the right child exceeds 1.
+
+   [KB-Image "AVL Tree Right Rotation"]
+
+Now, let's discuss double rotations:
+
+- **Left-Left (Double Left) Rotation**: When a left child of a node becomes unbalanced, we first perform a right rotation on the node's grandchild and then a left rotation on the node. This is also known as a double left rotation.
+
+   [KB-Image "AVL Tree Double Left Rotation"]
+
+- **Right-Right (Double Right) Rotation**: Similar to the left-left rotation, we first perform a left rotation on the node's grandchild and then a right rotation on the node. This is also known as a double right rotation.
+
+   [KB-Image "AVL Tree Double Right Rotation"]
+
+- **Left-Right (Right-Left) Rotations**: These are a combination of a left rotation on the parent of the original grandchild and a right rotation on the grandchild itself. They help in maintaining balance when the height difference between the two subtrees of the root exceeds 2, with the left subtree being taller.
+
+   [KB-Image "AVL Tree Left-Right Rotation"]
+
+- **Right-Left (Left-Right) Rotations**: These are a combination of a right rotation on the parent of the original grandchild and a left rotation on the grandchild itself. They help in maintaining balance when the height difference between the two subtrees of the root exceeds 2, with the right subtree being taller.
+
+   [KB-Image "AVL Tree Right-Left Rotation"]
+
+These rotations ensure that the tree remains balanced and the height of the tree is minimized, which leads to efficient search operations. For more details on AVL trees, you can refer to [KB-Text "Introduction to Algorithms" by Cormen et al.].
+2025-04-02 21:43:15,217 - INFO - ================================================================================
+2025-04-02 21:43:15,217 - INFO - 
+2025-04-02 21:43:15,217 - INFO - Configuration 7: mistral + large + chroma + nomic
+2025-04-02 21:43:15,217 - INFO - Time: 41.41s | Memory: -6.11MB
+2025-04-02 21:43:15,217 - INFO - Response:
+2025-04-02 21:43:15,217 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,217 - INFO -  The AVL (Adelson-Velsky and Landis) tree is a self-balancing binary search tree that was invented to solve the problem of maintaining a balanced tree in order to reduce the height of the tree, which in turn reduces the time complexity of operations such as insertion, deletion, and searching.
+
+The balancing in AVL trees is achieved by performing rotations on nodes that violate the balance condition. There are four types of rotations: left rotation on a left child (LL), right rotation on a left child (LR), left rotation on a right child (RL), and right rotation on a right child (RR).
+
+Let's take an example to understand how AVL tree rotations work. Suppose we have the following AVL tree:
+
+```
+    A
+   / \
+  B   D
+  |   / \
+  C   E   F
+           / \
+          G   H
+```
+
+Now, if we insert a new node 'I' as the left child of 'C', the tree becomes unbalanced. The height difference between the subtrees of 'A' exceeds 1, which violates the balance condition:
+
+```
+    A
+   / \
+  B   D
+  |   / \
+  C   E   F
+        /   \
+       G     I
+```
+
+To restore the balance, we perform a left rotation on 'C'. This will make 'D' the new parent of 'C' and 'I', and 'C' becomes the left child of 'B':
+
+```
+    A
+   / \
+  B   D
+     / \
+    C   I
+      |
+      G
+```
+
+Now, let's consider a different case where we delete node 'G'. Since 'G' was the right child of 'C', and its deletion causes an imbalance in the tree:
+
+```
+    A
+   / \
+  B   D
+  |   / \
+  C   E   F
+```
+
+To restore balance, we perform a right rotation on 'C':
+
+```
+    A
+   / \
+  B   D
+     /
+    G
+   |
+   C
+```
+
+Now, the tree is balanced again. This is just one example of how AVL tree rotations work. The specific type of rotation to be performed depends on which child is violating the balance condition and its position relative to the parent.
+
+For more information about AVL trees, you can refer to [KB-Text "Introduction to Algorithms" by Cormen et al.]. This book provides a comprehensive introduction to data structures and algorithms, including AVL trees.
+2025-04-02 21:43:15,218 - INFO - ================================================================================
+2025-04-02 21:43:15,218 - INFO - 
+2025-04-02 21:43:15,218 - INFO - Configuration 8: mistral + medium + qdrant + mpnet
+2025-04-02 21:43:15,218 - INFO - Time: 20.22s | Memory: -34.59MB
+2025-04-02 21:43:15,218 - INFO - Response:
+2025-04-02 21:43:15,218 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,218 - INFO -  The AVL (Adelson-Velsky and Landis) tree is a self-balancing binary search tree, which means it maintains the height of its subtrees close to each other. This property ensures that the number of operations needed to search for an item in the tree is logarithmic in the number of items, providing efficient performance.
+
+AVL trees achieve balance through a combination of rotations (left rotation and right rotation) and adjustments to the balancing factor of nodes. The balancing factor of a node is defined as the difference between the heights of its left and right subtrees. A node with a balancing factor of -1, 0, or 1 is considered balanced, while a node with a balancing factor of greater than 1 (overbalanced left) or less than -1 (overbalanced right) requires rotation to rebalance the tree.
+
+Let's consider an example to illustrate how AVL rotations work:
+
+1. [KB-Image "AVL_tree_example"]
+
+Initially, we have an AVL tree with the following nodes: A (balancing factor = 2), B (balancing factor = 0), C (balancing factor = -1), D (balancing factor = 0), E (balancing factor = 0), F (balancing factor = 0).
+
+The root node A has a balancing factor of 2, which is greater than 1, indicating an overbalanced left subtree. To rebalance the tree, we perform a right rotation on node A:
+
+2. [KB-Image "AVL_tree_right_rotation"]
+
+In the resulting tree, node B now has a balancing factor of 2, which requires further action to maintain balance. We perform a left rotation on node B:
+
+3. [KB-Image "AVL_tree_left_rotation"]
+
+Now the tree is balanced again, with all nodes having a balancing factor between -1 and 1. This example demonstrates how AVL rotations work to maintain balance in an AVL tree.
+
+For more information on AVL trees, you can refer to [KB-Text "Introduction to Algorithms" by Cormen et al.].
+
+[GK] The concept of AVL trees was introduced in 1972 as a solution for maintaining balance in binary search trees. It is named after Georgy Adelson-Velsky and Evgenii Landis, the researchers who developed it.
+2025-04-02 21:43:15,218 - INFO - ================================================================================
+2025-04-02 21:43:15,218 - INFO - 
+2025-04-02 21:43:15,218 - INFO - Configuration 9: mistral + medium + chroma + mpnet
+2025-04-02 21:43:15,218 - INFO - Time: 25.10s | Memory: 2.58MB
+2025-04-02 21:43:15,218 - INFO - Response:
+2025-04-02 21:43:15,218 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,218 - INFO -  AVL trees are self-balancing binary search trees that maintain the height of the tree close to logarithmic time complexity by performing rotations during insertions and deletions. The name AVL comes from the initials of Adelson-Velsky and Landis, who introduced this data structure in 1962 [KB-Text "AVL Trees"].
+
+The basic idea behind AVL tree rotation is to rebalance the tree after an insertion or deletion operation that causes a violation of the AVL tree's height balance condition. There are four types of rotations in AVL trees: left rotation on left children (LL), right rotation on left children (LR), left rotation on right children (RL), and right rotation on right children (RR).
+
+Let's consider an example to illustrate how these rotations work. Suppose we have the following AVL tree:
+
+```
+          A
+       /     \
+      B        C
+     /  \
+    D   E     G
+           /
+          H
+```
+
+Now, let's perform a left rotation on the root node 'A'. The new tree will look like this:
+
+```
+         C
+      /    \
+     A       B
+     |      /  \
+     D     E   G
+           /
+          H
+```
+
+In this example, we performed a left rotation on the root node 'A' (RL rotation). The new tree is balanced again.
+
+For more details about AVL trees and their rotations, I recommend checking out [KB-Text "Introduction to Algorithms" by Cormen et al.] or searching for online resources that provide visual explanations of AVL tree rotations.
+2025-04-02 21:43:15,218 - INFO - ================================================================================
+2025-04-02 21:43:15,218 - INFO - 
+2025-04-02 21:43:15,218 - INFO - Configuration 10: mistral + large + qdrant + nomic
+2025-04-02 21:43:15,218 - INFO - Time: 31.51s | Memory: -42.39MB
+2025-04-02 21:43:15,218 - INFO - Response:
+2025-04-02 21:43:15,218 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,218 - INFO -  The AVL (Adelson-Velsky and Landis) tree is a self-balancing binary search tree, which maintains the height of the tree close to logarithmic in the number of nodes. It does this by ensuring that the heights of the two child subtrees of any node differ by at most one. This is achieved through rotations, specifically left rotation (LL, LR, RL, andRR) and double rotation (LRL and RRL).
+
+1. **Single Rotations**
+   - **Left Rotation (LL):** In an AVL tree, if a left child of a node N is heavier than the right child (height(left_child) > height(right_child) + 2), it leads to an imbalance. To correct this, we perform a left rotation on N.
+     [KB-Image "AVL Tree LL Rotation"]
+
+   - **Right Rotation (RR):** If a right child of a node N is heavier than the left child (height(right_child) > height(left_child) + 2), it leads to an imbalance. To correct this, we perform a right rotation on N.
+     [KB-Image "AVL Tree RR Rotation"]
+
+   - **Left-Right Rotation (LR):** If the left child of a node M is lighter than the balance factor requirement and the left child of the left child (N) is heavier, we perform a left rotation on N followed by a right rotation on M. This is known as LR rotation.
+     [KB-Image "AVL Tree LR Rotation"]
+
+   - **Right-Left Rotation (RL):** If the right child of a node M is lighter than the balance factor requirement and the right child of the right child (N) is heavier, we perform a right rotation on N followed by a left rotation on M. This is known as RL rotation.
+     [KB-Image "AVL Tree RL Rotation"]
+
+2. **Double Rotations**
+   - **Left-Left Double Rotation (LRL):** If the left child of a node M is lighter than the balance factor requirement and the left child's left child (N) is heavier, we perform a sequence of left rotations on N and then M. This is known as LRL double rotation.
+     [KB-Image "AVL Tree LRL Rotation"]
+
+   - **Right-Right Double Rotation (RRR):** If the right child of a node M is heavier than the balance factor requirement and the right child's right child (N) is heavier, we perform a sequence of right rotations on N and then M. This is known as RRR double rotation.
+     [KB-Image "AVL Tree RRR Rotation"]
+
+   - **Left-Right Double Rotation (LRL):** If the left child of a node M is lighter than the balance factor requirement, the left child's right child (N) is heavier, and the right child of N is heavier, we perform a sequence of rotations: left on N, right on M, and finally left on M again. This is known as LRL double rotation.
+     [KB-Image "AVL Tree LRL Rotation"]
+
+   - **Right-Left Double Rotation (RRR):** If the right child of a node M is heavier than the balance factor requirement, the right child's left child (N) is heavier, and the left child of N is heavier, we perform a sequence of rotations: right on N, left on M, and finally right on M again. This is known as RRR double rotation.
+     [KB-Image "AVL Tree RRR Rotation"]
+
+These rotations help maintain the balance in the AVL tree, ensuring that the height of the tree remains logarithmic with respect to the number of nodes. For more detailed information on AVL trees, you can refer to the original paper by Adelson-Velsky and Landis: [GK] "A procedure for maintaining a set of points in sorted order without using too much space" (1978).
+2025-04-02 21:43:15,218 - INFO - ================================================================================
+2025-04-02 21:43:15,218 - INFO - 
+2025-04-02 21:43:15,219 - INFO - Configuration 11: mistral + small + qdrant + nomic
+2025-04-02 21:43:15,219 - INFO - Time: 39.05s | Memory: -58.31MB
+2025-04-02 21:43:15,219 - INFO - Response:
+2025-04-02 21:43:15,219 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,219 - INFO -  AVL trees are self-balancing binary search trees that maintain the height of the tree at a minimum by performing rotations when necessary to rebalance the tree after insertions or deletions. The name AVL comes from the inventors Adelson-Velsky and Landis.
+
+The basic rotation operations in an AVL tree are single rotations (left rotation and right rotation) and double rotations (left-left, right-right, left-right, and right-left).
+
+Let's start with single rotations:
+
+1. **Left Rotation**: In a left rotation, we swap the nodes as follows:
+   - Let N be the node that is out of balance (with a factor greater than 1).
+   - Make M the right child of N.
+   - Now, make N the left child of M.
+   - Finally, set M's parent to be N's old parent.
+
+![Left Rotation in AVL Tree](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/AVL_tree_left_rotation.svg/250px-AVL_tree_left_rotation.svg.png) [KB-Image 'AVL tree left rotation']
+
+2. **Right Rotation**: In a right rotation, we swap the nodes as follows:
+   - Let N be the node that is out of balance (with a factor greater than 1).
+   - Make M the left child of N.
+   - Now, make N the right child of M.
+   - Finally, set M's parent to be N's old parent.
+
+![Right Rotation in AVL Tree](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/AVL_tree_right_rotation.svg/250px-AVL_tree_right_rotation.svg.png) [KB-Image 'AVL tree right rotation']
+
+Double rotations are combinations of left and right rotations, used to correct more severe imbalances in the tree. For example, a left-left (LL) double rotation involves first performing a right rotation on the subtree rooted at N's left child, followed by a left rotation on the entire tree rooted at N. Similarly, a right-right (RR) double rotation involves first performing a left rotation on the subtree rooted at N's right child, followed by a right rotation on the entire tree rooted at N.
+
+[KB] For more information about AVL trees and their properties, you can refer to [Adelson-Velsky, G., & Landis, E. M. (1962). Balanced Binary Search Trees. Soviet Mathematics Doklady, 3(1), 17-21.]
+2025-04-02 21:43:15,219 - INFO - ================================================================================
+2025-04-02 21:43:15,219 - INFO - 
+2025-04-02 21:43:15,219 - INFO - Configuration 12: mistral + small + qdrant + minilm
+2025-04-02 21:43:15,219 - INFO - Time: 66.93s | Memory: -2.94MB
+2025-04-02 21:43:15,219 - INFO - Response:
+2025-04-02 21:43:15,219 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,219 - INFO -  The AVL (Adelson-Velsky and Landis) tree is a self-balancing binary search tree, which maintains the height of the tree close to logarithmic in the number of elements. It does this by ensuring that the heights of the two child subtrees of any node differ by at most one. This is achieved through rotations, specifically left rotation (LL, LR, RL, andRR) and double rotations (LRL and RRL).
+
+Let's take a look at each type of rotation:
+
+1. **Left Rotation (LL and LR):**
+   - LL rotation is performed on a node A with a left child B, whose left child C violates the AVL property. In an LL rotation, we rotate B around A as shown below:
+     ```
+     Before:
+         A
+       / \
+      B   C
+
+     After:
+          B
+        / \
+       A   C
+     ```
+   - LR rotation is performed on a node A with a left child B, whose left child C has a right child D that violates the AVL property. In an LR rotation, we first perform a left rotation on B around A, and then a right rotation on A around B:
+     ```
+     Before:
+          A
+        / \
+       B   C
+         / \
+        D   E
+
+     First step (Left Rotation on B):
+            B
+          / \
+         A   C
+         / \
+        D   E
+
+     Second step (Right Rotation on A):
+             C
+           / \
+          A   B
+          / \
+         D   E
+     ```
+
+2. **Right Rotation (RL and RR):**
+   - RL rotation is performed on a node A with a right child B, whose right child C violates the AVL property. In an RL rotation, we rotate B around A as shown below:
+     ```
+     Before:
+          A
+        / \
+       B   C
+         \ /
+          D  E
+
+     After:
+             B
+           / \
+          A   C
+          / \
+         D   E
+     ```
+   - RR rotation is performed on a node A with a right child B, whose right child C has a left child D that violates the AVL property. In an RR rotation, we first perform a right rotation on B around A, and then a left rotation on C around B:
+     ```
+     Before:
+          A
+        / \
+       B   C
+         \ /
+          D  E
+           / \
+          F   G
+
+     First step (Right Rotation on B):
+             C
+           / \
+          B   A
+          / \
+         D   E
+
+     Second step (Left Rotation on C):
+                 A
+               / \
+              B   C
+              / \
+             D   E
+             / \
+            F   G
+     ```
+
+3. **Double Rotations (LRL and RRL):**
+   - LRL rotation is performed when a left-left violation occurs, which can be resolved by first performing an LL rotation on the violating node, then an RR rotation on the new root of the subtree.
+     ```
+     Before:
+          A
+        / \
+       B   C
+         / \
+      D   E
+           / \
+          F   G
+
+     First step (Left Rotation on B):
+             C
+           / \
+          B   A
+          / \
+         D   E
+         / \
+        F   G
+
+     Second step (Right Rotation on A):
+                 B
+               / \
+              A   C
+              / \
+             D   E
+             / \
+            F   G
+     ```
+   - RRL rotation is performed when a right-right violation occurs, which can be resolved by first performing an RR rotation on the violating node, then an LL rotation on the new root of the subtree.
+     ```
+     Before:
+          A
+        / \
+       B   C
+         \ /
+          D  E
+           / \
+          F   G
+            / \
+           H   I
+
+     First step (Right Rotation on C):
+             A
+           / \
+          B   C
+          / \
+         D   E
+         / \
+        F   G
+
+     Second step (Left Rotation on B):
+                 C
+               / \
+              B   A
+              / \
+             D   E
+             / \
+            F   G
+           / \
+           H   I
+     ```
+
+For more information about AVL trees, you can refer to [KB-Text "Introduction to Algorithms" by Cormen et al.]. The rotations and balancing operations in AVL trees are similar to those in the more popular Red-Black tree, but with additional height updates and balancing checks.
+2025-04-02 21:43:15,219 - INFO - ================================================================================
+2025-04-02 21:43:15,219 - INFO - 
+2025-04-02 21:43:15,219 - INFO - Configuration 13: mistral + medium + qdrant + minilm
+2025-04-02 21:43:15,219 - INFO - Time: 24.47s | Memory: 34.34MB
+2025-04-02 21:43:15,219 - INFO - Response:
+2025-04-02 21:43:15,219 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,219 - INFO -  The AVL (Adelson-Velsky and Landis) tree is a self-balancing binary search tree, which means it maintains the height of the tree close to logarithmic time complexity for common operations like insertion, deletion, and searching. One key aspect of maintaining balance in an AVL tree is through rotations.
+
+There are two types of rotations in an AVL tree: left rotation (LL and LR) and right rotation (RR and RL). The names denote the direction of the rotation and the balance factor of the node involved. For example, LL rotation involves a left child becoming the new parent, while the parent becomes the grandparent of the left child.
+
+Let's take a look at each type of rotation:
+
+1. Left-Left (LL) Rotation:
+   - This occurs when the left child of a node is heavy (i.e., its balance factor is 2).
+   - To balance the tree, we perform an LL rotation, which means rotating the left subtree counterclockwise around the current node.
+
+[KB-Image "AVL_LL_Rotation"]
+
+2. Left-Right (LR) Rotation:
+   - This happens when a node's balance factor is 2 on the right side, and its left child has a balance factor of -1 (i.e., the left child is heavy).
+   - To rebalance the tree, we first perform a left rotation on the left child (LL rotation) and then perform a right rotation on the parent node around the new root of the left subtree. This results in an LR rotation on the original node.
+
+[KB-Image "AVL_LR_Rotation"]
+
+3. Right-Right (RR) Rotation:
+   - Similar to LL, this occurs when the right child of a node is heavy (i.e., its balance factor is 2).
+   - To balance the tree, we perform an RR rotation, which means rotating the right subtree clockwise around the current node.
+
+[KB-Image "AVL_RR_Rotation"]
+
+4. Right-Left (RL) Rotation:
+   - This happens when a node's balance factor is 2 on the left side, and its right child has a balance factor of 1 (i.e., the right child is heavy).
+   - To rebalance the tree, we first perform a right rotation on the right child (RR rotation) and then perform a left rotation on the parent node around the new root of the right subtree. This results in an RL rotation on the original node.
+
+[KB-Image "AVL_RL_Rotation"]
+
+These rotations help maintain the height balance in AVL trees, ensuring efficient performance for various operations. For more information about AVL trees and their applications, you can refer to [KB-Text "Introduction to Algorithms" by Cormen et al.] or search online resources related to data structures and algorithms.
+
+[GK] The examples and images provided are based on my training data, which includes various textbooks, articles, and online resources about computer science and related topics.
+2025-04-02 21:43:15,219 - INFO - ================================================================================
+2025-04-02 21:43:15,219 - INFO - 
+2025-04-02 21:43:15,219 - INFO - Configuration 14: mistral + large + qdrant + mpnet
+2025-04-02 21:43:15,219 - INFO - Time: 20.07s | Memory: 18.84MB
+2025-04-02 21:43:15,219 - INFO - Response:
+2025-04-02 21:43:15,219 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,219 - INFO -  The AVL (Adelson-Velsky and Landis) tree is a self-balancing binary search tree, which means it maintains the height of its subtrees close to each other. This property reduces the number of comparisons needed for searching, inserting, and deleting elements.
+
+The balancing in AVL trees is achieved using rotations (left rotation, right rotation, double rotation) on nodes that violate the tree's balance condition. Here's a step-by-step explanation of how these rotations work:
+
+1. **Left Rotation**: This operation is performed when a node with a balance factor greater than 1 has its left child with a balance factor less than or equal to 0. The goal is to maintain the balance by moving the excess height from the parent node to the grandparent node (if it exists).
+
+   [KB-Image "AVL_Left_Rotation"]
+
+2. **Right Rotation**: This operation is performed when a node with a balance factor less than -1 has its right child with a balance factor greater than or equal to 0. The goal is to maintain the balance by moving the excess height from the parent node to the grandparent node (if it exists).
+
+   [KB-Image "AVL_Right_Rotation"]
+
+3. **Double Rotation**: This operation combines a left rotation on a subtree and a right rotation on the subtree of that left child. It is used when a node with a balance factor greater than 1 has its left child with a balance factor greater than 0. The goal is to maintain the balance by moving the excess height from the parent node to the great-grandparent node (if it exists).
+
+   [KB-Image "AVL_Double_Rotation"]
+
+It's essential to note that the balancing operations in AVL trees are more complex compared to other self-balancing binary search trees like the Red-Black tree or Splay tree. However, they offer better performance in terms of height and thus comparison operations.
+
+For a more detailed explanation, you can refer to [KB-Text "Introduction to Algorithms"](https://introcs.cs.princeton.edu/java/11stack/) for the AVL tree section.
+
+[GK] The information about AVL trees is based on my training data and the Introduction to Algorithms book by Cormen, Leiserson, Rivest, and Stein.
+2025-04-02 21:43:15,221 - INFO - ================================================================================
+2025-04-02 21:43:15,221 - INFO - 
+2025-04-02 21:43:15,221 - INFO - Configuration 15: mistral + small + qdrant + mpnet
+2025-04-02 21:43:15,221 - INFO - Time: 38.54s | Memory: -14.31MB
+2025-04-02 21:43:15,221 - INFO - Response:
+2025-04-02 21:43:15,221 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,221 - INFO -  AVL trees are self-balancing binary search trees that maintain the height of the two child subtrees of any node differ by at most one. This is achieved through a system of rotations and rebalancing operations. Here's an overview of how AVL tree rotations work, specifically focusing on single rotations (left and right) and double rotations (left-left and right-right).
+
+1. **Single Rotation:**
+   - Left Rotation: In a left rotation, the right child of the node becomes the new parent of the original root, and the left child of the old root becomes the new right child of the old right child. [KB-Image "AVL Tree Left Rotation"](https://en.wikipedia.org/wiki/File:Avl_tree_left_rotation.svg)
+   - Right Rotation: In a right rotation, the left child of the node becomes the new parent of the original root, and the right child of the old root becomes the new left child of the old left child. [KB-Image "AVL Tree Right Rotation"](https://en.wikipedia.org/wiki/File:Avl_tree_right_rotation.svg)
+
+2. **Double Rotations:**
+   - Left-Left (Double Left Rotation): When a node with a negative balance factor undergoes a left rotation, it results in a double left rotation. This can be visualized as first performing a right rotation on the left child and then a left rotation on the new root. [KB-Image "AVL Tree Double Left Rotation"](https://en.wikipedia.org/wiki/File:Avl_tree_double_left_rotation.svg)
+   - Right-Right (Double Right Rotation): Similar to the double left rotation, a right-right rotation can be achieved by first performing a left rotation on the right child and then a right rotation on the new root. [KB-Image "AVL Tree Double Right Rotation"](https://en.wikipedia.org/wiki/File:Avl_tree_double_right_rotation.svg)
+
+These rotations help maintain the balance of the AVL tree, ensuring that the height difference between the two child subtrees of any node is at most one. For more complex scenarios, such as left-right or right-left rotations, they can be decomposed into a series of single rotations.
+
+[KB] The concept of AVL trees was introduced by Geodesic Inc.'s researchers Adelson-Velsky and Landis in 1962 as an improvement over the earlier B-trees. For further reading, you can refer to [this Wikipedia article on AVL Trees](https://en.wikipedia.org/wiki/AVL_tree).
+2025-04-02 21:43:15,224 - INFO - ================================================================================
+2025-04-02 21:43:15,225 - INFO - 
+2025-04-02 21:43:15,225 - INFO - Configuration 16: mistral + medium + qdrant + nomic
+2025-04-02 21:43:15,225 - INFO - Time: 44.90s | Memory: -12.67MB
+2025-04-02 21:43:15,225 - INFO - Response:
+2025-04-02 21:43:15,225 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,225 - INFO -  The AVL (Adelson-Velsky and Landis) tree is a self-balancing binary search tree, which means it maintains the height of its subtrees close to balanced. This is achieved through rotations, specifically single and double rotations. Let's first understand the concept of balance factor and then delve into the rotation mechanisms.
+
+In an AVL tree, each node has a balance factor that represents the difference between the heights of the left and right subtrees. The balance factor is calculated as follows:
+
+Balance Factor (BF) = Height(Left Subtree) - Height(Right Subtree)
+
+The rules for an AVL tree are:
+1. BF of any node must be between -1 and 1.
+2. A new node has a balance factor of 0.
+3. Rotations are performed to maintain the above conditions.
+
+Now, let's discuss the two types of rotations in an AVL tree:
+
+1. Single Rotation (Left or Right):
+   - Left Rotation (LL and LR cases): In a left-left case, we perform a right rotation on the root of the left subtree (the node with BF = 2). This is also known as a single left rotation. Similarly, in a left-right case, we first perform a left rotation on the left child of the root and then a right rotation on the original root. This is called a double left rotation.
+   [KB-Image "AVL_Left_Rotation"]
+
+   - Right Rotation (RR and RL cases): In a right-right case, we perform a left rotation on the root of the right subtree (the node with BF = 2). This is also known as a single right rotation. Similarly, in a right-left case, we first perform a right rotation on the right child of the root and then a left rotation on the original root. This is called a double right rotation.
+   [KB-Image "AVL_Right_Rotation"]
+
+2. Double Rotation (LLRR and RRLL): In some cases, two rotations are needed to balance the tree. For example, in an LLRR case, we first perform a left rotation on the left child of the root (LL) and then a right rotation on the new root (RR). Similarly, in an RRLL case, we first perform a right rotation on the right child of the root (RR) and then a left rotation on the new root (LL).
+   [KB-Image "AVL_Double_Rotation"]
+
+These rotations help maintain the balance factor within the specified range (-1 ≤ BF ≤ 1), ensuring the AVL tree remains approximately balanced. For more detailed explanations and examples, you can refer to [KB-Text "Data Structures and Algorithms in Modern Computer Science"].
+
+[GK] The concept of AVL trees was introduced by Georgy Adelson-Marsál and Aleksej Adelsón-Velskij in 1962 as a solution for maintaining the balance in binary search trees. It is widely used in applications requiring efficient insertion, deletion, and search operations on large data sets.
+2025-04-02 21:43:15,225 - INFO - ================================================================================
+2025-04-02 21:43:15,225 - INFO - 
+2025-04-02 21:43:15,225 - INFO - Configuration 17: mistral + large + chroma + mpnet
+2025-04-02 21:43:15,225 - INFO - Time: 38.15s | Memory: 46.73MB
+2025-04-02 21:43:15,225 - INFO - Response:
+2025-04-02 21:43:15,225 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,225 - INFO -  In an AVL (Adelson-Velsky and Landis) tree, rotation operations are used to maintain the height balance of the tree after insertion or deletion of nodes. There are two types of rotations in an AVL tree: left rotation and right rotation. Let's first understand the basic structure of an AVL tree before diving into the rotation details.
+
+[KB-Text "AVL Tree"] defines an AVL tree as a self-balancing binary search tree, where the height difference between the two child subtrees of any node is either 0 or 1. This property ensures that the tree remains balanced and performs well in terms of time complexity for various operations like insertion, deletion, and search.
+
+Now, let's discuss the rotation operations:
+
+1. Left Rotation (LL Case)
+   - In this case, a left child of N is taller than N itself.
+   - The rotation involves swapping the positions of N and its left child M, making M the new root.
+   - After the rotation, the original right child of M becomes the left child of N.
+   [KB-Image "AVL Tree Left Rotation"] shows an example of a left rotation operation.
+
+2. Right Rotation (RR Case)
+   - In this case, a right child of N is taller than N itself.
+   - The rotation involves swapping the positions of N and its right child M, making M the new root.
+   - After the rotation, the original left child of M becomes the right child of N.
+   [KB-Image "AVL Tree Right Rotation"] shows an example of a right rotation operation.
+
+3. Left-Right (LR Case) and Right-Left (RL Case) Rotations
+   - These are composite rotations that can occur when a double rotation is needed to balance the tree.
+   - In the LR case, first perform a left rotation on the subtree with the left child, followed by a right rotation on the new root.
+   - In the RL case, first perform a right rotation on the subtree with the right child, followed by a left rotation on the new root.
+
+[GK] Rotations in AVL trees are essential for maintaining the height balance of the tree and ensuring that the tree remains nearly balanced even after insertions or deletions. This property results in efficient performance of various operations like search, insertion, and deletion. For more information on AVL trees, you can refer to [KB-Text "Introduction to Algorithms" by Cormen et al.] (https://www.amazon.com/Introduction-Algorithms-Third-Thomas-Cormen/dp/0262033844).
+2025-04-02 21:43:15,226 - INFO - ================================================================================
+2025-04-02 21:43:15,226 - INFO - 
+2025-04-02 21:43:15,226 - INFO - Configuration 18: mistral + large + qdrant + minilm
+2025-04-02 21:43:15,226 - INFO - Time: 17.30s | Memory: 37.55MB
+2025-04-02 21:43:15,226 - INFO - Response:
+2025-04-02 21:43:15,226 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,226 - INFO -  In an AVL (Adelson-Velsky and Landis) tree, rotation is used to maintain the height balance of the tree after inserting or deleting nodes. There are two types of rotations in an AVL tree: left rotation and right rotation.
+
+1. **Left Rotation** [KB-Text "Introduction to Algorithms"]
+   - A left rotation on a node N occurs when we swap the subtrees of N with the right subtree of its left child M, making M the new parent of N. In other words, we rotate N counterclockwise around M.
+   - Here's an example:
+     ```
+      A                       B
+        / \                    /
+       B   C                  A
+         / \                  / \
+        D   E                C   D
+          \                    /
+           F                  E
+     Before rotation            After rotation
+     ```
+
+2. **Right Rotation** [KB-Text "Introduction to Algorithms"]
+   - A right rotation on a node N occurs when we swap the subtrees of N with the left subtree of its right child M, making N the new parent of M. In other words, we rotate N clockwise around M.
+   - Here's an example:
+     ```
+          A
+         /
+        B
+       / \
+      C   D
+           / \
+          E   F
+     Before rotation            After rotation
+     ```
+
+The choice between left and right rotations depends on the balance of the subtrees. For instance, if during an insertion or deletion operation, the difference in height between the two child nodes of a node exceeds 1, a rotation is required to rebalance the tree. The specific type of rotation used depends on which side the imbalance occurred.
+
+In addition to rotations, AVL trees also update the balance factors after each insertion or deletion operation to ensure that the height of the tree remains logarithmic in the number of nodes. [GK] This property makes AVL trees more efficient than simple binary search trees for operations like insertion and deletion, but less efficient for lookups, as the balance factor updates add overhead.
+2025-04-02 21:43:15,226 - INFO - ================================================================================
+2025-04-02 21:43:15,226 - INFO - 
+2025-04-02 21:43:15,226 - INFO - Configuration 19: mistral + large + chroma + minilm
+2025-04-02 21:43:15,226 - INFO - Time: 36.70s | Memory: -8.17MB
+2025-04-02 21:43:15,226 - INFO - Response:
+2025-04-02 21:43:15,226 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,226 - INFO -  The AVL (Adelson-Velsky and Landis) tree is a self-balancing binary search tree that was invented to solve the problem of maintaining a balanced tree during insertions, deletions, and searches. It's named after its inventors Geores Adelson-Malleson and Eugene Landis.
+
+The AVL tree maintains the height balance by ensuring that the heights of the two child subtrees of any node differ by at most one. This is achieved through rotations, which are operations performed on the nodes to rebalance the tree. There are four types of rotations in an AVL tree: left rotation (LL and LR), right rotation (RR and RL).
+
+1. **Left Left (LL) Rotation:**
+   [KB-Image "AVL_LL_Rotation"]
+   In this case, the left subtree of the left child is taller than the left child itself. The tree rotates counterclockwise around the tallest node (N3).
+
+2. **Left Right (LR) Rotation:**
+   [KB-Image "AVL_LR_Rotation"]
+   Here, the right subtree of the left child is taller than the left child itself. The tree rotates clockwise around the tallest node (N3).
+
+3. **Right Right (RR) Rotation:**
+   [KB-Image "AVL_RR_Rotation"]
+   In this case, the right subtree of the right child is taller than the right child itself. The tree rotates clockwise around the tallest node (N3).
+
+4. **Right Left (RL) Rotation:**
+   [KB-Image "AVL_RL_Rotation"]
+   Here, the left subtree of the right child is taller than the right child itself. The tree rotates counterclockwise around the tallest node (N3).
+
+It's important to note that these rotations are performed in a way that maintains the balance of the AVL tree and ensures that the height difference between the two child subtrees of any node is at most one.
+
+For more detailed information about AVL trees, I recommend checking out [KB-Text "Introduction to Algorithms" by Cormen et al.]. This book provides a comprehensive explanation of various data structures and algorithms, including AVL trees.
+
+[GK] The concept of AVL trees is based on the idea of self-balancing binary search trees, which aim to minimize the height of the tree during operations like insertion and deletion to improve the efficiency of searches. Other examples of such trees include the Red-Black Tree and the Splay Tree.
+2025-04-02 21:43:15,226 - INFO - ================================================================================
+2025-04-02 21:43:15,226 - INFO - 
+2025-04-02 21:43:15,226 - INFO - Configuration 20: medium + mpnet + chroma + qwen
+2025-04-02 21:43:15,226 - INFO - Time: 7.27s | Memory: 43.06MB
+2025-04-02 21:43:15,226 - INFO - Response:
+2025-04-02 21:43:15,226 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,226 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two types of rotations in AVL trees:
+
+1. Left-rotation (LL):
+   - Imagine a node with two children: `A` and `B`.
+   - If the right child of `A` becomes taller than `A`, we need to rotate `A` to the left.
+   - The new root is now `B`, and the old positions are adjusted accordingly.
+
+2. Right-rotation (RR):
+   - Similar to a left rotation, if the left child of `B` becomes shorter than `B`, we need to rotate `B` to the right.
+   - The new root is now `A`, and the old positions are adjusted accordingly.
+
+Both rotations aim to balance the tree by adjusting the heights of subtrees. By performing these rotations as needed, AVL trees maintain their self-balancing property.
+2025-04-02 21:43:15,227 - INFO - ================================================================================
+2025-04-02 21:43:15,227 - INFO - 
+2025-04-02 21:43:15,227 - INFO - Configuration 21: large + nomic + chroma + qwen
+2025-04-02 21:43:15,227 - INFO - Time: 8.29s | Memory: 12.20MB
+2025-04-02 21:43:15,227 - INFO - Response:
+2025-04-02 21:43:15,227 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,227 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two main types of AVL rotations:
+
+1. Left-rotation (LL):
+   - Situation: A node with a right subtree that is taller than the left subtree.
+   - Steps:
+     - Remove the node from its current position.
+     - Make the removed node's right child as the new root (old root -> old right child).
+     - Move the original root to be the right child of the new root.
+
+2. Right-rotation (RR):
+   - Situation: A node with a left subtree that is taller than the right subtree.
+   - Steps:
+     - Remove the node from its current position.
+     - Make the removed node's left child as the new root (old root -> old left child).
+     - Move the original root to be the right child of the new root.
+
+Both rotations are performed to maintain the AVL property, which ensures that the tree remains balanced.
+2025-04-02 21:43:15,227 - INFO - ================================================================================
+2025-04-02 21:43:15,227 - INFO - 
+2025-04-02 21:43:15,227 - INFO - Configuration 22: medium + nomic + chroma + qwen
+2025-04-02 21:43:15,227 - INFO - Time: 8.10s | Memory: 34.02MB
+2025-04-02 21:43:15,227 - INFO - Response:
+2025-04-02 21:43:15,227 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,227 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two types of AVL rotations: left rotation (LL) and right rotation (RR).
+
+1. Left Rotation (LL):
+   - Situation: A node with two children (left and right) is too far to the right.
+   - Steps:
+     a. Create a new root by swapping the original right child with its leftmost subtree.
+     b. Set the new root's left child as the old right child.
+     c. Delete the original right child.
+
+2. Right Rotation (RR):
+   - Situation: A node with two children (left and right) is too far to the left.
+   - Steps:
+     a. Create a new root by swapping the original left child with its rightmost subtree.
+     b. Set the new root's right child as the old left child.
+     c. Delete the original left child.
+
+Both rotations maintain the AVL tree property by adjusting the heights of subtrees.
+2025-04-02 21:43:15,227 - INFO - ================================================================================
+2025-04-02 21:43:15,228 - INFO - 
+2025-04-02 21:43:15,228 - INFO - Configuration 23: large + mpnet + chroma + qwen
+2025-04-02 21:43:15,228 - INFO - Time: 13.77s | Memory: -8.27MB
+2025-04-02 21:43:15,228 - INFO - Response:
+2025-04-02 21:43:15,228 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,228 - INFO - AVL trees are self-balancing binary search trees that maintain a balance factor (difference in height between the left and right subtrees) for each node.
+
+Rotation operations are performed when an imbalance occurs, either due to insertions or deletions. There are three main types of rotations:
+
+1. **Left Rotation (LR)**:** This rotation is performed when the tree becomes unbalanced by a right subtree that is too deep. LR shifts all nodes in the right subtree one position to the left.
+
+   ```markdown
+   Original AVL Tree:
+   ```
+   / \
+  5   7
+    / \
+   3   9
+   ```  
+   After Left Rotation (LR):
+   ```
+   / \
+  3   9
+    / \
+   5   7
+   ```
+
+2. **Right Rotation (RR)**:** This rotation is the opposite of LR, needed when a left subtree that is too deep causes imbalance.
+
+   ```markdown
+   Original AVL Tree:
+   ```
+   / \
+  5   7
+    / \
+   3   9
+   ```  
+   After Right Rotation (RR):
+   ```
+   / \
+  3   9
+    / \
+   7   5
+   ```
+
+3. **Two-Child Left Rotation (2CLR)**:** This rotation is needed when a right subtree has two children, and LR would not balance the tree.
+
+   ```markdown
+   Original AVL Tree:
+   ```
+   / \
+  5   9
+    / \
+   7   11
+   ```  
+   After Two-Child Left Rotation (2CLR):
+   ```
+   / \
+  3   9
+    / \
+   7   11
+     / \
+    5   10
+   ```
+
+In summary, AVL tree rotations are performed to maintain the balance property of an AVL tree. Depending on the type of imbalance, one or more rotation operations may be necessary.
+2025-04-02 21:43:15,228 - INFO - ================================================================================
+2025-04-02 21:43:15,228 - INFO - 
+2025-04-02 21:43:15,228 - INFO - Configuration 24: large + minilm + chroma + qwen
+2025-04-02 21:43:15,228 - INFO - Time: 7.67s | Memory: 38.83MB
+2025-04-02 21:43:15,228 - INFO - Response:
+2025-04-02 21:43:15,228 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,228 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two types of rotations in AVL trees:
+
+1. Left Rotation (LR):
+   - Situation: A node with two children is inserted or deleted on its right side.
+   - Steps:
+     a. Create a new root by moving the old root's right child to be the new root.
+     b. Update the left subtree of the new root, which was previously the right subtree of the old root.
+2. Right Rotation (RR):
+   - Situation: A node with two children is inserted or deleted on its left side.
+   - Steps:
+     a. Create a new root by moving the old root's left child to be the new root.
+     b. Update the right subtree of the new root, which was previously the left subtree of the old root.
+
+Both rotations maintain the AVL tree property by adjusting the balance factor (the difference in height between left and right subtrees) of each node.
+2025-04-02 21:43:15,228 - INFO - ================================================================================
+2025-04-02 21:43:15,229 - INFO - 
+2025-04-02 21:43:15,229 - INFO - Configuration 25: small + nomic + chroma + qwen
+2025-04-02 21:43:15,229 - INFO - Time: 13.20s | Memory: 13.20MB
+2025-04-02 21:43:15,229 - INFO - Response:
+2025-04-02 21:43:15,229 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,229 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one.
+
+Rotation operations are performed to restore balance after a node's subtree height has changed. There are four common rotations:
+
+1. Left Rotation (LR):
+   - Situation: A right child with a non-empty left subtree.
+   - Operation: Move the right child (R) to its parent's left position (L). Create a new right child for the original right child's left subtree (L').
+   - Result: The tree is rebalanced, and the search performance remains optimal.
+
+2. Right Rotation (RR):
+   - Situation: A left child with a non-empty right subtree.
+   - Operation: Move the left child (L) to its parent's right position (R). Create a new left child for the original left child's right subtree (R').
+   - Result: The tree is rebalanced, and the search performance remains optimal.
+
+3. Left-Right Rotation (LR/RR):
+   - Situation: A node with both left and right children.
+   - Operation:
+    - Choose the side that needs more balancing (usually the right side in a LR case).
+    - Perform an internal rotation on that side to balance it out.
+    - If needed, perform another rotation to maintain AVL tree properties.
+   - Result: The tree is rebalanced, and the search performance remains optimal.
+
+4. Right-Left Rotation (RR/LR):
+   - Situation: A node with both left and right children, but in a different configuration from LR/RR.
+   - Operation:
+    - Choose the side that needs more balancing (usually the left side in an RR case).
+    - Perform an internal rotation on that side to balance it out.
+    - If needed, perform another rotation to maintain AVL tree properties.
+   - Result: The tree is rebalanced, and the search performance remains optimal.
+2025-04-02 21:43:15,229 - INFO - ================================================================================
+2025-04-02 21:43:15,230 - INFO - 
+2025-04-02 21:43:15,230 - INFO - Configuration 26: small + minilm + chroma + qwen
+2025-04-02 21:43:15,230 - INFO - Time: 7.57s | Memory: 52.52MB
+2025-04-02 21:43:15,230 - INFO - Response:
+2025-04-02 21:43:15,230 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,230 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two types of AVL rotations:
+
+1. Left-rotation (LL):
+   - Situation: A node with two children is too far to the right.
+   - Steps:
+     a. Create a new root by moving the original right child up to its parent's position.
+     b. Set the original right child as the new left child of the original parent.
+     c. The original parent becomes the new root.
+
+2. Right-rotation (RR):
+   - Situation: A node with two children is too far to the left.
+   - Steps:
+     a. Create a new root by moving the original left child down to its grandparent's position.
+     b. Set the original left child as the new right child of the original parent.
+     c. The original parent becomes the new root.
+
+By performing these rotations, an AVL tree can maintain its balance and ensure efficient search operations.
+2025-04-02 21:43:15,230 - INFO - ================================================================================
+2025-04-02 21:43:15,230 - INFO - 
+2025-04-02 21:43:15,230 - INFO - Configuration 27: small + mpnet + chroma + qwen
+2025-04-02 21:43:15,230 - INFO - Time: 9.15s | Memory: -3.47MB
+2025-04-02 21:43:15,230 - INFO - Response:
+2025-04-02 21:43:15,230 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,230 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two types of rotations in AVL trees:
+
+1. Left Rotation (LR):
+   - Situation: A node with two children is inserted or deleted, causing a violation of the AVL height difference condition.
+   - Operation: Move the rightmost child of the affected node to become its new left child. Update the parent pointers accordingly.
+   - Example: ![Left Rotation](https://i.imgur.com/3eJvZb.png) (Assuming 'A' is the original node)
+
+2. Right Rotation (RR):
+   - Situation: Similar to a Left Rotation, but with the rightmost child on the left and the second-rightmost child on the right.
+   - Operation: Move the second-rightmost child of the affected node to become its new right child. Update the parent pointers accordingly.
+   - Example: ![Right Rotation](https://i.imgur.com/4s1U6L.png) (Assuming 'A' is the original node)
+
+After performing either a Left or Right Rotation, the AVL tree will be rebalanced, ensuring that the height difference condition is maintained.
+2025-04-02 21:43:15,230 - INFO - ================================================================================
+2025-04-02 21:43:15,230 - INFO - 
+2025-04-02 21:43:15,230 - INFO - Configuration 28: medium + minilm + chroma + qwen
+2025-04-02 21:43:15,230 - INFO - Time: 10.50s | Memory: 17.75MB
+2025-04-02 21:43:15,230 - INFO - Response:
+2025-04-02 21:43:15,230 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,230 - INFO - AVL trees are self-balancing binary search trees that maintain a balance factor (difference in height between left and right subtrees) for each node.
+
+Rotation operations are performed when the balance factor becomes too extreme, either -2 or +2. There are three main types of rotations:
+
+1. Left Rotation (LR):
+   - This rotation is needed when a node's right subtree has become too large.
+   - The process involves moving the rightmost node to the left and adjusting the balance factors accordingly.
+   - Cite: [KB-Text 'AVL Tree Left Rotation']].
+
+2. Right Rotation (RR):
+   - Similar to LR, RR is required when the left subtree of a node becomes too large.
+   - The process involves shifting the leftmost node to the right and updating balance factors.
+   - Cite: [KB-Text 'AVL Tree Right Rotation']].
+
+3. Double Rotation (DR):
+   - This occurs when both left and right subtrees require rotation.
+   - There are two subcases for DR:
+     a) Left-Right Rotation (LR-RR):
+        - Perform an LR first, then an RR.
+        - Cite: [KB-Text 'AVL Tree Double Left-Right Rotation']].
+     b) Right-Left Rotation (RR-LR):
+        - Perform an RR first, then an LR.
+        - Cite: [KB-Text 'AVL Tree Double Right-Left Rotation']].
+
+Remember to cite your sources when providing information about AVL tree rotations.
+2025-04-02 21:43:15,233 - INFO - ================================================================================
+2025-04-02 21:43:15,233 - INFO - 
+2025-04-02 21:43:15,233 - INFO - Configuration 29: large + mpnet + redis + qwen
+2025-04-02 21:43:15,233 - INFO - Time: 12.35s | Memory: 0.44MB
+2025-04-02 21:43:15,233 - INFO - Response:
+2025-04-02 21:43:15,233 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,233 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two types of rotations in AVL trees:
+
+1. Left-Left Rotation (LLR):
+   - Situation: A node with two left children (L2).
+     ![LLR Situation](https://user-images.githubusercontent.com/5340879/16350088-aae7c4a.png)
+   - Operation: Remove the L2 and make its parent point to the second child. Then, insert the removed L2 as the new root.
+     ```markdown
+     [LLR Operation]
+     
+     Original Tree:
+     A -> B1 -> C
+     After LLR:
+     A' -> B2 -> C
+     ```
+   - Result: The tree becomes balanced again.
+
+2. Right-Right Rotation (RRR):
+   - Situation: A node with two right children (R2).
+     ![RRR Situation](https://user-images.githubusercontent.com/5344879/16350134-dcbea6d.png)
+   - Operation: Remove the R2 and make its parent point to the second child. Then, insert the removed R2 as the new root.
+     ```markdown
+     [RRR Operation]
+     
+     Original Tree:
+     A -> B1 -> C
+     After RR:
+     A' -> B2 -> C
+     ```
+   - Result: The tree becomes balanced again.
+
+In summary, AVL rotations are used to maintain balance in an AVL tree by performing either a left-left rotation (LLR) or a right-right rotation (RRR).
+2025-04-02 21:43:15,233 - INFO - ================================================================================
+2025-04-02 21:43:15,233 - INFO - 
+2025-04-02 21:43:15,233 - INFO - Configuration 30: large + minilm + redis + qwen
+2025-04-02 21:43:15,233 - INFO - Time: 14.98s | Memory: 11.36MB
+2025-04-02 21:43:15,233 - INFO - Response:
+2025-04-02 21:43:15,233 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,233 - INFO - AVL trees are self-balancing binary search trees where the height difference between left and right subtrees is at most 1.
+
+Rotation operations in an AVL tree are performed to restore balance after a node's subtree heights have changed. There are four types of rotations:
+
+1. Left Rotation (LR):
+   - If a node has two or more right children, a left rotation is needed.
+   - The root becomes the rightmost child of the rotated node.
+   - The original right child of the rotated node becomes the new root.
+   - Citation: [KB-Text 'AVL Tree Left Rotation']].
+
+2. Right Rotation (RR):
+   - Similar to left rotations, a right rotation is required when a node has two or more left children.
+   - The root becomes the leftmost child of the rotated node.
+   - The original left child of the rotated node becomes the new root.
+   - Citation: [KB-Text 'AVL Tree Right Rotation']].
+
+3. Left-Right (LR/RL) Rotation:
+   - This type of rotation is needed when a node's left and right subtrees have different heights, causing a 2-level imbalance.
+   - Depending on which subtree has the higher height, either a left rotation followed by a right rotation (LR/RR), or vice versa (RR/LR) is performed.
+   - Citation: [KB-Text 'AVL Tree Left-Right Rotation']].
+
+4. Right-Left (RL/LR) Rotation:
+   - Similar to LR/RL rotations, this type of rotation is needed when a node's right and left subtrees have different heights, causing a 2-level imbalance.
+   - Depending on which subtree has the higher height, either a right rotation followed by a left rotation (RL/LR), or vice versa (LR/RL) is performed.
+   - Citation: [KB-Text 'AVL Tree Right-Left Rotation']].
+
+In summary, AVL tree rotations are used to maintain balance by adjusting node positions and reassigning parent pointers. These operations ensure that the tree's height difference between left and right subtrees remains at most 1.
+2025-04-02 21:43:15,233 - INFO - ================================================================================
+2025-04-02 21:43:15,233 - INFO - 
+2025-04-02 21:43:15,233 - INFO - Configuration 31: medium + mpnet + redis + qwen
+2025-04-02 21:43:15,233 - INFO - Time: 8.94s | Memory: 48.62MB
+2025-04-02 21:43:15,233 - INFO - Response:
+2025-04-02 21:43:15,233 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,233 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two main types of AVL rotations: Left-rotation (LL) and Right-rotation (RR).
+
+1. **Left-rotation (LL)**:
+   - Imagine a node with two children, say A and B.
+   - If the right child of A (B in this case)) becomes taller than A, an LL rotation is needed.
+   - The process involves moving the root (A) to be the right child of its left sibling (B).
+   - The old right child of A (B) becomes the new root.
+
+2. **Right-rotation (RR)**:
+   - Similarly, if the left child of B (A in this case)) becomes taller than B, an RR rotation is needed.
+   - This process involves moving the root (B) to be the left child of its right sibling (A).
+   - The old left child of B (A) becomes the new root.
+
+Both types of rotations aim to balance the tree by adjusting the heights and positions of nodes. By performing these rotations as necessary, AVL trees maintain their optimal balance for efficient searching.
+2025-04-02 21:43:15,234 - INFO - ================================================================================
+2025-04-02 21:43:15,234 - INFO - 
+2025-04-02 21:43:15,234 - INFO - Configuration 32: medium + minilm + redis + qwen
+2025-04-02 21:43:15,234 - INFO - Time: 15.45s | Memory: -0.47MB
+2025-04-02 21:43:15,234 - INFO - Response:
+2025-04-02 21:43:15,234 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,234 - INFO - AVL trees are self-balancing binary search trees that maintain a balance factor (difference between height of left and right subtrees) for each node.
+
+Rotation operations in an AVL tree occur when the balance factor becomes too large or too small, necessitating adjustments to maintain the balance property.
+
+There are two main types of rotations: left rotation (LL) and right rotation (RR).
+
+1. Left Rotation (LL):
+- The situation occurs when a node with a right child has a balance factor greater than 1.
+- To rebalance, we perform an LL rotation on the affected node.
+   - Step 1: Remove the node with the larger balance factor (let's call it `old_node`).
+      [KB-Text 'LL Rotation Step 1']]
+   - Step 2: Move the right child of `old_node` to be the left child of `old_node`'s parent.
+      [KB-Image 'LL_Rotation_Step2.png']]
+   - Step 3: Create a new node with the same key as `old_node`, and make it the right child of `old_node`'s parent.
+      [KB-Text 'LL Rotation Step 3']]
+2. Right Rotation (RR):
+- This rotation occurs when a node with a left child has a balance factor less than -1.
+- The process involves an RR rotation on the affected node.
+   - Step 1: Remove the node with the larger balance factor (let's call it `old_node`).
+      [KB-Text 'RR Rotation Step 1']]
+   - Step 2: Move the left child of `old_node` to be the right child of `old_node`'s parent.
+      [KB-Image 'RR_Rotation_Step2.png']]
+   - Step 3: Create a new node with the same key as `old_node`, and make it the left child of `old_node`'s parent.
+      [KB-Text 'RR Rotation Step 3']
+
+
+In summary, AVL tree rotations are performed to maintain the balance property by adjusting the heights of subtrees. These rotations can be either left (LL) or right (RR), depending on the specific situation in the tree.
+2025-04-02 21:43:15,234 - INFO - ================================================================================
+2025-04-02 21:43:15,234 - INFO - 
+2025-04-02 21:43:15,234 - INFO - Configuration 33: small + minilm + redis + qwen
+2025-04-02 21:43:15,234 - INFO - Time: 9.91s | Memory: 38.53MB
+2025-04-02 21:43:15,234 - INFO - Response:
+2025-04-02 21:43:15,234 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,234 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two main types of AVL rotations: Left-rotation (LL) and Right-rotation (RR).
+
+1. **Left-rotation (LL)**:
+   - Imagine a node with two children, A and B.
+   - If the right child (B) has higher height than its left sibling (A), an imbalance occurs.
+   - To restore balance, perform a left rotation on node A.
+     - Move node A to the position of node B.
+     - Make node B the new right child of node A.
+   - The result is that the tree becomes balanced again.
+
+2. **Right-rotation (RR)**:
+   - Similar to the left rotation, if the left child (A) has higher height than its right sibling (B), an imbalance occurs.
+   - To restore balance, perform a right rotation on node B.
+     - Move node B to the position of node A.
+     - Make node A the new right child of node B.
+   - The result is again a balanced AVL tree.
+
+In summary, AVL rotations are performed to maintain the height difference between left and right subtrees within one. These rotations can be either left-rotation (LL) or right-rotation (RR), depending on the specific imbalance in the AVL tree.
+2025-04-02 21:43:15,234 - INFO - ================================================================================
+2025-04-02 21:43:15,234 - INFO - 
+2025-04-02 21:43:15,234 - INFO - Configuration 34: medium + nomic + redis + qwen
+2025-04-02 21:43:15,234 - INFO - Time: 7.95s | Memory: -7.47MB
+2025-04-02 21:43:15,234 - INFO - Response:
+2025-04-02 21:43:15,234 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,234 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are used to restore balance.
+
+There are two types of rotations in AVL trees:
+
+1. Left Rotation (LR):
+   - Consider a node `x` with a right child `y`.
+   - If `y`'s left child is not null, perform a left rotation around `x` and `y`. 
+   - Otherwise, the tree structure would be invalid, so no rotation is needed.
+
+2. Right Rotation (RR):
+   - Similar to LR, consider a node `z` with a left child `w`.
+   - If `w`'s right child is not null, perform a right rotation around `z` and `w`. 
+   - Otherwise, the tree structure would be invalid, so no rotation is needed.
+
+Both rotations aim to balance the tree by adjusting the parent-child relationships. After the rotation, the AVL property is restored, ensuring efficient search operations in the balanced tree.
+2025-04-02 21:43:15,234 - INFO - ================================================================================
+2025-04-02 21:43:15,234 - INFO - 
+2025-04-02 21:43:15,234 - INFO - Configuration 35: small + mpnet + redis + qwen
+2025-04-02 21:43:15,234 - INFO - Time: 8.53s | Memory: 57.31MB
+2025-04-02 21:43:15,234 - INFO - Response:
+2025-04-02 21:43:15,234 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,234 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are used to restore balance.
+
+There are two types of rotations in AVL trees:
+
+1. Left-rotation (LR):
+   - Imagine a node with two children: `A` and `B`.
+   - If the right child (`B` here) becomes taller than its parent (`A`), we need to perform a left rotation.
+   - The new root will be `B`, and `A`'s left child (if any) becomes `A`'s original position.
+
+2. Right-rotation (RR):
+   - Similar to the LR case, if the left child (`A` here) becomes taller than its parent (`B`), a right rotation is needed.
+   - The new root will be `A`, and `B`'s right child (if any) becomes `B`'s original position.
+
+Both rotations maintain the AVL tree property by adjusting the heights of subtrees. They are used as part of the self-balancing process to ensure that the search efficiency is not compromised due to imbalanced trees.
+2025-04-02 21:43:15,234 - INFO - ================================================================================
+2025-04-02 21:43:15,234 - INFO - 
+2025-04-02 21:43:15,235 - INFO - Configuration 36: small + nomic + redis + qwen
+2025-04-02 21:43:15,235 - INFO - Time: 12.92s | Memory: -173.72MB
+2025-04-02 21:43:15,235 - INFO - Response:
+2025-04-02 21:43:15,235 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,235 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two types of AVL rotations:
+
+1. Left-rotation (LL):
+   - Suppose we have a node `A` with a right child `B`, and `B` has a left child `C`.
+   - The imbalance occurs when `B` is taller than its parent `A`. To rotate to the left, we perform an LL rotation on `A`:
+     - Create a new temporary root `T` by moving `B`'s rightmost child (if any) to `B`.
+     - Make `A` point to `B`, effectively making `B` the new parent of `A` and `C`.
+     - Set `T` as the new root, with `A` now being a left child of `T`.
+
+2. Right-rotation (RR):
+   - The scenario is similar to an LL rotation, but instead of moving to the left, we move to the right.
+   - Let's say we have a node `D` with a left child `E`, and `E` has a right child `F`.
+   - If `F` is taller than its sibling `E`, we perform an RR rotation on `D`:
+     - Create a new temporary root `T` by moving `F`'s leftmost child (if any) to `F`.
+     - Make `D` point to `E`, effectively making `E` the new parent of `D` and `F`.
+     - Set `T` as the new root, with `D` now being a right child of `T`.
+
+Both types of rotations aim to restore balance by adjusting the heights of subtrees. They are performed recursively until the tree is once again balanced.
+2025-04-02 21:43:15,235 - INFO - ================================================================================
+2025-04-02 21:43:15,235 - INFO - 
+2025-04-02 21:43:15,235 - INFO - Configuration 37: large + nomic + redis + qwen
+2025-04-02 21:43:15,235 - INFO - Time: 7.11s | Memory: -4.84MB
+2025-04-02 21:43:15,235 - INFO - Response:
+2025-04-02 21:43:15,235 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,235 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two types of rotations in AVL trees:
+
+1. Left Rotation (LR):
+   - Situation: A node with two children is too far to the right.
+   - Process: Remove the node from its current position and make its left child the new root. The right child of the old root becomes the left child of the new root.
+
+2. Right Rotation (RR):
+   - Situation: A node with two children is too far to the left.
+   - Process: Similar to a left rotation, remove the node from its current position and make its right child the new root. The left child of the old root becomes the right child of the new root.
+
+These rotations help maintain the AVL tree property and ensure efficient search operations.
+2025-04-02 21:43:15,235 - INFO - ================================================================================
+2025-04-02 21:43:15,235 - INFO - 
+2025-04-02 21:43:15,235 - INFO - Configuration 38: medium + nomic + qdrant + qwen
+2025-04-02 21:43:15,235 - INFO - Time: 7.39s | Memory: 26.62MB
+2025-04-02 21:43:15,235 - INFO - Response:
+2025-04-02 21:43:15,235 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,235 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two types of rotations in AVL trees:
+
+1. Left-rotation (LL):
+   - Situation: A node with two children (left and right) is too far to the right.
+   - Operation: Move the right child of the unbalanced node to become its left child. Then, reposition the original right child as the new root's right child.
+
+2. Right-rotation (RL):
+   - Situation: A node with two children (left and right) is too far to the left.
+   - Operation: Similar to a left rotation, move the left child of the unbalanced node to become its right child. Then, reposition the original left child as the new root's left child.
+
+These rotations ensure that the AVL tree remains balanced and can efficiently perform search, insertion, and deletion operations.
+2025-04-02 21:43:15,235 - INFO - ================================================================================
+2025-04-02 21:43:15,235 - INFO - 
+2025-04-02 21:43:15,235 - INFO - Configuration 39: medium + mpnet + qdrant + qwen
+2025-04-02 21:43:15,235 - INFO - Time: 8.37s | Memory: -3.02MB
+2025-04-02 21:43:15,235 - INFO - Response:
+2025-04-02 21:43:15,235 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,235 - INFO - AVL trees are self-balancing binary search trees. When an AVL tree violates the balance condition (difference in height between left and right subtrees exceeds a threshold), rotations are performed to restore balance.
+
+There are two main types of rotations in AVL trees:
+
+1. Left Rotation (LR):
+   - Consider a node `N` with a right child `R`.
+   - The key in `R` is greater than the key in `N`.
+   - To perform an LR, we move `R` up to become the new root.
+   - Then, we make `N` the left child of the new root.
+
+2. Right Rotation (RR):
+   - Similar to LR, consider a node `N` with a left child `L`.
+   - The key in `L` is smaller than the key in `N`.
+   - To perform an RR, we move `L` down to become the new right child.
+   - Then, we make `N` the right child of the new right child.
+
+After performing the appropriate rotation (LR or RR), the AVL tree will be restored to its balance condition.
+2025-04-02 21:43:15,235 - INFO - ================================================================================
+2025-04-02 21:43:15,235 - INFO - 
+2025-04-02 21:43:15,235 - INFO - Configuration 40: large + nomic + qdrant + qwen
+2025-04-02 21:43:15,235 - INFO - Time: 12.08s | Memory: 36.89MB
+2025-04-02 21:43:15,235 - INFO - Response:
+2025-04-02 21:43:15,235 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,235 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two main types of AVL rotations:
+
+1. Left-rotation (LR):
+   - Suppose we have a node `A` with a right subtree (`B`) that is too large.
+   - To rotate `A` leftwards, we create a new root at the position of `B`, which becomes `A`'s new right child.
+   - The old position of `B` (now `A`), becomes the new root (`C`). So, the rotation can be represented as:
+     ```markdown
+       A
+      / \
+     B   C
+        \
+         D
+     ```
+   - After the LR, the tree is now balanced.
+
+2. Right-rotation (RR):
+   - The scenario for a right rotation is similar to that of a left rotation, but with the roles of nodes reversed.
+   - For example, suppose we have a node `A` with a left subtree (`B`) that is too small.
+   - To rotate `A` rightwards, we create a new root at the position of `B`, which becomes `A`'s new left child.
+   - The old position of `B` (now `A`)), becomes the new root (`C`). So, the rotation can be represented as:
+     ```markdown
+       A
+      / \
+     B   C
+        \
+         D
+     ```
+   - After the RR, the tree is now balanced.
+
+In both cases, after the rotation, the balance property of AVL trees is restored.
+2025-04-02 21:43:15,235 - INFO - ================================================================================
+2025-04-02 21:43:15,235 - INFO - 
+2025-04-02 21:43:15,236 - INFO - Configuration 41: medium + minilm + qdrant + qwen
+2025-04-02 21:43:15,236 - INFO - Time: 7.63s | Memory: 24.19MB
+2025-04-02 21:43:15,236 - INFO - Response:
+2025-04-02 21:43:15,236 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,236 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two main types of AVL rotations:
+
+1. Left-Left Rotation (LLR):
+   - Situation: A node with two left children is inserted or deleted.
+   - Steps:
+     a. Create a new root (the old right child).
+     b. Set the old right child as the new left child.
+     c. Set the new root as the old root.
+2. Right-Right Rotation (RRR):
+   - Situation: A node with two right children is inserted or deleted.
+   - Steps:
+     a. Create a new left child (the old left child).
+     b. Set the old left child as the new right child.
+     c. Set the new root (the old right child) as the old root.
+
+These rotations ensure that the AVL tree remains balanced, allowing for efficient search and update operations.
+2025-04-02 21:43:15,236 - INFO - ================================================================================
+2025-04-02 21:43:15,236 - INFO - 
+2025-04-02 21:43:15,236 - INFO - Configuration 42: large + mpnet + qdrant + qwen
+2025-04-02 21:43:15,236 - INFO - Time: 9.93s | Memory: 19.34MB
+2025-04-02 21:43:15,236 - INFO - Response:
+2025-04-02 21:43:15,236 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,236 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two main types of rotations in AVL trees:
+
+1. Left-rotation (LR):
+   - Suppose we have a node `x` with a right child `y`.
+   - To perform a left rotation on `x`, we first move `y` up to become the new root (`z`).
+   - Then, we reassign `x`'s left and right children. `x.left = y` and `x.right = z`.
+   - The result is that the height of the left subtree of `z` has decreased by one.
+
+2. Right-rotation (RR):
+   - A similar process occurs for a right rotation.
+   - Instead of moving the right child up, we move the left child down to become the new root (`w`).
+   - Then, we reassign `x`'s left and right children. `x.left = w` and `x.right = y`.
+   - The result is that the height of the right subtree of `y` has decreased by one.
+
+Both rotations are performed to maintain the AVL property, which ensures that the difference in heights between the left and right subtrees of any node never exceeds one.
+2025-04-02 21:43:15,236 - INFO - ================================================================================
+2025-04-02 21:43:15,236 - INFO - 
+2025-04-02 21:43:15,236 - INFO - Configuration 43: large + minilm + qdrant + qwen
+2025-04-02 21:43:15,236 - INFO - Time: 10.73s | Memory: 41.41MB
+2025-04-02 21:43:15,236 - INFO - Response:
+2025-04-02 21:43:15,236 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,236 - INFO - AVL trees are self-balancing binary search trees that maintain a balance factor (difference in height between the left and right subtrees) for each node.
+
+Rotation operations in an AVL tree occur when the balance factor becomes too large or too small, necessitating restructuring to restore balance.
+
+There are three main types of rotations:
+
+1. Left Rotation (LR):
+   - This occurs when a node with a right child that is too far to the right needs to be moved one level down to its left.
+   - Example: If a node A with a right child B has a balance factor of -3, LR would rotate A' (A's new position) and B towards the left.
+
+2. Right Rotation (RR):
+   - This occurs when a node with a left child that is too far to the left needs to be moved one level down to its right.
+   - Example: If a node C with a left child D has a balance factor of +3, RR would rotate C' (C's new position) and D towards the right.
+
+3. Double Rotation (DR):
+   - This occurs when both LR and RR are needed in sequence to balance a node or its subtree.
+   - Example: If a node E with a left child F and a right child G has a balance factor of -5, DR would involve first performing an LR on F, then doing an RR on G.
+
+In summary, AVL tree rotations are used to maintain balance by adjusting the positions of nodes. These adjustments can be single or double rotations depending on the specific imbalance encountered.
+2025-04-02 21:43:15,236 - INFO - ================================================================================
+2025-04-02 21:43:15,236 - INFO - 
+2025-04-02 21:43:15,236 - INFO - Configuration 44: small + nomic + qdrant + qwen
+2025-04-02 21:43:15,236 - INFO - Time: 7.78s | Memory: -62.64MB
+2025-04-02 21:43:15,236 - INFO - Response:
+2025-04-02 21:43:15,236 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,236 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two main types of AVL rotations: Left Rotation (LR) and Right Rotation (RR).
+
+1. **Left Rotation (LR)**:
+   - Imagine a node with two children, say A and B.
+   - If the right child of A (B in this case)) has more than one child, we need to perform an LR first.
+   - Perform a right rotation on B: swap B's left child with B itself, then rotate B to its original position.
+   - Now that B is rotated back to its original position, the balance condition for A and B will be restored.
+
+2. **Right Rotation (RR)**:
+   - The process for an RR is similar to an LR, but with the roles of left and right children reversed.
+
+In summary, AVL rotations are used to maintain balance in self-balancing binary search trees like AVL trees. These rotations involve swapping nodes and rotating subtrees to correct any imbalance that may have arisen.
+2025-04-02 21:43:15,236 - INFO - ================================================================================
+2025-04-02 21:43:15,236 - INFO - 
+2025-04-02 21:43:15,236 - INFO - Configuration 45: small + minilm + qdrant + qwen
+2025-04-02 21:43:15,236 - INFO - Time: 6.61s | Memory: 36.69MB
+2025-04-02 21:43:15,236 - INFO - Response:
+2025-04-02 21:43:15,236 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,236 - INFO - AVL trees are self-balancing binary search trees. When an AVL tree becomes unbalanced due to a change in height or the presence of a node with an incorrect balance factor, rotations are performed to restore balance.
+
+There are two main types of rotations in AVL trees:
+
+1. Left Rotation (LLR):
+   - This rotation is needed when a node's right child becomes too large and violates the AVL tree property.
+   - The process involves moving the rightmost node (the new root) one level left, and adjusting the balance factors of the nodes involved.
+
+2. Right Rotation (RRR):
+   - Similar to Left Rotation, this rotation is required when a node's left child becomes too small or unbalanced.
+   - The steps involve moving the leftmost node (new rightmost child) one level right, and adjusting the balance factors accordingly.
+
+By performing these rotations, an AVL tree can maintain its height property and remain a highly efficient search structure.
+2025-04-02 21:43:15,236 - INFO - ================================================================================
+2025-04-02 21:43:15,236 - INFO - 
+2025-04-02 21:43:15,236 - INFO - Configuration 46: small + mpnet + qdrant + qwen
+2025-04-02 21:43:15,236 - INFO - Time: 7.75s | Memory: -1.38MB
+2025-04-02 21:43:15,236 - INFO - Response:
+2025-04-02 21:43:15,236 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,236 - INFO - AVL trees are self-balancing binary search trees where the heights of left and right subtrees differ by at most one. When an imbalance occurs, AVL rotations are performed to restore balance.
+
+There are two types of rotations in AVL trees:
+
+1. Left Rotation (LR):
+   - Imagine a node with two children: A left subtree and a right subtree.
+   - If the right child has more nodes than its sibling (the left child), we need to rotate the right subtree to the left side.
+   - The rotation process involves moving the right child's root to be the new left child, and then making the right child the new right subtree.
+
+2. Right Rotation (RR):
+   - Similar to a Left Rotation, if the left subtree has more nodes than its sibling (the right child), we need to rotate the left subtree to the right side.
+   - The rotation process involves moving the left child's root to be the new right child, and then making the left child the new left subtree.
+
+Both rotations are performed to maintain the AVL property, which ensures that the tree remains approximately balanced.
+2025-04-02 21:43:15,236 - INFO - ================================================================================
+2025-04-02 21:43:15,236 - INFO - 
+2025-04-02 21:43:15,236 - INFO - Configuration 47: mistral + small + redis + minilm
+2025-04-02 21:43:15,236 - INFO - Time: 20.64s | Memory: -28.38MB
+2025-04-02 21:43:15,236 - INFO - Response:
+2025-04-02 21:43:15,236 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,236 - INFO - AVL (Adelson-Velsky and Landis) trees are self-balancing binary search trees that maintain the height of the tree close to logarithmic in the number of nodes, reducing the average time complexity for common operations such as insertion, deletion, and search to O(log n).
+
+The balancing is achieved by maintaining a balance factor for each node, which is the difference between the heights of the left and right subtrees. The balance factor of a node should be between -1 and 1 for the tree to remain balanced. Rotations are performed when an insertion or deletion causes a violation of this rule.
+
+There are two types of rotations in AVL trees: single rotation (left rotation or right rotation) and double rotation (left-left, right-right, left-right, or right-left).
+
+1. Single Rotation:
+   - Left Rotation: If a node N with the right child M violates the balance factor rule, we perform a left rotation on N. This involves swapping the positions of N and M, making M's right child as N's left child. [KB-Image "AVL_Left_Rotation"]
+   - Right Rotation: Similar to left rotation, but for nodes violating the rule with their left children. The positions of the nodes are swapped, and the left child's right child becomes the original node's right child.
+
+2. Double Rotation:
+   - Left-Left (Double Rotation with a Left Child): If a node N with a left child L and L's left child M violates the balance factor rule, we perform a single left rotation on L followed by a right rotation on N. This ensures that the tree remains balanced. [KB-Image "AVL_Left_Left_Rotation"]
+   - Right-Right (Double Rotation with a Right Child): Similar to Left-Left, but for nodes violating the rule with their right children. We first perform a right rotation on the node and then a left rotation on its parent. [KB-Image "AVL_Right_Right_Rotation"]
+   - Left-Right and Right-Left: These are more complex cases that involve both single rotations in different orders, ensuring the tree remains balanced after an insertion or deletion. [GK] The specific steps for these double rotations can be found in various textbooks on data structures and algorithms.
+
+For a more detailed explanation of AVL trees and their rotations, I recommend reading "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein [KB-Text "Cormen_2009"]. This book provides an in-depth look at data structures and algorithms, including AVL trees.
+2025-04-02 21:43:15,236 - INFO - ================================================================================
+2025-04-02 21:43:15,236 - INFO - 
+2025-04-02 21:43:15,237 - INFO - Configuration 48: mistral + large + redis + minilm
+2025-04-02 21:43:15,237 - INFO - Time: 33.90s | Memory: 1.86MB
+2025-04-02 21:43:15,237 - INFO - Response:
+2025-04-02 21:43:15,237 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,237 - INFO -  AVL trees are self-balancing binary search trees that maintain the height of the tree close to logarithmic time complexity by performing rotations during insertion and deletion operations. The name AVL comes from Adelson-Velsky and Landis, who introduced this data structure in 1962.
+
+The basic idea behind AVL tree rotation is to rebalance the tree after an insertion or deletion operation that causes an imbalance in height between the two subtrees of a node. There are four types of rotations in AVL trees: left rotation, right rotation, double left rotation, and double right rotation.
+
+1. **Left Rotation** ([KB-Image "AVL_left_rotation"]): A left rotation is performed when the right child of a node becomes too heavy (its height exceeds that of the left child by more than 1). In this case, we rotate the subtree rooted at the right child counterclockwise around the parent node.
+
+   For example, consider the following AVL tree:
+
+      A
+    /   \
+   B     C
+       / \
+      D   E
+
+   If we insert a new key to the right of key 'C', the tree becomes imbalanced as follows:
+
+      A
+    /   \
+   B     C
+         / \
+        F   E
+          /
+         I
+
+   To rebalance the tree, we perform a left rotation on node 'C':
+
+      A
+    /   \
+   B     C'
+   /     / \
+  D     F   E
+           /
+          I
+
+   Where C' is the new subtree rooted at key 'F'.
+
+2. **Right Rotation** ([KB-Image "AVL_right_rotation"]): A right rotation is performed when the left child of a node becomes too heavy (its height exceeds that of the right child by more than 1). In this case, we rotate the subtree rooted at the left child clockwise around the parent node.
+
+   For example, consider the following AVL tree:
+
+      A
+    /   \
+   B     C
+         / \
+        D   E
+       /     \
+      G      H
+
+   If we insert a new key to the left of key 'B', the tree becomes imbalanced as follows:
+
+      A
+    /   \
+   B'    C
+          / \
+         D   E
+       /     \
+      G      H
+
+   To rebalance the tree, we perform a right rotation on node 'B':
+
+      A
+    /   \
+   C     B'
+   / \    /
+  D   E   G
+               \
+                 H
+
+   Where B' is the new subtree rooted at key 'G'.
+
+3. **Double Left Rotation** and **Double Right Rotation**: These are combinations of two rotations that help restore balance when a single rotation is not sufficient. For example, if we perform a left rotation on a node and its right child still becomes too heavy, we can follow up with a right rotation on the original parent node.
+
+   In general, AVL tree rotations ensure that the height difference between the two subtrees of any node never exceeds 1, which guarantees logarithmic time complexity for search, insertion, and deletion operations. For more information about AVL trees, you can refer to [KB-Text "AVL Trees: Analysis of Algorithms"](https://link.springer.com/chapter/10.1007%2F978-3-642-65779-6_1).
+2025-04-02 21:43:15,237 - INFO - ================================================================================
+2025-04-02 21:43:15,237 - INFO - 
+2025-04-02 21:43:15,237 - INFO - Configuration 49: mistral + medium + redis + nomic
+2025-04-02 21:43:15,237 - INFO - Time: 22.94s | Memory: 53.55MB
+2025-04-02 21:43:15,237 - INFO - Response:
+2025-04-02 21:43:15,237 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,237 - INFO -  AVL trees are self-balancing binary search trees that were invented by Georgy Adelson-Velsky and Evgenii Landis in 1962. The main goal of AVL trees is to maintain the height balance, which ensures that the number of nodes at any level differs by at most one from its sibling levels. This property guarantees that the tree's height is logarithmic with respect to the number of nodes, leading to efficient search operations.
+
+   The balancing in AVL trees is achieved through rotations: single rotations (left and right) and double rotations (left-left or right-right). Here's how they work:
+
+1. Single Rotation (Left Rotation):
+   A left rotation occurs when the balance factor of the root node exceeds 1, meaning that the tree is unbalanced towards the right. The rotation involves swapping the subtrees of the root node and its right child, effectively re-balancing the tree.
+
+   [KB-Image "AVL_Left_Rotation"]
+
+2. Single Rotation (Right Rotation):
+   A right rotation occurs when the balance factor of the root node is less than -1, meaning that the tree is unbalanced towards the left. The rotation involves swapping the subtrees of the root node and its left child, effectively re-balancing the tree.
+
+   [KB-Image "AVL_Right_Rotation"]
+
+3. Double Rotation (Left-Left):
+   A double rotation (left-left) occurs when a left rotation doesn't balance the tree anymore. This happens when a sequence of left rotations increases the balance factor of the root node to 2 or more. The double rotation involves first performing a right rotation on the root node's left child and then a left rotation on the updated root node.
+
+   [KB-Image "AVL_Left_Left_Rotation"]
+
+4. Double Rotation (Right-Right):
+   A double rotation (right-right) occurs when a right rotation doesn't balance the tree anymore. This happens when a sequence of right rotations increases the balance factor of the root node to -2 or less. The double rotation involves first performing a left rotation on the root node's right child and then a right rotation on the updated root node.
+
+   [KB-Image "AVL_Right_Right_Rotation"]
+
+In addition to rotations, AVL trees also update balance factors after each insertion, deletion, or rotation operation. This ensures that the tree remains balanced and efficient for search operations. For more details on AVL trees, you can refer to [KB-Text "AVL Tree" by Georgy Adelson-Velsky and Evgenii Landis].
+
+[GK] The concept of AVL trees is widely used in computer science, particularly in areas that require efficient search operations such as databases, compilers, and operating systems. It's an important data structure to understand for anyone studying algorithms and data structures.
+2025-04-02 21:43:15,237 - INFO - ================================================================================
+2025-04-02 21:43:15,237 - INFO - 
+2025-04-02 21:43:15,237 - INFO - Configuration 50: mistral + small + redis + nomic
+2025-04-02 21:43:15,237 - INFO - Time: 17.55s | Memory: -28.03MB
+2025-04-02 21:43:15,237 - INFO - Response:
+2025-04-02 21:43:15,237 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,237 - INFO -  AVL trees are self-balancing binary search trees that maintain the height of the two child subtrees of any node within one, thus ensuring that the number of operations required to search for an item is logarithmic in the number of items stored. The balancing is achieved using rotations, specifically left rotation (LL, LR, RL, andRR) [KB-Text "Introduction to Algorithms" by Cormen et al.].
+
+Let's consider a simple example with an AVL tree:
+
+```
+       I
+     /   \
+    B     J
+  /     / \
+ A   D   E   F
+```
+
+In this case, we have an overbalanced left subtree at node 'I'. To balance it, we perform a right rotation on 'I', resulting in:
+
+```
+        J
+       /
+      I
+    /   \
+   B     F
+  /     / \
+ A   D   E
+```
+
+Now the height of the left and right subtrees of 'I' is balanced. This is an example of a right rotation (R).
+
+Similarly, if we have an overbalanced right subtree at node 'J', we perform a left rotation on 'J':
+
+```
+       I
+     /   \
+    B     J
+  /     / \
+ A   D   E
+      / \
+     F   B
+```
+
+Now, the height of the left and right subtrees of 'J' is balanced. This is an example of a left rotation (L).
+
+The specific type of rotation to be performed depends on the balance factor of each node. The balance factor of a node is calculated as the height of the right subtree minus the height of the left subtree, and adjustments are made after insertions or deletions to maintain the balance [KB-Text "Introduction to Algorithms" by Cormen et al.].
+
+In summary, AVL tree rotation works by performing specific rotations (LL, LR, RL, RR) on nodes to balance overbalanced subtrees and ensure that the height of the left and right child subtrees is always within one. This helps in maintaining the logarithmic time complexity for search operations.
+2025-04-02 21:43:15,237 - INFO - ================================================================================
+2025-04-02 21:43:15,237 - INFO - 
+2025-04-02 21:43:15,237 - INFO - Configuration 51: mistral + large + redis + nomic
+2025-04-02 21:43:15,237 - INFO - Time: 19.68s | Memory: 62.67MB
+2025-04-02 21:43:15,237 - INFO - Response:
+2025-04-02 21:43:15,237 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,237 - INFO -  The AVL (Adelson-Velsky and Landis) tree is a self-balancing binary search tree, which means it maintains the height of the tree close to log(n) for n keys. This is achieved by performing rotations when an insertion or deletion causes the height difference between subtrees to exceed 1.
+
+There are two types of rotations in AVL trees: left rotation (LL and LR) and right rotation (RR and RL). Let's consider a simple case of left-left (LL) rotation, which is used when the left child of a node becomes too heavy (its height exceeds the height of the root by 2).
+
+[KB-Image "AVL_tree_rotation_LL"]
+
+In the above image, we have an AVL tree with a node A as the root. Node A has two children: B and C. Now, let's say that node B has two children D and E. If we perform an insertion or deletion in the subtree of D such that its height exceeds the height of A by 2, the tree becomes unbalanced. To balance the tree, we perform a left-left rotation, as shown below:
+
+[KB-Image "AVL_tree_rotation_LL_after"]
+
+In the rotated tree, node B is now the root, and the original root A has moved to the right side of the tree. The height of the subtrees at nodes B and C are now balanced, ensuring that the overall height of the tree remains close to log(n).
+
+It's essential to understand that AVL trees use rotation operations to maintain balance, which in turn ensures efficient search times. For more information on other types of rotations (right-right, left-right, and right-left) and the update rules for balancing factors, I recommend consulting [KB-Text "Introduction to Algorithms" by Cormen et al.].
+
+[GK] The concept of AVL trees is based on the idea of self-balancing binary search trees, which were first introduced by Geodesic Inc. in 1962. The name "AVL tree" comes from the initials of its inventors: Adelson-Velsky and Landis.
+2025-04-02 21:43:15,237 - INFO - ================================================================================
+2025-04-02 21:43:15,237 - INFO - 
+2025-04-02 21:43:15,237 - INFO - Configuration 52: mistral + large + redis + mpnet
+2025-04-02 21:43:15,237 - INFO - Time: 33.56s | Memory: -1.42MB
+2025-04-02 21:43:15,237 - INFO - Response:
+2025-04-02 21:43:15,237 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,237 - INFO -  AVL trees are self-balancing binary search trees that maintain the height of the two child subtrees of any node differ by at most one. This is achieved through a combination of rotations (left, right, and double). Here's an explanation of how AVL tree rotation works with examples:
+
+1. **Single Rotation - Left Rotation [KB-Text "Introduction to Algorithms"]**
+   ![AVL Tree Single Left Rotation](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Avl_single_left_rotation.svg/250px-Avl_single_left_rotation.svg.png "[KB-Image 'AVL Tree Single Left Rotation']")
+
+   In the case of left-heavy tree, we perform a left rotation on the root node (Z). The right child of the new root becomes the left child of the old root, and the old root becomes the right child of the original right child.
+
+2. **Single Rotation - Right Rotation [KB-Text "Introduction to Algorithms"]**
+   ![AVL Tree Single Right Rotation](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Avl_single_right_rotation.svg/250px-Avl_single_right_rotation.svg.png "[KB-Image 'AVL Tree Single Right Rotation']")
+
+   In the case of right-heavy tree, we perform a right rotation on the root node (Z). The left child of the new root becomes the right child of the old root, and the old root becomes the left child of the original left child.
+
+3. **Double Rotation [KB-Text "Introduction to Algorithms"]**
+   Double rotations are a combination of two single rotations. They can be either left-left (LL) or right-right (RR) or left-right (LR) and right-left (RL). The goal is to balance the tree after an insertion or deletion operation that causes the height difference between subtrees to exceed 1.
+
+   - **Left-Left (LL) Double Rotation**
+     ![AVL Tree LL Double Rotation](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Avl_ll_double_rotation.svg/250px-Avl_ll_double_rotation.svg.png "[KB-Image 'AVL Tree LL Double Rotation']")
+
+   - **Right-Right (RR) Double Rotation**
+     ![AVL Tree RR Double Rotation](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Avl_rr_double_rotation.svg/250px-Avl_rr_double_rotation.svg.png "[KB-Image 'AVL Tree RR Double Rotation']")
+
+   - **Left-Right (LR) and Right-Left (RL) Double Rotations**
+     These double rotations are a combination of one left rotation followed by a right rotation or vice versa, depending on the case. They help balance the tree when the height difference between subtrees is more than 2 after an insertion or deletion operation.
+
+In summary, AVL tree rotation works by performing single rotations (left and right) and double rotations (LL, RR, LR, and RL) to maintain the balance of the tree, ensuring that the height difference between subtrees is at most 1. This allows for efficient search, insertion, and deletion operations in self-balancing binary search trees.
+
+[GK] AVL trees were invented by Geodesic numbers theorist Adelson-Velsky and Soviet computer scientist Landis in 1972 as an improvement over the earlier B-trees. They are widely used in applications that require fast insertion, deletion, search, and minimum or maximum operations on large data sets.
+2025-04-02 21:43:15,237 - INFO - ================================================================================
+2025-04-02 21:43:15,237 - INFO - 
+2025-04-02 21:43:15,237 - INFO - Configuration 53: mistral + medium + redis + minilm
+2025-04-02 21:43:15,237 - INFO - Time: 24.69s | Memory: 37.08MB
+2025-04-02 21:43:15,237 - INFO - Response:
+2025-04-02 21:43:15,238 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,238 - INFO -  AVL trees are self-balancing binary search trees that maintain the height of the two child subtrees of any node differ by at most one. This is achieved through left and right rotations, which are used to rebalance the tree after insertions or deletions.
+
+Let's consider a simple example to illustrate how AVL tree rotation works. We will use the following notation:
+
+- N represents the root node
+- L(N) and R(N) represent the left and right subtrees of node N, respectively.
+- h(N) is the height of the subtree rooted at node N.
+
+[KB-Image "AVL_Tree_Rotation"] shows a simple AVL tree before rotation. Let's say we want to insert '17' as a new node. The steps for performing left rotation on this tree are as follows:
+
+1. Find the longest path from the root to a leaf, which is the path from N (root) to M (left child of R(N)). In our example, the path is N -> L(N) -> M.
+
+2. Identify the subtree with height difference greater than 1. In this case, it's the left subtree of M (L(M)) because h(R(M)) - h(L(M)) = 2 > 1.
+
+3. Perform single rotation on the subtree with height difference greater than 1. In our example, we will perform a left rotation at M:
+   - First, make R(M) as the new right child of L(N).
+   - Then, make N as the new left child of R(M).
+
+[KB-Image "AVL_Tree_Rotation_Step1"] shows the state after step 3.
+
+4. Update the heights of nodes and check if any other balance factor violations occur. In our example, no further rotations are needed because the height difference between the subtrees is now within the allowed limit (h(R(M)) - h(L(M)) = 1).
+
+[KB-Image "AVL_Tree_Rotation_Final"] shows the final state of the AVL tree after the rotation.
+
+It's essential to note that AVL trees also perform right rotations in similar scenarios, where the height difference is on the right side of the tree. For more details and examples, you can refer to [KB-Text "AVL Trees"] (Cormen, Leiserson, Rivest, & Stein, 2009).
+
+[GK] The concept of AVL tree rotation is closely related to other self-balancing binary search trees like Splay Trees and Red-Black Trees. However, AVL trees are unique in that they explicitly maintain the balance factor for each node, which allows for more efficient insertions and deletions compared to other self-balancing trees (Cormen et al., 2009).
+
+References:
+[KB-Text "AVL Trees"] Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). Introduction to Algorithms (3rd ed.). MIT Press.
+2025-04-02 21:43:15,238 - INFO - ================================================================================
+2025-04-02 21:43:15,238 - INFO - 
+2025-04-02 21:43:15,238 - INFO - Configuration 54: mistral + small + redis + mpnet
+2025-04-02 21:43:15,238 - INFO - Time: 22.75s | Memory: -2.75MB
+2025-04-02 21:43:15,238 - INFO - Response:
+2025-04-02 21:43:15,238 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,238 - INFO -  The AVL (Adelson-Velsky and Landis) tree is a self-balancing binary search tree, which means it maintains the height of the tree close to logarithmic time complexity. This is achieved by performing rotations on nodes that violate certain balance conditions.
+
+There are two types of rotations in AVL trees: left rotation (LL and LR) and right rotation (RR and RL). Let's consider a node N as the root, where N has a subtree T1 on its left side and a subtree T2 on its right side.
+
+1. Left-Left (LL) Rotation:
+   - If N is the root of the tree, then perform a right rotation on N with T1 as the new root. [GK] This operation is performed when T1's height increases by 2 while T2's height remains unchanged or increases by 1.
+   - If N is not the root and T1's parent (P) is on the left side of P, then perform a right rotation on P with N as the new left child, followed by a left rotation on N with T1 as the new right child. [GK] This operation is performed when both T1 and T2 increase in height by 1.
+
+   Example:
+   ```
+   Before Rotation:
+       A
+     /   \
+    B     C
+   / \     |
+  D   E    F
+
+   After LL Rotation:
+        B
+      /   \
+     A     C
+   / \     |
+  D   E    F
+   ```
+
+2. Left-Right (LR) Rotation:
+   - If N is the root of the tree, then perform a left rotation on N with T2 as the new root. [GK] This operation is performed when T1's height remains unchanged or increases by 1 while T2's height increases by 2.
+   - If N is not the root and T1's parent (P) is on the right side of P, then perform a left rotation on P with T2 as the new right child, followed by a right rotation on N with T1 as the new left child. [GK] This operation is performed when both T1 and T2 increase in height by 1.
+
+   Example:
+   ```
+   Before Rotation:
+        A
+       /
+      B
+     / | \
+    C D   E
+          |
+          F
+
+   After LR Rotation:
+           B
+         /   \
+        A     E
+       / |     |
+      C D    F   B
+   ```
+
+3. Right-Right (RR) and Right-Left (RL) rotations can be handled similarly by swapping left and right in the descriptions above. [KB-Text "Introduction to Algorithms, 3rd edition, CLRS"]
+2025-04-02 21:43:15,238 - INFO - ================================================================================
+2025-04-02 21:43:15,238 - INFO - 
+2025-04-02 21:43:15,238 - INFO - Configuration 55: mistral + medium + redis + mpnet
+2025-04-02 21:43:15,238 - INFO - Time: 20.25s | Memory: 36.67MB
+2025-04-02 21:43:15,238 - INFO - Response:
+2025-04-02 21:43:15,238 - INFO - --------------------------------------------------------------------------------
+2025-04-02 21:43:15,238 - INFO -  AVL (Adelson-Velsky and Landis) trees are self-balancing binary search trees that maintain the height of the tree close to logarithmic in the number of nodes, ensuring efficient insertion, deletion, and search operations. The balancing is achieved using rotations, specifically left rotation (LL, LR, RL, andRR), which are performed to maintain the AVL property: the difference between heights of two child subtrees for any node should not exceed 1.
+
+Let's take a look at each type of rotation:
+
+1. **Left Rotation (LL and LR)**
+   - LL rotation is performed on a left-leaning tree where both children of the root are leaning to the left. [KB-Image "AVL_LL"]
+     ```
+     A           B
+    / \         /
+   B  C     =>  A
+                \
+                 D
+     ```
+   - LR rotation is performed on a tree where the left child of the root is leaning to the left and the left child of the left child is leaning to the right. [KB-Image "AVL_LR"]
+     ```
+     A           B
+    / \         / \
+   B  D        C   A
+      |            |
+      E           B
+     ```
+
+2. **Right Rotation (RL and RR)**
+   - RL rotation is performed on a right-leaning tree where both children of the root are leaning to the right. [KB-Image "AVL_RL"]
+     ```
+     A           B
+      \         /
+       C        A
+        |       |
+        D       E
+     ```
+   - RR rotation is performed on a tree where the right child of the root is leaning to the right and the right child of the right child is leaning to the left. [KB-Image "AVL_RR"]
+     ```
+     A           B
+      \         /
+       C        A
+       |       |
+       D       E
+      / \     /
+     F   G    B
+     ```
+
+These rotations are used to maintain the balance in the tree, ensuring efficient operations. For more details, you can refer to [KB-Text "AVL Tree"] for a comprehensive explanation of AVL trees and their properties.
+
+[GK] The concept of AVL trees was introduced by Georgy Adelson-Marsál and Aleksej Landis in 1962 as an improvement over the earlier proposed B-trees, which were developed by Rudolf Bayer and Edward McCreight in 1972.
+2025-04-02 21:43:15,238 - INFO - ================================================================================
+2025-04-02 21:43:15,238 - INFO - 
+2025-04-02 21:43:19,018 - INFO - Exported performance metrics to evaluation_analysis/performance_metrics.csv

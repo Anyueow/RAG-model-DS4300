@@ -1,0 +1,45 @@
+{
+  "configuration": {
+    "name": "large_nomic_redis_mistral",
+    "embedding_model": "nomic-ai/nomic-embed-text-v1.5",
+    "llm_model": "mistral:latest",
+    "vector_db": "redis",
+    "chunking_strategy": "large",
+    "semantic_weight": 0.7,
+    "keyword_weight": 0.3,
+    "chunk_size": 1024,
+    "chunk_overlap": 100,
+    "top_k": 3
+  },
+  "responses": {
+    "question_1": {
+      "question": "What is the difference between B-trees and B+ trees?",
+      "response": " The B-tree (Balanced-tree) and B+ tree are both self-balancing search trees used in databases to efficiently store and retrieve data from disk. They differ primarily in their internal node structure, which affects the way they handle key-data pairs and data retrieval [KB-Text \"Database Systems: A Practical Approach to Design, Implementation, and Management\" by Elmasri & Navathe].\n\nA B-tree stores both keys and data directly within the nodes. Each internal node can have a range of keys, and each leaf node contains data items. This structure allows for efficient key search operations but may lead to more disk I/O during data retrieval due to the need to access multiple nodes [KB-Text \"Database Systems: A Practical Approach to Design, Implementation, and Management\"].\n\nOn the other hand, a B+ tree stores only keys in internal nodes and data items exclusively in leaf nodes. This structure results in more efficient data retrieval since all data items are located at the leaves [KB-Text \"Database Systems: A Practical Approach to Design, Implementation, and Management\"]. However, key search operations may require accessing multiple nodes due to the need to traverse from internal nodes to leaf nodes.\n\nIn summary, B-trees are suitable for applications where frequent data insertions, deletions, and updates are required, while B+ trees are more efficient for read-heavy workloads that prioritize fast data retrieval [GK]. It's essential to choose the appropriate tree structure based on the specific requirements of your application.",
+      "execution_time": 14.013451099395752,
+      "memory_usage": -313.59375,
+      "contexts": []
+    },
+    "question_2": {
+      "question": "Explain how AVL tree rotation works",
+      "response": " The AVL (Adelson-Velsky and Landis) tree is a self-balancing binary search tree, which means it maintains the height of the tree close to log(n) for n keys. This is achieved by performing rotations when an insertion or deletion causes the height difference between subtrees to exceed 1.\n\nThere are two types of rotations in AVL trees: left rotation (LL and LR) and right rotation (RR and RL). Let's consider a simple case of left-left (LL) rotation, which is used when the left child of a node becomes too heavy (its height exceeds the height of the root by 2).\n\n[KB-Image \"AVL_tree_rotation_LL\"]\n\nIn the above image, we have an AVL tree with a node A as the root. Node A has two children: B and C. Now, let's say that node B has two children D and E. If we perform an insertion or deletion in the subtree of D such that its height exceeds the height of A by 2, the tree becomes unbalanced. To balance the tree, we perform a left-left rotation, as shown below:\n\n[KB-Image \"AVL_tree_rotation_LL_after\"]\n\nIn the rotated tree, node B is now the root, and the original root A has moved to the right side of the tree. The height of the subtrees at nodes B and C are now balanced, ensuring that the overall height of the tree remains close to log(n).\n\nIt's essential to understand that AVL trees use rotation operations to maintain balance, which in turn ensures efficient search times. For more information on other types of rotations (right-right, left-right, and right-left) and the update rules for balancing factors, I recommend consulting [KB-Text \"Introduction to Algorithms\" by Cormen et al.].\n\n[GK] The concept of AVL trees is based on the idea of self-balancing binary search trees, which were first introduced by Geodesic Inc. in 1962. The name \"AVL tree\" comes from the initials of its inventors: Adelson-Velsky and Landis.",
+      "execution_time": 19.679652214050293,
+      "memory_usage": 62.671875,
+      "contexts": []
+    },
+    "question_3": {
+      "question": "What are the main advantages of MongoDB?",
+      "response": " The main advantages of MongoDB [GK] include:\n\n1. Flexible data model (document-oriented): Unlike traditional relational databases, MongoDB stores data in flexible JSON-like documents, making it easier to handle complex and dynamic data structures. This is particularly useful for applications that require storing semi-structured or unstructured data. [KB-Text \"Introduction to MongoDB\"]\n\n2. Scalability: MongoDB can easily scale horizontally by adding more machines to a sharded cluster, making it suitable for handling large amounts of data and high traffic applications. [KB-Text \"MongoDB Architecture\"]\n\n3. High performance: MongoDB offers fast read and write operations due to its use of efficient data structures like BSON (Binary JSON) and the ability to perform CRUD operations on individual documents rather than entire tables. [KB-Text \"MongoDB Performance\"]\n\n4. Easy setup and administration: MongoDB is relatively easy to set up and manage compared to other databases, thanks to its built-in tools like the MongoDB shell, Compass GUI, and various drivers for different programming languages. [KB-Text \"Getting Started with MongoDB\"]\n\n5. Aggregation framework: MongoDB provides a powerful aggregation pipeline that allows you to perform complex data processing tasks, such as filtering, grouping, sorting, and joining data from multiple collections, without the need for additional tools or programming. [KB-Text \"MongoDB Aggregation Framework\"]",
+      "execution_time": 13.764561891555786,
+      "memory_usage": 0.3125,
+      "contexts": []
+    },
+    "question_4": {
+      "question": "How does AWS S3 handle data replication?",
+      "response": " The Amazon Simple Storage Service (S3) handles data replication through a feature called \"Bucket Replication.\" This is a service that allows you to automatically copy objects across Amazon S3 buckets, both within the same Region and across multiple Regions.\n\nHere's a step-by-step explanation of how it works:\n\n1. You create a Bucket Replication configuration in your source bucket. This configuration specifies the destination bucket(s) where you want to replicate the data.\n\n2. The replication process is initiated by Amazon S3 when an object is created, updated, or deleted in the source bucket.\n\n3. By default, the replicated objects are stored in the same Region as the destination bucket. However, you can configure multi-Region replication to store copies of your objects in other Regions for disaster recovery purposes.\n\n4. You can also customize the replication process by specifying filters (such as prefixes or tags) to control which objects are replicated and how they are replicated (e.g., copying only new objects, updating existing objects with the latest version, or deleting replicated objects that no longer exist in the source bucket).\n\nFor more information about Bucket Replication, you can refer to the official AWS documentation: [KB-Text \"Amazon S3 Bucket Replication\"](https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-replication.html)",
+      "execution_time": 13.744565963745117,
+      "memory_usage": -63.609375,
+      "contexts": []
+    }
+  },
+  "timestamp": "2025-04-02 21:16:22"
+}

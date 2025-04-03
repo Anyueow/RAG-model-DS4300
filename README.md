@@ -1,127 +1,222 @@
-# The Aces RAG Model
+# Local Retrieval-Augmented Generation System for DS4300 Notes
+A local RAG system that leverages course notes to provide accurate, context-aware responses to questions about data science topics.
 
-A Retrieval-Augmented Generation (RAG) system built for DS4300 Midterm preparation, featuring a Streamlit-based user interface and multiple embedding model support.
+## Overview
 
-## Prerequisites
+Retrieval-Augmented Generation (RAG) is an AI architecture that combines the power of large language models with external knowledge retrieval to provide more accurate and contextual responses. This project implements a local RAG system specifically designed to answer questions about data science topics using course notes as the knowledge base.
 
-- Python 3.8+
-- Ollama installed and running locally
-- Redis server running locally (for vector database)
-- Required Python packages (install via `pip install -r requirements.txt`)
+The system's primary goal is to demonstrate the effectiveness of different RAG configurations by comparing various embedding models, vector databases, chunking strategies, and LLM models in a controlled environment.
 
-## Ollama Models Required
+## Tech Stack
 
-Before running the system, ensure you have the following Ollama models pulled:
-
-```bash
-ollama pull nomic-ai/nomic-embed-text-v1.5  # For embeddings
-ollama pull qwen:7b                          # For LLM
-```
-
-## Running the Streamlit UI
-
-1. First, ensure Redis is running:
-```bash
-redis-server
-```
-
-2. In a new terminal, start the Streamlit app:
-```bash
-streamlit run app.py
-```
-
-3. The UI will open in your default web browser at `http://localhost:8501`
-
-## Final RAG Configuration (Streamlit UI)
-
-The Streamlit UI uses the following optimized configuration:
-
-### Embedding Model
-- Model: `nomic-ai/nomic-embed-text-v1.5`
-- Type: Ollama-based embedding model
-- Embedding Dimension: 768
-- Max Length: 512 tokens
-
-### LLM Configuration
-- Model: `qwen:7b`
-- Temperature: 0.4 (for balanced creativity and consistency)
-- Context Window: 4096 tokens
-
-### Vector Database
-- Type: ChromaDB
-- Collection Name: "app_collection"
-- Distance Metric: Cosine Similarity
-
-### Search Configuration
-- Semantic Weight: 0.8 (emphasizes semantic understanding)
-- Keyword Weight: 0.2 (supplementary keyword matching)
-- Top-k Results: 3 (number of contexts retrieved)
-
-### Text Processing
-- Chunk Size: 512 tokens
-- Chunk Overlap: 50 tokens
-- Tokenizer: tiktoken (for accurate token counting)
-
-### Caching
-- Query Results Cache: Enabled
-- Embedding Cache: Enabled
-- Context Cache: Enabled
+- **Python 3.8+**: Core programming language
+- **Ollama**: Local LLM deployment
+  - Mistral: Latest version for primary testing
+  - Qwen: 7B model for comparative analysis
+- **Vector Databases**:
+  - Redis: High-performance in-memory vector store (fastest for real-time queries)
+  - Qdrant: Vector similarity search engine (best for complex similarity metrics)
+  - Chroma: Open-source vector database (easiest to set up and maintain)
+- **Embedding Models**:
+  - Nomic AI's nomic-embed-text-v1.5
+  - MiniLM (multi-qa-MiniLM-L6-cos-v1)
+  - MPNet (all-mpnet-base-v2)
+- **Additional Libraries**:
+  - Sentence Transformers for embeddings
+  - LangChain for text processing
+  - Plotly for visualization
+  - Pandas for data analysis
 
 ## Features
 
-- Interactive query interface
-- Real-time document processing
-- Support for PDF documents
-- Hybrid search (semantic + keyword)
-- Context-aware responses
-- Memory-efficient document processing
-- Parallel document ingestion
-- System status monitoring
+- **Document Processing**:
+  - Automatic document ingestion from various formats
+  - Configurable text chunking with overlap control
+  - Metadata extraction and storage
+
+- **Embedding Pipeline**:
+  - Support for multiple embedding models
+  - Vector dimension validation
+  - Efficient batch processing
+
+- **Vector Database Integration**:
+  - Unified interface for multiple vector DBs
+  - Automatic collection management
+  - Configurable similarity search parameters
+
+- **LLM Integration**:
+  - Local LLM deployment via Ollama
+  - Configurable prompt templates
+  - Temperature and sampling controls
+
+- **Evaluation Framework**:
+  - Standardized question sets
+  - Performance metrics tracking
+  - Interactive visualization tools
+  - CSV export capabilities
+
+## Project Structure
+
+```
+.
+├── data/                   # Course notes and evaluation data
+├── database/              # Vector database implementations
+│   ├── chroma_db.py      # Chroma DB client
+│   ├── qdrant_db.py      # Qdrant DB client
+│   └── redis_db.py       # Redis DB client
+├── embeddings/           # Embedding model implementations
+│   ├── sentence_transformer.py
+│   └── test_config.py    # Model configurations
+├── llm/                  # LLM interface
+│   └── llm_interface.py  # Ollama integration
+├── evaluation/          # Evaluation scripts and tools
+│   ├── evaluate_rag.py  # Main evaluation script
+│   └── generate_evaluation_responses_*.py  # Response generators
+├── main.py             # Main RAG system implementation
+└── requirements.txt    # Project dependencies
+```
+
+## Installation
+
+1. **Set up Python Environment**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+2. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Set up Ollama**:
+   ```bash
+   # Install Ollama (follow instructions at https://ollama.ai)
+   # Pull the required models
+   ollama pull mistral:latest
+   ollama pull qwen:7b
+   ```
+
+4. **Vector Database Setup**:
+   ```bash
+   # Redis (if using)
+   docker run -d -p 6379:6379 redis
+
+   # Qdrant (if using)
+   docker run -d -p 6333:6333 qdrant/qdrant
+   ```
 
 ## Usage
 
-1. **Initialize the System**
-   - Click "Initialize/Update RAG System" in the sidebar
-   - Wait for the initialization to complete
+1. **Run Evaluation Pipeline**:
+   ```bash
+   # Generate responses with Redis
+   python generate_evaluation_responses_redis.py
 
-2. **Process Documents**
-   - Place your PDF documents in the `data` directory
-   - Click "Process Data Directory" in the sidebar
-   - Monitor the processing status
+   # Generate responses with Qdrant
+   python generate_evaluation_responses_qdrant.py
 
-3. **Query the System**
-   - Enter your question in the text area
-   - Click "Search"
-   - View the response and relevant contexts
+   # Generate responses with Chroma
+   python generate_evaluation_responses_chroma.py
+   ```
 
-## Performance Considerations
+2. **Evaluate Results**:
+   ```bash
+   python evaluate_rag.py
+   ```
 
-- The system uses parallel processing for document ingestion
-- Documents are processed in chunks of 10 for optimal memory usage
-- Embeddings and responses are cached for faster subsequent queries
-- The UI provides real-time feedback on system status and processing
+3. **View Results**:
+   - Check `evaluation_results/` for JSON outputs
+   - View interactive visualizations in `evaluation_results/visualizations/`
+   - Access raw data in `evaluation_results/raw_responses.csv`
 
-## Troubleshooting
+## Configuration
 
-1. **Redis Connection Issues**
-   - Ensure Redis server is running: `redis-server`
-   - Check Redis port (default: 6379)
+The system supports various configuration options:
 
-2. **Ollama Issues**
-   - Verify Ollama is running: `ollama list`
-   - Ensure required models are pulled
-   - Check model availability in Ollama
+1. **Chunking Strategies**:
+   ```json
+   {
+     "chunk_size": 256,  // or 512, 1024
+     "chunk_overlap": 25 // or 50, 100
+   }
+   ```
 
-3. **Memory Issues**
-   - Monitor system memory usage
-   - Adjust chunk size if needed
-   - Clear vector database if necessary
+2. **Embedding Models**:
+   ```python
+   EMBEDDING_MODELS = {
+       "nomic-ai/nomic-embed-text-v1.5": {...},
+       "multi-qa-MiniLM-L6-cos-v1": {...},
+       "all-mpnet-base-v2": {...}
+   }
+   ```
 
-## Development
+3. **Vector Database Settings**:
+   ```python
+   vector_db = RedisDB(
+       collection_name="eval_config_name",
+       embedding_model="model_name"
+   )
+   ```
 
-For development and evaluation purposes, separate evaluation scripts are available:
-- `evaluate_mpnet.py`: For all-mpnet-base-v2 model
-- `evaluate_minilm.py`: For multi-qa-MiniLM-L6-cos-v1 model
-- `evaluate_nomic.py`: For nomic-ai/nomic-embed-text-v1.5 model
+4. **LLM Parameters**:
+   ```python
+   # Mistral configuration
+   llm = OllamaLLM(
+       model_name="mistral:latest",
+       temperature=0.4
+   )
+   
+   # Qwen configuration
+   llm = OllamaLLM(
+       model_name="qwen:7b",
+       temperature=0.4
+   )
+   ```
 
-Each script can be run independently to evaluate different embedding models and configurations. 
+## Experiments
+
+The system evaluates different configurations:
+
+1. **Chunking Strategies**:
+   - Small (256/25): Fine-grained retrieval
+   - Medium (512/50): Balanced approach
+   - Large (1024/100): Context preservation
+
+2. **Embedding Models**:
+   - Nomic AI: Latest generation embeddings
+   - MiniLM: Fast and efficient
+   - MPNet: Strong semantic understanding
+
+3. **Vector Databases**:
+   - Redis: In-memory performance
+   - Qdrant: Advanced similarity search
+   - Chroma: Local persistence
+
+4. **LLM Models**:
+   - Mistral: Latest version for primary testing
+   - Qwen: 7B model for comparative analysis
+
+## Results
+
+Key findings from the evaluation:
+
+1. **Performance Metrics**:
+   - Memory usage across configurations
+   - Execution time for different components
+   - Response quality and relevance
+   - LLM model comparison (Mistral vs. Qwen)
+
+2. **Best Performing Configuration**:
+   - Optimal chunking strategy
+   - Most effective embedding model
+   - Preferred vector database
+   - Preferred LLM model
+
+3. **Trade-offs**:
+   - Speed vs. accuracy
+   - Memory usage vs. context size
+   - Local vs. distributed storage
+   - LLM performance vs. resource usage
+
+Detailed results and visualizations are available in the `evaluation_results/` directory. 
